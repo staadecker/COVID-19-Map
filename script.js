@@ -32,14 +32,32 @@ var heatmap = new google.maps.visualization.HeatmapLayer({
 heatmap.setMap(map);
 
 var script = document.createElement('script');
-script.src = 'data.js';
+script.src = 'self-report.js';
+
+
+/*data format reference: 
+codePolyArray = [
+    [
+        {lat: 37.782, lng: -122.447},
+        {lat: 34.782, lng: -100.445},
+        {lat: 45.321, lng: -64.757}], 
+    [
+        {lat: 25.774, lng: -80.190},
+        {lat: 18.466, lng: -66.118},
+        {lat: 32.321, lng: -64.757}],
+]
+confirmedArray = [
+{items: 1, coordinates: [50.782, -122.447]}
+]*/
+
+//Array of Google Map API polygons and markers
+var polygons = [];
+var markers = [];
+
 
 //read postalcodePolygonArray and create polygons with pop up
 window.eqfeed_callback = function (results) {
 
-	//Array of Google Map API polygons
-	var polygons = [];
-	
 	//Loop on the postalcodePolygonArray
 	for (var i = 0; i < codePolyArray.length; i++) {
 
@@ -62,9 +80,35 @@ window.eqfeed_callback = function (results) {
 				content : "No Cases Collected"
 			});
 
-		//Runs when user clicks on marker
+		//Runs when user clicks on polygon
 		p.addListener('click', popup);
-	}
+    }
+	
+	//Loop on the postalcodePolygonArray
+	for (var i = 0; i < confirmedArray.length; i++) {
+        confirmedCase = confirmedArray[i]
+        //Add the marker
+        var latLng = new google.maps.LatLng(confirmedCase.coordinates[0], confirmedCase.coordinates[1]);
+        var marker = new google.maps.Marker({
+                position : latLng,
+                map : map,
+                //icon : icon_path
+            });
+		marker.setMap(map);
+
+		//Add polygon to polygon array
+		markers[i] = marker;
+		
+		//initialize infowindow text
+		marker.info = new google.maps.InfoWindow({
+				//maxWidth : 250,
+				content : "1 case confirmed"
+			});
+
+		//Runs when user clicks on polygon
+		marker.addListener('click', popup);
+    }
+    
 }
 
 
@@ -73,7 +117,10 @@ function popup(event) {
     for (var i = 0; i < polygons.length; i++) {
       polygons[i].info.close();
     }
-
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].info.close();
+      }
+      
     //Open polygon infowindow
     this.info.setPosition(event.latLng)
     this.info.open(map, this);
