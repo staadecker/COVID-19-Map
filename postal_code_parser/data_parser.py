@@ -42,6 +42,7 @@ def read_data():
 
     # Dictionary returning the data that is read
     output_data = {}
+    skipped_data_points = 0
 
     # For each FSA
     for element in root.findall(FEATURE_TAG):
@@ -72,12 +73,18 @@ def read_data():
             output_coord = []
 
             for coord in pyproj.itransform(CONVERT_IN_PROJ, CONVERT_OUT_PROJ, input_coord):
-                output_coord.append(
-                    {'lat': round(coord[0], ROUNDING_ACCURACY), 'lng': round(coord[1], ROUNDING_ACCURACY)})
+                lat = round(coord[0], ROUNDING_ACCURACY)
+                lng = round(coord[1], ROUNDING_ACCURACY)
+
+                if len(output_coord) > 0 and output_coord[-1]['lat'] == lat and output_coord[-1]['lng'] == lng:
+                    skipped_data_points += 1
+                    continue
+
+                output_coord.append({'lat': lat, 'lng': lng})
 
             output_data[fsa_code] = output_coord
 
-    return output_data
+    return output_data, skipped_data_points
 
 
 def write_data(data_to_write):
@@ -87,5 +94,6 @@ def write_data(data_to_write):
 
 
 if __name__ == "__main__":
-    data = read_data()
+    data, num_skipped = read_data()
+    print(num_skipped)
     write_data(data)
