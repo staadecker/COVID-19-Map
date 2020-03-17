@@ -30,3 +30,50 @@ var heatmap = new google.maps.visualization.HeatmapLayer({
     radius: 1
 });
 heatmap.setMap(map);
+
+var script = document.createElement('script');
+script.src = 'data.js';
+
+//read postalcodePolygonArray and create polygons with pop up
+window.eqfeed_callback = function (results) {
+
+	//Array of Google Map API polygons
+	var polygons = [];
+	
+	//Loop on the postalcodePolygonArray
+	for (var i = 0; i < codePolyArray.length; i++) {
+
+    	//Add the polygon
+		var p = new google.maps.Polygon({
+			paths: codePolyArray[i],
+			strokeWeight: 0,
+			fillColor: '#FF0000',
+			fillOpacity: 0.6,
+			indexID: i
+		});
+		p.setMap(map);
+
+		//Add polygon to polygon array
+		polygons[i] = p;
+		
+		//initialize infowindow text
+		p.info = new google.maps.InfoWindow({
+				maxWidth : 250,
+				content : "No Cases Collected"
+			});
+
+		//Runs when user clicks on marker
+		google.maps.event.addListener(p, 'click', function () {
+			//Close all info windows
+			for (var i = 0; i < polygons.length; i++) {
+				polygons[i].info.close();
+			}
+			//Center and zoom on polygon
+			map.panTo(this.position);
+			map.setZoom(15);
+
+			//Open polygon infowindow
+			this.info.open(map, this);
+		});
+	}
+}
