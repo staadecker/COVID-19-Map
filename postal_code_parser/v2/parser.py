@@ -55,6 +55,9 @@ def get_polygon(coordinates):
     for lat, lng in TRANSFORMER.itransform(coordinates):
         polygon.append({'lat': (round(lat, ROUNDING_ACCURACY)),
                         'lng': (round(lng, ROUNDING_ACCURACY))})
+
+    polygon.pop()  # To not repeat the last item
+
     return polygon
 
 
