@@ -58,22 +58,28 @@ window.eqfeed_callback = function (results) {
 		
 		//initialize infowindow text
 		p.info = new google.maps.InfoWindow({
-				maxWidth : 250,
+				//maxWidth : 250,
 				content : "No Cases Collected"
 			});
 
 		//Runs when user clicks on marker
-		google.maps.event.addListener(p, 'click', function () {
-			//Close all info windows
-			for (var i = 0; i < polygons.length; i++) {
-				polygons[i].info.close();
-			}
-			//Center and zoom on polygon
-			map.panTo(this.position);
-			map.setZoom(15);
-
-			//Open polygon infowindow
-			this.info.open(map, this);
-		});
+		p.addListener('click', popup);
 	}
 }
+
+
+function popup(event) {
+    //Close all info windows
+    for (var i = 0; i < polygons.length; i++) {
+      polygons[i].info.close();
+    }
+
+    //Open polygon infowindow
+    this.info.setPosition(event.latLng)
+    this.info.open(map, this);
+    }
+
+
+
+
+
