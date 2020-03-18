@@ -4,40 +4,33 @@ map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4
 });
 
-var blueDot = {
-    url: "res/blueDot2.png", // url
-    scaledSize: new google.maps.Size(22, 35), // scaled size
-};
-// Try HTML5 geolocation.
+// Try HTML5 geolocation. // Else Browser doesn't support Geolocation or permission not given.
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-        };
-        const marker = new google.maps.Marker({
-            position: pos,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                strokeWeight: 3,
-                fillColor: 'royalblue',
-                strokeColor: 'white',
-                fillOpacity: 1,
-                strokeOpacity: 0.5
-              },
-        });
-        
-        map.setCenter(pos);
-        map.setZoom(8);
-        marker.setMap(map);
-    }, 
+    navigator.geolocation.getCurrentPosition(function (position) {
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            const marker = new google.maps.Marker({
+                position: pos,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 8,
+                    strokeWeight: 3,
+                    fillColor: 'royalblue',
+                    strokeColor: 'white',
+                    fillOpacity: 1,
+                    strokeOpacity: 0.5
+                },
+            });
+
+            map.setCenter(pos);
+            map.setZoom(8);
+            marker.setMap(map);
+        },
     );
-    }
-    else {
-    // Browser doesn't support Geolocation or permission not given.
-    }
-    
+}
+
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
@@ -69,7 +62,8 @@ for (let fsa in postal_code_data) {
 
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
-                /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " people in self-isolation</p>"
+                /*maxWidth : 250,*/
+                content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " people in self-isolation</p>"
             });
 
             //Add polygon to polygon array
@@ -127,15 +121,14 @@ function item_pressed(event) {
 }
 
 function toggle_clicked(radio) {
-    if (radio.value === "in_self_isolation"){
+    if (radio.value === "in_self_isolation") {
         setMapOnAll(null, markers);
         setMapOnAll(map, polygons);
-    } else{
+    } else {
         setMapOnAll(map, markers);
         setMapOnAll(null, polygons);
     }
 }
-
 
 
 // Set every item in group to the map specified by map. map can be null
