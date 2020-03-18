@@ -1,11 +1,16 @@
+// Create map
 map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(43.6532, -79.3832), // Toronto
     zoom: 4
 });
 
+
+// Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
 confirmed_data = JSON.parse(data_confirmed);
+
+// Create layers
 
 //Array of Google Map API polygons and markers
 let polygons = [];
@@ -68,8 +73,11 @@ for (let i = 0; i < confirmed_data.length; i++) {
     marker.addListener('click', item_pressed);
 }
 
+// Enable marker layer
 setMapOnAll(map, markers);
-let geoloccontrol = new klokantech.GeolocationControl(map);
+
+//Functions
+
 
 function item_pressed(event) {
     //Close all info windows
