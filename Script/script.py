@@ -12,22 +12,19 @@ df.sort_values(by='health_region', inplace=True)
 output = {}
 
 for index, row in df.iterrows():
-   if row['health_region'] + ', ' + row['province'] in output:
-      output[row['health_region'] + ', ' + row['province']][0] += 1
-   else:
-      if row['health_region'] == "Not Reported" and row['province'] == "Repatriated":
-         output[row['health_region'] + ', ' + row['province']] = [1, "N/A", "N/A"]
-      elif row['health_region'] == "Not Reported":
-         location = geolocator.geocode(row['province'] + ', Canada')
-         output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
-      else: 
-         location = geolocator.geocode(row['health_region'] + ', ' + row['province'])
-         if location is None:
+    if row['health_region'] + ', ' + row['province'] in output:
+        output[row['health_region'] + ', ' + row['province']][0] += 1
+    else:
+        if row['health_region'] == "Not Reported" and row['province'] == "Repatriated":
+            output[row['health_region'] + ', ' + row['province']] = [1, "N/A", "N/A"]
+        elif row['health_region'] == "Not Reported":
             location = geolocator.geocode(row['province'] + ', Canada')
-         output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
-         
-      
-
+            output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
+        else:
+            location = geolocator.geocode(row['health_region'] + ', ' + row['province'])
+            if location is None:
+                location = geolocator.geocode(row['province'] + ', Canada')
+            output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
 
 with open('confirmed.json', 'w') as outfile:
     json.dump(output, outfile)
