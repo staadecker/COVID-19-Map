@@ -21,7 +21,7 @@ let markers = [];
 let polygonCount = 0;
 for (let fsa in postal_code_data) {
     if (postal_code_data.hasOwnProperty(fsa)) {
-        const num_in_self_isolation = in_self_isolation_data[fsa];
+        const num_in_self_isolation = in_self_isolation_data['fsa'][fsa];
 
         for (let i = 0; i < postal_code_data[fsa].length; i++) {
 

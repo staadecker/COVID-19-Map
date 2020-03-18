@@ -2,6 +2,7 @@
 
 import json
 import random
+import time
 
 generated_data = {}
 
@@ -14,6 +15,8 @@ with open('../postal_code_boundries/v2/postal_code_boundaries.json') as file:
         else:
             generated_data[key] = 0
 
+full_data = {"time": time.time(), "fsa": generated_data}
+
 with open('in_self_isolation_SAMPLE.js', 'w') as file:
-    output_string = json.dumps(generated_data)
+    output_string = json.dumps(full_data)
     file.write("data_in_self_isolation_sample = '"+output_string + "';")
