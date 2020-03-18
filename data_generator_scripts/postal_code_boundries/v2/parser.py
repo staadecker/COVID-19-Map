@@ -83,5 +83,5 @@ def write_data(data_to_write, filename):
 
 
 if __name__ == "__main__":
-    data = read_data('one_percent_smooth.json')
-    write_data(data, 'output_boundary_data.json')
+    data = read_data('unformatted_postal_code_boundaries.json')
+    write_data(data, 'postal_code_boundaries.json')

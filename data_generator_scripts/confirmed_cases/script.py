@@ -6,7 +6,7 @@ geolocator = Nominatim(user_agent="COVIDScript")
 
 fields = ['health_region', 'province']
 
-df = pd.read_csv('Script/Public_COVID-19_Canada.csv', skipinitialspace=True, usecols=fields)
+df = pd.read_csv('confirmed_cases/Public_COVID-19_Canada.csv', skipinitialspace=True, usecols=fields)
 df.sort_values(by='health_region', inplace=True)
 
 output = {}
