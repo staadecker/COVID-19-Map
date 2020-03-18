@@ -6,6 +6,7 @@ map = new google.maps.Map(document.getElementById('map'), {
 //data_postal_code_boundaries = '{"B0S": [{"coord": [{"lat": -64.8696, "lng": 44.5928}, {"lat": -65.0615, "lng": 44.4548}, {"lat": -64.945, "lng": 44.5371}, {"lat": -64.8545, "lng": 44.4595}], "area": 5269165351}]}';
 
 postal_code_data = JSON.parse(data_postal_code_boundaries);
+in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
 
 confirmed_data = [
     {items: 1, coordinates: [50.782, -122.447]},
@@ -20,13 +21,17 @@ let markers = [];
 let polygonCount = 0;
 for (let fsa in postal_code_data) {
     if (postal_code_data.hasOwnProperty(fsa)) {
+        const num_in_self_isolation = in_self_isolation_data[fsa];
+
         for (let i = 0; i < postal_code_data[fsa].length; i++) {
+
+
             //Add the polygon
             const p = new google.maps.Polygon({
                 paths: postal_code_data[fsa][i]['coord'],
-                strokeWeight: 1,
+                strokeWeight: 0.5,
                 fillColor: '#FF0000',
-                fillOpacity: 0.4,
+                fillOpacity: num_in_self_isolation / 100 * 0.5,
                 indexID: polygonCount
             });
 
@@ -35,7 +40,7 @@ for (let fsa in postal_code_data) {
 
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
-                /*maxWidth : 250,*/ content: "No Cases Collected"
+                /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " cases in self-isolation</p>"
             });
 
             //Add polygon to polygon array
