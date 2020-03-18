@@ -1,29 +1,35 @@
+body {
+  background-color: #001f3f;
+  font-family: 'Roboto','sans-serif';
+  color: white;
+}
+
+
 /* Set the size of the div element that contains the map */
 #map {
-    height: 600px;  /* The height is 400 pixels */
+    height: calc( 100vh - 200px );  /* The height is 400 pixels */
     width: 100%;  /* The width is the width of the web page */
 }
 
-#floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 0;
-        //border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+
+.name_div {
+  float: left;
+}
 
 
  /* Define styling for radio buttons */
 .switch-field {
 	display: flex;
-	margin-bottom: 36px;
+  margin-right: 10px;
+  margin-left: 3px;
+	margin-bottom: 10px;
+  margin-top: 10px;
 	overflow: hidden;
+  float: left;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+
 }
 
 .switch-field input {
@@ -36,14 +42,14 @@
 }
 
 .switch-field label {
-	background-color: #e4e4e4;
-	color: rgba(0, 0, 0, 0.6);
+	background-color: #034f84;
+	color: rgba(0, 0, 0.1, 0.7);
 	font-size: 14px;
 	line-height: 1;
 	text-align: center;
 	padding: 8px 16px;
 	margin-right: -1px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
+	border: 0px solid rgba(0, 0, 0, 0.2);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
 	transition: all 0.1s ease-in-out;
 }
@@ -53,15 +59,34 @@
 }
 
 .switch-field input:checked + label {
-	background-color: #a5dc86;
+	background-color: #e4e4e4;
+  color: #0074D9;
 	box-shadow: none;
 }
 
 .switch-field label:first-of-type {
-	border-radius: 4px 0 0 4px;
+	border-radius: 8px 0 0 8px;
 }
 
 .switch-field label:last-of-type {
-	border-radius: 0 4px 4px 0;
+	border-radius: 0 8px 8px 0;
 }
-/* Emd styling for radio buttons */
+/* End styling for radio buttons */
+
+
+
+
+/* Footer style */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /*background-color: #034f84; */
+  color: white;
+  text-align: center;
+  z-index: 3;
+  background-color: #001f3f;
+}
+
+/* End footer style */
