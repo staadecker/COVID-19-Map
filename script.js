@@ -1,17 +1,16 @@
-/* Data points defined as an array of LatLng objects */
-
-
 map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(43.6532, -79.3832), // Toronto
     zoom: 4
 });
 
+//data_postal_code_boundaries = '{"B0S": [{"coord": [{"lat": -64.8696, "lng": 44.5928}, {"lat": -65.0615, "lng": 44.4548}, {"lat": -64.945, "lng": 44.5371}, {"lat": -64.8545, "lng": 44.4595}], "area": 5269165351}]}';
+
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 
 confirmed_data = [
-    {items: 1, coordinates: [50.782, -122.447]}
+    {items: 1, coordinates: [50.782, -122.447]},
+    {items: 3, coordinates: [44.5928, -64.8696 ]}
 ];
-
 
 //Array of Google Map API polygons and markers
 let polygons = [];
@@ -25,9 +24,9 @@ for (let fsa in postal_code_data) {
             //Add the polygon
             const p = new google.maps.Polygon({
                 paths: postal_code_data[fsa][i]['coord'],
-                strokeWeight: 0,
+                strokeWeight: 1,
                 fillColor: '#FF0000',
-                fillOpacity: 0.6,
+                fillOpacity: 0.4,
                 indexID: polygonCount
             });
 
@@ -47,9 +46,6 @@ for (let fsa in postal_code_data) {
 
 
             polygonCount++;
-        }
-        if (polygonCount > 50){
-            break;
         }
     }
 }

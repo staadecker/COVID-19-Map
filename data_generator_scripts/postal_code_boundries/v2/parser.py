@@ -68,7 +68,7 @@ def read_data(filename):
 def get_polygon(coordinates):
     polygon = []
 
-    for lat, lng in TRANSFORMER.itransform(coordinates):
+    for lng, lat in TRANSFORMER.itransform(coordinates):
         polygon.append({'lat': (round(lat, ROUNDING_ACCURACY)),
                         'lng': (round(lng, ROUNDING_ACCURACY))})
 
