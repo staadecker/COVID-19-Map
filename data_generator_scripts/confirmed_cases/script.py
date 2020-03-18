@@ -21,7 +21,7 @@ for index, row in df.iterrows():
             location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
         else:
-            location = geolocator.geocode(row['health_region'] + ', ' + row['province'])
+            location = geolocator.geocode(row['health_region'] + ', ' + row['province'] + ', Canada')
             if location is None:
                 location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
