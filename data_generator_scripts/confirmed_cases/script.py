@@ -26,7 +26,12 @@ for index, row in df.iterrows():
                 location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
 
+real_output = []
+
+for key in output:
+    real_output.append({"name": key, "cases": output[key][0], "coord": [output[key][1], output[key][2]]})
+
 with open('confirmed.js', 'w') as outfile:
-    output_string = json.dumps(output)
-    output_string.replace("'", "\'")
+    output_string = json.dumps(real_output)
+    output_string = output_string.replace("'", r"\'")
     outfile.write("data_in_self_isolation_sample = '"+output_string + "';")
