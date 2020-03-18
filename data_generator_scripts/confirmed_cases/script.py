@@ -33,5 +33,8 @@ for key in output:
 
 with open('confirmed.js', 'w') as outfile:
     output_string = json.dumps(real_output)
+    output_string = output_string.replace("Vancouver Coastal", "Vancouver")
     output_string = output_string.replace("'", r"\'")
     outfile.write("data_confirmed = '"+output_string + "';")
+
+
