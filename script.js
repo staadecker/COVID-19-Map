@@ -32,7 +32,7 @@ for (let fsa in postal_code_data) {
                 paths: postal_code_data[fsa][i]['coord'],
                 strokeWeight: 0.5,
                 fillColor: '#FF0000',
-                fillOpacity: num_in_self_isolation / 100 * 0.5,
+                fillOpacity: num_in_self_isolation / in_self_isolation_data['max'] * 0.5,
                 indexID: polygonCount
             });
 

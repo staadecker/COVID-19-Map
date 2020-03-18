@@ -4,6 +4,8 @@ import json
 import random
 import time
 
+MAX_NUMBER = 1000
+
 generated_data = {}
 
 with open('../postal_code_boundries/v2/postal_code_boundaries.json') as file:
@@ -11,11 +13,11 @@ with open('../postal_code_boundries/v2/postal_code_boundaries.json') as file:
 
     for key in data.keys():
         if random.random() < 0.1:
-            generated_data[key] = random.randint(0, 100)
+            generated_data[key] = random.randint(0, MAX_NUMBER)
         else:
             generated_data[key] = 0
 
-full_data = {"time": time.time(), "fsa": generated_data}
+full_data = {"time": time.time(), "max": MAX_NUMBER, "fsa": generated_data}
 
 with open('in_self_isolation_SAMPLE.js', 'w') as file:
     output_string = json.dumps(full_data)
