@@ -14,5 +14,6 @@ with open('../postal_code_boundries/v2/postal_code_boundaries.json') as file:
         else:
             generated_data[key] = 0
 
-with open('in_self_isolation_SAMPLE.json', 'w') as file:
-    json.dump(generated_data, file)
+with open('in_self_isolation_SAMPLE.js', 'w') as file:
+    output_string = json.dumps(generated_data)
+    file.write("data_in_self_isolation_sample = '"+output_string + "';")

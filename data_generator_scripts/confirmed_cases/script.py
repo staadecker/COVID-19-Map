@@ -6,7 +6,7 @@ geolocator = Nominatim(user_agent="COVIDScript")
 
 fields = ['health_region', 'province']
 
-df = pd.read_csv('confirmed_cases/Public_COVID-19_Canada.csv', skipinitialspace=True, usecols=fields)
+df = pd.read_csv('Public_COVID-19_Canada.csv', skipinitialspace=True, usecols=fields)
 df.sort_values(by='health_region', inplace=True)
 
 output = {}
@@ -26,5 +26,7 @@ for index, row in df.iterrows():
                 location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
 
-with open('confirmed.json', 'w') as outfile:
-    json.dump(output, outfile)
+with open('confirmed.js', 'w') as outfile:
+    output_string = json.dumps(output)
+    output_string.replace("'", "\'")
+    outfile.write("data_in_self_isolation_sample = '"+output_string + "';")
