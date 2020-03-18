@@ -28,5 +28,5 @@ for index, row in df.iterrows():
 
 with open('confirmed.js', 'w') as outfile:
     output_string = json.dumps(output)
-    output_string.replace("'", "\'")
+    output_string = output_string.replace("'", r"\'")
     outfile.write("data_in_self_isolation_sample = '"+output_string + "';")
