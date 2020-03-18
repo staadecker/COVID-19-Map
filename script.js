@@ -3,22 +3,14 @@ map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4
 });
 
-//data_postal_code_boundaries = '{"B0S": [{"coord": [{"lat": -64.8696, "lng": 44.5928}, {"lat": -65.0615, "lng": 44.4548}, {"lat": -64.945, "lng": 44.5371}, {"lat": -64.8545, "lng": 44.4595}], "area": 5269165351}]}';
-
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
 confirmed_data = JSON.parse(data_confirmed);
-
-/*confirmed_data = [
-    {items: 1, coordinates: [50.782, -122.447]},
-    {items: 3, coordinates: [44.5928, -64.8696 ]}
-];*/
 
 //Array of Google Map API polygons and markers
 let polygons = [];
 let markers = [];
 
-//Loop on the postalcodePolygonArray
 let polygonCount = 0;
 for (let fsa in postal_code_data) {
     if (postal_code_data.hasOwnProperty(fsa)) {
@@ -60,6 +52,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
     const position = new google.maps.LatLng(confirmed_data[i].coord[0], confirmed_data[i].coord[1]);
     const marker = new google.maps.Marker({
         position: position,
+        icon: "res/marker.png"
     });
 
     //initialize infowindow text
@@ -75,6 +68,8 @@ for (let i = 0; i < confirmed_data.length; i++) {
     marker.addListener('click', item_pressed);
 }
 
+setMapOnAll(map, markers);
+let geoloccontrol = new klokantech.GeolocationControl(map);
 
 function item_pressed(event) {
     //Close all info windows
@@ -90,8 +85,6 @@ function item_pressed(event) {
     this.info.open(map, this);
 }
 
-
-
 function toggle_clicked(radio) {
     if (radio.value === "in_self_isolation"){
         setMapOnAll(null, markers);
@@ -102,7 +95,7 @@ function toggle_clicked(radio) {
     }
 }
 
-setMapOnAll(map, markers);
+
 
 // Set every item in group to the map specified by map. map can be null
 function setMapOnAll(map, groups) {
