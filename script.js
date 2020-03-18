@@ -89,3 +89,50 @@ function item_pressed(event) {
 }
 
 
+
+function item_pressed(event) {
+    //Close all info windows
+    for (let i = 0; i < polygons.length; i++) {
+        polygons[i].info.close();
+    }
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].info.close();
+    }
+
+    //Open polygon infowindow
+    this.info.setPosition(event.latLng);
+    this.info.open(map, this);
+}
+
+
+var markersOn = true
+var polygonsOn = true
+
+function setMapOnAll(map, groups) {
+    for (var i = 0; i < groups.length; i++) {
+        groups[i].setMap(map);
+    }
+}
+
+function ToggleMarkers() {
+    if (markersOn){
+        setMapOnAll(null, markers);
+    }
+    else{
+        setMapOnAll(map, markers);
+    }
+    markersOn = !markersOn;
+}
+     
+function TogglePolygons() {
+    if (polygonsOn){
+        setMapOnAll(null, polygons);
+    }
+    else{
+        setMapOnAll(map, polygons);
+    }
+    polygonsOn = !polygonsOn;
+}
+     
+      
+
