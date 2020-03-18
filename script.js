@@ -1,6 +1,6 @@
 // Create map
 map = new google.maps.Map(document.getElementById('map'), {
-    center: new google.maps.LatLng(43.6532, -79.3832), // Toronto
+    center: new google.maps.LatLng(53.9902, -97.8155), // Toronto
     zoom: 4
 });
 
@@ -29,7 +29,7 @@ if (navigator.geolocation) {
         });
         
         map.setCenter(pos);
-        map.setZoom(14)
+        map.setZoom(8);
         marker.setMap(map);
     }, 
     );
