@@ -6,16 +6,7 @@ map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4
 });
 
-polygons_data = [
-    [
-        {lat: 37.782, lng: -122.447},
-        {lat: 34.782, lng: -100.445},
-        {lat: 45.321, lng: -64.757}],
-    [
-        {lat: 25.774, lng: -80.190},
-        {lat: 18.466, lng: -66.118},
-        {lat: 32.321, lng: -64.757}],
-];
+postal_code_data = JSON.parse(data_postal_code_boundaries);
 
 confirmed_data = [
     {items: 1, coordinates: [50.782, -122.447]}
@@ -27,28 +18,40 @@ let polygons = [];
 let markers = [];
 
 //Loop on the postalcodePolygonArray
-for (let i = 0; i < polygons_data.length; i++) {
+let polygonCount = 0;
+for (let fsa in postal_code_data) {
+    if (postal_code_data.hasOwnProperty(fsa)) {
+        for (let i = 0; i < postal_code_data[fsa].length; i++) {
+            //Add the polygon
+            const p = new google.maps.Polygon({
+                paths: postal_code_data[fsa][i]['coord'],
+                strokeWeight: 0,
+                fillColor: '#FF0000',
+                fillOpacity: 0.6,
+                indexID: polygonCount
+            });
 
-    //Add the polygon
-    const p = new google.maps.Polygon({
-        paths: polygons_data[i],
-        strokeWeight: 0,
-        fillColor: '#FF0000',
-        fillOpacity: 0.6,
-        indexID: i
-    });
-    p.setMap(map);
+            p.setMap(map);
 
-    //initialize infowindow text
-    p.info = new google.maps.InfoWindow({
-        /*maxWidth : 250,*/ content: "No Cases Collected"
-    });
 
-    //Add polygon to polygon array
-    polygons[i] = p;
+            //Initialize infowindow text
+            p.info = new google.maps.InfoWindow({
+                /*maxWidth : 250,*/ content: "No Cases Collected"
+            });
 
-    //Runs when user clicks on polygon
-    p.addListener('click', item_pressed);
+            //Add polygon to polygon array
+            polygons[polygonCount] = p;
+
+            //Runs when user clicks on polygon
+            p.addListener('click', item_pressed);
+
+
+            polygonCount++;
+        }
+        if (polygonCount > 50){
+            break;
+        }
+    }
 }
 
 //Loop on the confirmed cases
@@ -89,24 +92,8 @@ function item_pressed(event) {
 }
 
 
-
-function item_pressed(event) {
-    //Close all info windows
-    for (let i = 0; i < polygons.length; i++) {
-        polygons[i].info.close();
-    }
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].info.close();
-    }
-
-    //Open polygon infowindow
-    this.info.setPosition(event.latLng);
-    this.info.open(map, this);
-}
-
-
-var markersOn = true
-var polygonsOn = true
+let markersOn = true;
+let polygonsOn = true;
 
 function setMapOnAll(map, groups) {
     for (var i = 0; i < groups.length; i++) {
@@ -115,20 +102,18 @@ function setMapOnAll(map, groups) {
 }
 
 function ToggleMarkers() {
-    if (markersOn){
+    if (markersOn) {
         setMapOnAll(null, markers);
-    }
-    else{
+    } else {
         setMapOnAll(map, markers);
     }
     markersOn = !markersOn;
 }
-     
+
 function TogglePolygons() {
-    if (polygonsOn){
+    if (polygonsOn) {
         setMapOnAll(null, polygons);
-    }
-    else{
+    } else {
         setMapOnAll(map, polygons);
     }
     polygonsOn = !polygonsOn;

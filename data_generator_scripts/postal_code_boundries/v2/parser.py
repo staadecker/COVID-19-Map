@@ -80,7 +80,7 @@ def get_polygon(coordinates):
 def write_data(data_to_write, filename):
     with open(filename, 'w') as file:
         output_string = json.dumps(data_to_write)
-        file.write("data_in_self_isolation_sample = '"+output_string + "';")
+        file.write("data_postal_code_boundaries = '"+output_string + "';")
 
 
 if __name__ == "__main__":
