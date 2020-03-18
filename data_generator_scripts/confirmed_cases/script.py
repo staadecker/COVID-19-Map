@@ -61,6 +61,10 @@ geolocator = Nominatim(user_agent="COVIDScript")
 
 output = {}
 
+name_exceptions = {"Kingston Frontenac Lennox & Addington": "Kingston", 
+                    "Zone 2 (Saint John area)": "Saint John"}
+
+
 for index, row in df.iterrows():
     if row['health_region'] + ', ' + row['province'] in output:
         output[row['health_region'] + ', ' + row['province']][0] += 1
@@ -71,7 +75,11 @@ for index, row in df.iterrows():
             location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
         else:
-            location = geolocator.geocode(row['health_region'] + ', ' + row['province'] + ', Canada')
+            if row['health_region'] in name_exceptions:
+                location = geolocator.geocode(name_exceptions[row['health_region']] + ', ' + row['province'] + ', Canada')
+            else: 
+                location = geolocator.geocode(row['health_region'] + ', ' + row['province'] + ', Canada')
+                
             if location is None:
                 location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
