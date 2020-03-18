@@ -21,12 +21,17 @@ for index, row in df.iterrows():
             location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
         else:
-            location = geolocator.geocode(row['health_region'] + ', ' + row['province'])
+            location = geolocator.geocode(row['health_region'] + ', ' + row['province'] + ', Canada')
             if location is None:
                 location = geolocator.geocode(row['province'] + ', Canada')
             output[row['health_region'] + ', ' + row['province']] = [1, location.latitude, location.longitude]
 
+real_output = []
+
+for key in output:
+    real_output.append({"name": key, "cases": output[key][0], "coord": [output[key][1], output[key][2]]})
+
 with open('confirmed.js', 'w') as outfile:
-    output_string = json.dumps(output)
+    output_string = json.dumps(real_output)
     output_string = output_string.replace("'", r"\'")
-    outfile.write("data_in_self_isolation_sample = '"+output_string + "';")
+    outfile.write("data_confirmed = '"+output_string + "';")

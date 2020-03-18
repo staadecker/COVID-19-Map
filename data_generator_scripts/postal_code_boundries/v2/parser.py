@@ -21,11 +21,10 @@ CONVERT_AREA_PROJ = pyproj.Proj("esri:102001")
 TRANSFORMER = pyproj.Transformer.from_proj(CONVERT_IN_PROJ, CONVERT_OUT_PROJ, always_xy=True)
 AREA_TRANSFORMER = pyproj.Transformer.from_proj(CONVERT_IN_PROJ, CONVERT_AREA_PROJ, always_xy=True)
 
-
+"""
 def get_polygon_area(corners):
-    """
-    https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
-    """
+    # https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
+
     corners = list(AREA_TRANSFORMER.itransform(corners))
     n = len(corners)  # of corners
     area = 0.0
@@ -34,6 +33,7 @@ def get_polygon_area(corners):
         area += corners[i][0] * corners[j][1]
         area -= corners[j][0] * corners[i][1]
     return int(abs(area) / 2.0)
+"""
 
 
 def read_data(filename):
@@ -68,21 +68,23 @@ def read_data(filename):
 def get_polygon(coordinates):
     polygon = []
 
-    for lat, lng in TRANSFORMER.itransform(coordinates):
+    for lng, lat in TRANSFORMER.itransform(coordinates):
         polygon.append({'lat': (round(lat, ROUNDING_ACCURACY)),
                         'lng': (round(lng, ROUNDING_ACCURACY))})
 
     polygon.pop()  # To not repeat the last item
 
-    return {"coord": polygon, "area": get_polygon_area(coordinates)}
+    return {"coord": polygon}  # , "area": get_polygon_area(coordinates)}
 
 
-def write_data(data_to_write, filename):
-    with open(filename, 'w') as file:
+def write_data(data_to_write):
+    with open('postal_code_boundaries.js', 'w') as file:
         output_string = json.dumps(data_to_write)
-        file.write("data_in_self_isolation_sample = '"+output_string + "';")
+        file.write("data_postal_code_boundaries = '" + output_string + "';")
+    with open('postal_code_boundaries.json', 'w') as file:
+        json.dump(data_to_write, file)
 
 
 if __name__ == "__main__":
     data = read_data('unformatted_postal_code_boundaries.json')
-    write_data(data, 'postal_code_boundaries.js')
+    write_data(data)
