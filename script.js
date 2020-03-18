@@ -57,7 +57,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
     const position = new google.maps.LatLng(confirmed_data[i].coord[0], confirmed_data[i].coord[1]);
     const marker = new google.maps.Marker({
         position: position,
-        icon: "res/marker.png"
+        icon: "res/marker.svg"
     });
 
     //initialize infowindow text
