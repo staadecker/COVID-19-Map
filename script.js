@@ -36,8 +36,6 @@ for (let fsa in postal_code_data) {
                 indexID: polygonCount
             });
 
-            p.setMap(map);
-
 
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
@@ -62,7 +60,6 @@ for (let i = 0; i < confirmed_data.length; i++) {
     const position = new google.maps.LatLng(confirmed_data[i].coord[0], confirmed_data[i].coord[1]);
     const marker = new google.maps.Marker({
         position: position,
-        map: map
     });
 
     //initialize infowindow text
@@ -94,9 +91,18 @@ function item_pressed(event) {
 }
 
 
-let markersOn = true;
-let polygonsOn = true;
 
+function toggle_clicked(radio) {
+    if (radio.value === "in_self_isolation"){
+        setMapOnAll(null, markers);
+        setMapOnAll(map, polygons);
+    } else{
+        setMapOnAll(map, markers);
+        setMapOnAll(null, polygons);
+    }
+}
+
+setMapOnAll(map, markers);
 
 // Set every item in group to the map specified by map. map can be null
 function setMapOnAll(map, groups) {
@@ -104,24 +110,5 @@ function setMapOnAll(map, groups) {
         groups[i].setMap(map);
     }
 }
-
-function toggleMarkers() {
-    if (markersOn) {
-        setMapOnAll(null, markers);
-    } else {
-        setMapOnAll(map, markers);
-    }
-    markersOn = !markersOn;
-}
-
-function togglePolygons() {
-    if (polygonsOn) {
-        setMapOnAll(null, polygons);
-    } else {
-        setMapOnAll(map, polygons);
-    }
-    polygonsOn = !polygonsOn;
-}
-     
       
 
