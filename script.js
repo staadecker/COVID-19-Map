@@ -7,11 +7,12 @@ map = new google.maps.Map(document.getElementById('map'), {
 
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
+confirmed_data = JSON.parse(data_confirmed);
 
-confirmed_data = [
+/*confirmed_data = [
     {items: 1, coordinates: [50.782, -122.447]},
     {items: 3, coordinates: [44.5928, -64.8696 ]}
-];
+];*/
 
 //Array of Google Map API polygons and markers
 let polygons = [];
@@ -58,7 +59,7 @@ for (let fsa in postal_code_data) {
 //Loop on the confirmed cases
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
-    const position = new google.maps.LatLng(confirmed_data[i].coordinates[0], confirmed_data[i].coordinates[1]);
+    const position = new google.maps.LatLng(confirmed_data[i].coord[0], confirmed_data[i].coord[1]);
     const marker = new google.maps.Marker({
         position: position,
         map: map
@@ -67,7 +68,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
     //initialize infowindow text
     marker.info = new google.maps.InfoWindow({
         //maxWidth : 250,
-        content: "1 case confirmed"
+        content: "<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i].cases + " cases in this area</p>"
     });
 
     //Add polygon to polygon array
