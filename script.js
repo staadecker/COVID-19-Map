@@ -41,7 +41,7 @@ for (let fsa in postal_code_data) {
 
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
-                /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " cases in self-isolation</p>"
+                /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " people in self-isolation</p>"
             });
 
             //Add polygon to polygon array
@@ -68,7 +68,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
     //initialize infowindow text
     marker.info = new google.maps.InfoWindow({
         //maxWidth : 250,
-        content: "<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i].cases + " cases in this area</p>"
+        content: "<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i].cases + " confirmed cases in this area</p>"
     });
 
     //Add polygon to polygon array
