@@ -34,4 +34,4 @@ for key in output:
 with open('confirmed.js', 'w') as outfile:
     output_string = json.dumps(real_output)
     output_string = output_string.replace("'", r"\'")
-    outfile.write("data_in_self_isolation_sample = '"+output_string + "';")
+    outfile.write("data_confirmed = '"+output_string + "';")
