@@ -97,13 +97,15 @@ function item_pressed(event) {
 let markersOn = true;
 let polygonsOn = true;
 
+
+// Set every item in group to the map specified by map. map can be null
 function setMapOnAll(map, groups) {
-    for (var i = 0; i < groups.length; i++) {
+    for (let i = 0; i < groups.length; i++) {
         groups[i].setMap(map);
     }
 }
 
-function ToggleMarkers() {
+function toggleMarkers() {
     if (markersOn) {
         setMapOnAll(null, markers);
     } else {
@@ -112,7 +114,7 @@ function ToggleMarkers() {
     markersOn = !markersOn;
 }
 
-function TogglePolygons() {
+function togglePolygons() {
     if (polygonsOn) {
         setMapOnAll(null, polygons);
     } else {
