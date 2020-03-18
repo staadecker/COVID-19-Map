@@ -77,12 +77,14 @@ def get_polygon(coordinates):
     return {"coord": polygon}  # , "area": get_polygon_area(coordinates)}
 
 
-def write_data(data_to_write, filename):
-    with open(filename, 'w') as file:
+def write_data(data_to_write):
+    with open('postal_code_boundaries.js', 'w') as file:
         output_string = json.dumps(data_to_write)
         file.write("data_postal_code_boundaries = '" + output_string + "';")
+    with open('postal_code_boundaries.json', 'w') as file:
+        json.dump(data_to_write, file)
 
 
 if __name__ == "__main__":
     data = read_data('unformatted_postal_code_boundaries.json')
-    write_data(data, 'postal_code_boundaries.js')
+    write_data(data)
