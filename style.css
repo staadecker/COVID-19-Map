@@ -43,8 +43,8 @@ body {
 }
 
 .switch-field label {
-	background-color: #0E6CAE;
-	color: rgba(0, 0, 0.1, 0.7);
+	background-color: #e4e4e4;
+	color: #AAAAAA;
 	font-size: 14px;
 	line-height: 1;
 	text-align: center;
@@ -60,9 +60,10 @@ body {
 }
 
 .switch-field input:checked + label {
-	background-color: #e4e4e4;
-  color: #0074D9;
-	box-shadow: none;
+	background-color: #0074D9;
+  color: #B8F5FF;
+  font-weight: bold;
+  box-shadow: none;
 }
 
 .switch-field label:first-of-type {
@@ -72,6 +73,8 @@ body {
 .switch-field label:last-of-type {
 	border-radius: 0 8px 8px 0;
 }
+
+
 /* End styling for radio buttons */
 
 
@@ -90,4 +93,60 @@ body {
   background-color: #001f3f;
 }
 
+
+.footer_element {
+  display: inline-block;
+  margin: 10px;
+}
+
+.footer_element:hover,
+.footer_element:active,
+.footer_element:focus {
+  cursor: pointer;
+  text-decoration: underline;
+}
 /* End footer style */
+
+
+
+/* Styling for footer pop up elements */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: #001f3f;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* End pop up elements styling */
