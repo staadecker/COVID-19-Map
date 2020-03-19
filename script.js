@@ -6,6 +6,8 @@ map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false
 });
 
+document.write(data_last_updated);
+
 // Try HTML5 geolocation. // Else Browser doesn't support Geolocation or permission not given.
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
