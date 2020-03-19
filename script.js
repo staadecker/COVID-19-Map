@@ -1,7 +1,7 @@
 // Create map
 map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(53.9902, -97.8155),
-    zoom: 4
+    zoom: 4,
     streetViewControl: false,
     mapTypeControl: false
 });
