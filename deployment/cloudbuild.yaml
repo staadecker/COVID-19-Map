@@ -9,7 +9,4 @@ images:
 secrets:
   - kmsKeyName: projects/flatten-271620/locations/global/keyRings/deploy_token/cryptoKeys/deploy-token # No variable substitution
     secretEnv:
-      FIREBASE_TOKEN: CiQADbQuifDK4gO2i0PadYSW9XtaWhUtcUovLU8rplcu+Ueru40SkAEA0sjbI2UAQXGU0ZSJmV8N
-        vlzvpFivz1b4C/ABpcNCXjxcY3ZAzI58UWGWCVTfOm/ng4ko2joOV/FgYgfycrwe7h0KpigkcV8A
-        8uVXuFN1seKEFtlxqtqJSO5W1r4YKVTCnLMUICqzuAn8pxpJeaOgPWH/Hxe8RxqXYRkg/W+Pcsug
-        J/FId8upQmZpYdG7HUY=
+      FIREBASE_TOKEN: CiQADbQuifDK4gO2i0PadYSW9XtaWhUtcUovLU8rplcu+Ueru40SkAEA0sjbI2UAQXGU0ZSJmV8NvlzvpFivz1b4C/ABpcNCXjxcY3ZAzI58UWGWCVTfOm/ng4ko2joOV/FgYgfycrwe7h0KpigkcV8A8uVXuFN1seKEFtlxqtqJSO5W1r4YKVTCnLMUICqzuAn8pxpJeaOgPWH/Hxe8RxqXYRkg/W+PcsugJ/FId8upQmZpYdG7HUY=
