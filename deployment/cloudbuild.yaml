@@ -1,15 +1,15 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/flatten-271620/firebase', '.' ]
-  - name: 'gcr.io/flatten-271620/firebase'
-    args: [ 'deploy', '--project', 'flatten-271620']
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/firebase', '.' ]
+  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args: [ 'deploy', '--project', '$PROJECT_ID', '--token=$$FIREBASE_TOKEN']
     secretEnv: ['FIREBASE_TOKEN']
 secrets:
-  - kmsKeyName: projects/flatten-271620/locations/global/keyRings/deploy_token/cryptoKeys/deploy-token
+  - kmsKeyName: projects/flatten-271620/locations/global/keyRings/deploy_token/cryptoKeys/deploy-token # No variable substitution
     secretEnv:
       FIREBASE_TOKEN: CiQADbQuifDK4gO2i0PadYSW9XtaWhUtcUovLU8rplcu+Ueru40SkAEA0sjbI2UAQXGU0ZSJmV8N
-                         vlzvpFivz1b4C/ABpcNCXjxcY3ZAzI58UWGWCVTfOm/ng4ko2joOV/FgYgfycrwe7h0KpigkcV8A
-                         8uVXuFN1seKEFtlxqtqJSO5W1r4YKVTCnLMUICqzuAn8pxpJeaOgPWH/Hxe8RxqXYRkg/W+Pcsug
-                         J/FId8upQmZpYdG7HUY=
+        vlzvpFivz1b4C/ABpcNCXjxcY3ZAzI58UWGWCVTfOm/ng4ko2joOV/FgYgfycrwe7h0KpigkcV8A
+        8uVXuFN1seKEFtlxqtqJSO5W1r4YKVTCnLMUICqzuAn8pxpJeaOgPWH/Hxe8RxqXYRkg/W+Pcsug
+        J/FId8upQmZpYdG7HUY=
 images:
-  - 'gcr.io/flatten-271620/firebase'
+  - 'gcr.io/$PROJECT_ID/firebase'
