@@ -13,7 +13,7 @@ with open('../postal_code_boundries/v2/postal_code_boundaries.json') as file:
     data = json.load(file)
 
     for key in data.keys():
-    # fill generated_data with: key -> {mild -> num_mild, severe -> num_severe]
+    # fill generated_data with: key -> {mild -> num_mild, severe -> num_severe}
         if random.random() < 0.1:
             num_mild = random.randint(0, MAX_NUMBER)
             num_severe = int(num_mild * 0.2)
