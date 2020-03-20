@@ -107,6 +107,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
         }
 
         const circle = new L.circleMarker(confirmed_data[i].coord, {
+            weight: 0,
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
