@@ -26,6 +26,17 @@ for (let fsa in postal_code_data) {
     colour_selfIso = getColor_selfIso(num_severe + num_mild);
     colour_highRisk = getColor_highRisk(num_high_risk);
 
+    var opacity_selfIso = 0.4;
+    var opacity_highRisk = 0.4;
+
+    if (num_severe + num_mild == 0) {
+        opacity_selfIso = 0;
+    }
+
+    if (num_high_risk == 0) {
+        opacity_highRisk = 0
+    }
+
     for (let i = 0; i < postal_code_data[fsa].length; i++) {
 
         // Add the polygons.
@@ -33,13 +44,13 @@ for (let fsa in postal_code_data) {
             weight: 0.9,
             color: colour_selfIso,
             fillColor: colour_selfIso,
-            fillOpacity: 0.4,
+            fillOpacity: opacity_selfIso,
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
             color: colour_highRisk,
             fillColor: colour_highRisk,
-            fillOpacity: 0.4,
+            fillOpacity: opacity_highRisk,
         });
 
 
