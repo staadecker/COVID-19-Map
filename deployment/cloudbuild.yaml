@@ -2,7 +2,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/firebase', '.' ]
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    args: [ 'deploy', '--project', '$PROJECT_ID', '--token=$$FIREBASE_TOKEN']
+    args: [ 'deploy', '--project', '$PROJECT_ID']
     secretEnv: ['FIREBASE_TOKEN']
 images:
   - 'gcr.io/$PROJECT_ID/firebase'
