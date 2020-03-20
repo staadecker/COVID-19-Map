@@ -19,7 +19,6 @@ let markers = [];
 let polygonCount = 0;
 for (let fsa in postal_code_data) {
     if (postal_code_data.hasOwnProperty(fsa)) {
-        const num_in_self_isolation = in_self_isolation_data['fsa'][fsa][0];
         const num_severe = in_self_isolation_data['fsa'][fsa][1];
         const num_mild = in_self_isolation_data['fsa'][fsa][2];
 
@@ -31,7 +30,7 @@ for (let fsa in postal_code_data) {
                 paths: postal_code_data[fsa][i]['coord'],
                 strokeWeight: 0.5,
                 fillColor: '#FF0000',
-                fillOpacity: (2*num_severe+num_mild) / in_self_isolation_data['max'] * 0.5,
+                fillOpacity: (2 * num_severe + num_mild) / in_self_isolation_data['max'] * 0.5,
                 indexID: polygonCount
             });
 
@@ -39,8 +38,8 @@ for (let fsa in postal_code_data) {
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
                 /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>"
-                + num_in_self_isolation + " people in self-isolation</p><p>"
-                + num_severe + " severe / "+ num_mild +" in mild condition</p>"
+                    + num_severe + " severe / " + num_mild + " in mild condition</p>"
+                    + (num_severe + num_mild) + " total people with symptoms</p><p>"
             });
 
             //Add polygon to polygon array
@@ -98,15 +97,14 @@ function item_pressed(event) {
 }
 
 function toggle_clicked(radio) {
-    if (radio.value === "in_self_isolation"){
+    if (radio.value === "in_self_isolation") {
         setMapOnAll(null, markers);
         setMapOnAll(map, polygons);
-    } else{
+    } else {
         setMapOnAll(map, markers);
         setMapOnAll(null, polygons);
     }
 }
-
 
 
 // Set every item in group to the map specified by map. map can be null
