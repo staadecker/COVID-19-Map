@@ -7,12 +7,19 @@ body {
 
 /* Set the size of the div element that contains the map */
 #map {
-    height: calc(100vh - 200px); /* The height is 400 pixels */
     width: 100%; /* The width is the width of the web page */
     color: black;
-    z-index: 1;
 }
 
+/* Different button style for mobile devices */
+@media (min-width:700px) {
+  #map  { height: calc(100vh - 150px);}
+}
+
+/* Different button style for desktop */
+@media (max-width:700px) {
+  #map  { height: calc(100vh - 300px);}
+}
 
 .name_div {
     float: left;
@@ -22,12 +29,23 @@ body {
 /* Define styling for radio buttons */
 .switch-field {
     display: flex;
+    margin: 0px 10px 10px 3px;
+    overflow: hidden;
+    float: left;
+}
+
+
+/* Different button styly for mobile devices */
+ @media (min-width:700px) {
+  .switch-field  {
+    display: flex;
     margin: 10px 10px 10px 3px;
     overflow: hidden;
     float: left;
     position: absolute;
     top: 10px;
     left: 50%;
+  }
 }
 
 .switch-field input {
