@@ -8,33 +8,6 @@ map = new google.maps.Map(document.getElementById('map'), {
 
 document.write(data_last_updated);
 
-// Try HTML5 geolocation. // Else Browser doesn't support Geolocation or permission not given.
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-            const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            const marker = new google.maps.Marker({
-                position: pos,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 8,
-                    strokeWeight: 3,
-                    fillColor: 'royalblue',
-                    strokeColor: 'white',
-                    fillOpacity: 1,
-                    strokeOpacity: 0.5
-                },
-            });
-
-            map.setCenter(pos);
-            map.setZoom(8);
-            marker.setMap(map);
-        },
-    );
-}
-
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
 in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
@@ -128,26 +101,6 @@ function item_pressed(event) {
     // Open polygon infowindow.
     this.info.setPosition(event.latLng);
     this.info.open(map, this);
-}
-
-function toggle_clicked(radio) {
-    switch (radio.value) {
-        case "in_self_isolation":
-            setMapOnAll(null, confirmedMarkers);
-            setMapOnAll(map, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons);
-            break;
-        case "high_risk":
-            setMapOnAll(null, confirmedMarkers);
-            setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(map, highRiskPolygons);
-            break;
-        default:
-            setMapOnAll(map, confirmedMarkers);
-            setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons);
-            break;
-    }
 }
 
 // Set every item in group to the map specified by map. map can be null
