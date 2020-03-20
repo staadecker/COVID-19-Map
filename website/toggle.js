@@ -1,23 +1,25 @@
 function toggle_clicked(radio) {
     switch (radio.value) {
         case "in_self_isolation":
-            setMapOnAll(null, confirmedMarkers);
-            setMapOnAll(map, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons);
+            map.removeLayer(confirmedCircles);
+            selfIsolatedPolygons.addTo(map);
+            map.removeLayer(highRiskPolygons);
             document.getElementById("update_time").innerHTML = "Last update: " + in_self_isolation_data["time"];
             break;
         case "high_risk":
-            setMapOnAll(null, confirmedMarkers);
-            setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(map, highRiskPolygons);
+            map.removeLayer(confirmedCircles);
+            map.removeLayer(selfIsolatedPolygons);
+            highRiskPolygons.addTo(map);
             document.getElementById("update_time").innerHTML = "Last update: " + high_risk_data["time"];
+
             break;
         default:
-            setMapOnAll(map, confirmedMarkers);
-            setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons);
+            confirmedCircles.addTo(map);
+            map.removeLayer(selfIsolatedPolygons);
+            map.removeLayer(highRiskPolygons);
             document.getElementById("update_time").innerHTML = data_last_updated;
-            
-            break;
+
     }
+
+    current_location.bringToFront();
 }
