@@ -19,8 +19,8 @@ let markers = [];
 let polygonCount = 0;
 for (let fsa in postal_code_data) {
     if (postal_code_data.hasOwnProperty(fsa)) {
-        const num_severe = in_self_isolation_data['fsa'][fsa][1];
-        const num_mild = in_self_isolation_data['fsa'][fsa][2];
+        const num_severe = in_self_isolation_data['fsa'][fsa]['severe'];
+        const num_mild = in_self_isolation_data['fsa'][fsa]['mild'];
 
         for (let i = 0; i < postal_code_data[fsa].length; i++) {
 
@@ -38,7 +38,7 @@ for (let fsa in postal_code_data) {
             //Initialize infowindow text
             p.info = new google.maps.InfoWindow({
                 /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>"
-                    + num_severe + " severe / " + num_mild + " in mild condition</p>"
+                    + num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
                     + (num_severe + num_mild) + " total people with symptoms</p><p>"
             });
 
