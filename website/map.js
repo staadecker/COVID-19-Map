@@ -1,5 +1,5 @@
 // Create map.
-const map = new L.map('map').setView([53.9902, -97.8155], 4);
+const map = new L.map('map').setView([43.6532, -79.3832], 10);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

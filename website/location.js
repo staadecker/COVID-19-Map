@@ -18,6 +18,4 @@ if (navigator.geolocation) {
         // move the map to have the location in its center
         map.setView(new L.LatLng(latit, longit), 10);
     });
-} else {
-    map.setView(new L.LatLng(43.6532, -79.3832), 4);
 }
