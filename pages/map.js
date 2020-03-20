@@ -31,14 +31,12 @@ for (let fsa in postal_code_data) {
             color: '#FF8800',
             fillColor: '#FF8800',
             fillOpacity: (2 * num_severe + num_mild) / in_self_isolation_data['max'] * 0.5,
-            //indexID: polygonCount
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
             color: '#FF4400',
             fillColor: '#FF4400',
             fillOpacity: num_high_risk / high_risk_data['max'] * 0.5,
-            //indexID: polygonCount
         });
 
 
@@ -52,9 +50,6 @@ for (let fsa in postal_code_data) {
         // Add polygons to polygon arrays and add click listeners.
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
         highRiskPolygon.addTo(highRiskPolygons);
-        //selfIsolatedPolygon.addListener('click', item_pressed);
-        //highRiskPolygon.addListener('click', item_pressed);
-
     }
 }
 
@@ -65,7 +60,7 @@ const confirmedCircles = L.layerGroup();
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
     if (confirmed_data[i].coord[0] !== "N/A") {
-        var rad = 10;
+        let rad;
         if (confirmed_data[i].cases < 10) {
             rad = 5;
         } else {
