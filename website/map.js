@@ -42,14 +42,14 @@ for (let fsa in postal_code_data) {
         // Add the polygons.
         const selfIsolatedPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: 'white',
+            color: 'black',
             dashArray: '3',
             fillColor: colour_selfIso,
             fillOpacity: opacity_selfIso,
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: 'white',
+            color: 'black',
             dashArray: '3',
             fillColor: colour_highRisk,
             fillOpacity: opacity_highRisk,
@@ -160,4 +160,3 @@ for (let i = 0; i < confirmed_data.length; i++) {
 
 // Enable marker layer
 map.addLayer(confirmedCircles);
-
