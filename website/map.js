@@ -30,11 +30,11 @@ for (let fsa in postal_code_data) {
     var opacity_selfIso = 0.4;
     var opacity_highRisk = 0.4;
 
-    if (num_severe + num_mild == 0) {
+    if (num_severe + num_mild === 0) {
         opacity_selfIso = 0;
     }
 
-    if (num_high_risk == 0) {
+    if (num_high_risk === 0) {
         opacity_highRisk = 0
     }
 
@@ -92,6 +92,43 @@ function getColor_highRisk(cases) {
                        '#ffffd9';
 }
 
+//Legend for self-isolated cases
+const selfIso_legend = L.control({position: 'bottomright'});
+
+selfIso_legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor_selfIso(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+//Legend for high risk cases
+const highRisk_legend = L.control({position: 'bottomright'});
+
+highRisk_legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor_highRisk(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
 
 // Array of Leaflet API markers for confirmed cases.
 const confirmedCircles = L.layerGroup();
