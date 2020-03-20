@@ -59,9 +59,9 @@ for (let fsa in postal_code_data) {
         //Initialize infowindow text
         selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>"
             //+ num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
-            + (num_severe + num_mild) + " total people with symptoms</p>");
+            + (num_severe + num_mild) + " potential cases</p>");
 
-        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>" + num_high_risk + " people at high risk</p>");
+        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>" + num_high_risk + " people vulnerable</p>");
 
         // Add polygons to polygon arrays and add click listeners.
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
