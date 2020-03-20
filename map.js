@@ -27,14 +27,14 @@ for (let fsa in postal_code_data) {
 
         // Add the polygons.
         const selfIsolatedPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
-            strokeWeight: 0.05,
+            weight: 0.9,
             color: '#FF8800',
             fillColor: '#FF8800',
             fillOpacity: (2 * num_severe + num_mild) / in_self_isolation_data['max'] * 0.5,
             //indexID: polygonCount
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
-            strokeWeight: 0.05,
+            weight: 0.9,
             color: '#FF4400',
             fillColor: '#FF4400',
             fillOpacity: num_high_risk / high_risk_data['max'] * 0.5,
