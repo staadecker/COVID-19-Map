@@ -1,5 +1,5 @@
 // Create map.
-map = new L.map('map').setView([53.9902, -97.8155], 4);
+const map = new L.map('map').setView([53.9902, -97.8155], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -64,7 +64,7 @@ let confirmedCircles = L.layerGroup().addTo(map);
 
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
-    if (confirmed_data[i].coord[0] != "N/A") {
+    if (confirmed_data[i].coord[0] !== "N/A") {
         var rad = 10;
         if (confirmed_data[i].cases < 10) {
             rad = 5;

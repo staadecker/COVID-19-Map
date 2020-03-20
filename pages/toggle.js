@@ -1,9 +1,9 @@
 function toggle_clicked(radio) {
-    if (radio.value == "in_self_isolation") {
+    if (radio.value === "in_self_isolation") {
         map.removeLayer(confirmedCircles);
         selfIsolatedPolygons.addTo(map);
         map.removeLayer(highRiskPolygons);
-    } else if (radio.value == "high_risk") {
+    } else if (radio.value === "high_risk") {
         map.removeLayer(confirmedCircles);
         map.removeLayer(selfIsolatedPolygons);
         highRiskPolygons.addTo(map);

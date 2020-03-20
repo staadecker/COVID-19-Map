@@ -3,8 +3,8 @@ var abc;
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-        latit = position.coords.latitude;
-        longit = position.coords.longitude;
+        const latit = position.coords.latitude;
+        const longit = position.coords.longitude;
 
         // this is just a marker placed in that position
         abc = L.circleMarker([position.coords.latitude, position.coords.longitude], {
