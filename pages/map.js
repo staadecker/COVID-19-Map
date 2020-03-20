@@ -14,8 +14,8 @@ high_risk_data = JSON.parse(data_high_risk_sample);
 confirmed_data = JSON.parse(data_confirmed);
 
 // Array of Google Map API polygons for self-isolated and high-risk addresse
-let selfIsolatedPolygons = L.layerGroup().addTo(map);
-let highRiskPolygons = L.layerGroup().addTo(map);
+const selfIsolatedPolygons = L.layerGroup();
+const highRiskPolygons = L.layerGroup();
 
 for (let fsa in postal_code_data) {
     if (!postal_code_data.hasOwnProperty(fsa)) continue;
@@ -60,7 +60,7 @@ for (let fsa in postal_code_data) {
 
 
 // Array of Leaflet API markers for confirmed cases.
-let confirmedCircles = L.layerGroup().addTo(map);
+const confirmedCircles = L.layerGroup();
 
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
@@ -88,6 +88,5 @@ for (let i = 0; i < confirmed_data.length; i++) {
 }
 
 // Enable marker layer
-map.removeLayer(selfIsolatedPolygons);
-map.removeLayer(highRiskPolygons);
+map.addLayer(confirmedCircles);
 
