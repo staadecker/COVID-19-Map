@@ -1,5 +1,5 @@
 // Try HTML5 geolocation. // Else Browser doesn't support Geolocation or permission not given.
-if (navigator.geolocation) {
+/*if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
             const pos = L.LatLng(position.coords.latitude, position.coords.longitude);
             
@@ -10,4 +10,4 @@ if (navigator.geolocation) {
             marker.setMap(map);
         },
     );
-}
+}*/

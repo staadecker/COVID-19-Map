@@ -90,3 +90,4 @@ for (let i = 0; i < confirmed_data.length; i++) {
 // Enable marker layer
 map.removeLayer(selfIsolatedPolygons);
 map.removeLayer(highRiskPolygons);
+
