@@ -6,7 +6,7 @@ map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false
 });
 
-document.write(data_last_updated);
+document.getElementById("update_time").innerHTML = data_last_updated;
 
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
