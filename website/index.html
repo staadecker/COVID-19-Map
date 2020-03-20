@@ -4,6 +4,9 @@
 
 <head>
     <title>COVID-19 Map</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -27,10 +30,10 @@
 
         <input type="radio" id="in_self_isolation" name="layers" onclick="toggle_clicked(this)"
                value="in_self_isolation">
-        <label for="in_self_isolation">In Self Isolation</label>
+        <label for="in_self_isolation">Potential Cases</label>
 
         <input type="radio" id="high_risk" name="layers" onclick="toggle_clicked(this)" value="high_risk">
-        <label for="high_risk">High Risk</label>
+        <label for="high_risk">Vulnerable Individuals</label>
     </div>
 </div>
 
@@ -44,9 +47,7 @@
 
 <div class="footer">
     <div id="myBtn1" class="footer_element"> About this map</div>
-    <div id="myBtn2" class="footer_element"> About us</div>
-    <div id="myBtn3" class="footer_element"> Data Source</div>
-    
+    <div id="myBtn2" class="footer_element"> About Us</div>    
 </div>
 
 <!-- The Modal (pop up) -->
@@ -55,12 +56,17 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="close1" class="close">&times;</span>
-        <h3>About this map</h3>
-        <p>This map was created to visualze residential areas in which there is a higher density
-            of individuals who have symptoms of Coronavirus. The map has two layers: "confirmed" and "in
-            self-isolation". </p>
-        <p> The "confirmed" layer shows flags where individuals have tested positive of COVID-19, while
-            "in self-isolation" layer depicts regions with numbers of self-isolating individuals.
+        <h3> About this map </h3> 
+        <p> This map displays confirmed cases, Candians who are potential carriers of the virus, as well highlight regions where there are many elderly and immunocompromised individuals. 
+            The purpose of this map is to inform government agencies and healthcare systems of where there is an influx of potential cases to arise so that resources can be utilized in the most efficient manner. 
+            Additionally, through highlighting regions where there is a dense demographic of vulnerable individuals, we can inform agencies to have the resources to protect these individuals. </p> 
+        <p> The "confirmed" layer shows flags where individuals who have tested positive for COVID-19 are mapped. Through the submission of FLATTEN, the vulnerable populations as well as potential carriers are mapped. </p> 
+        
+        <h3>Data Sources:</h3>
+        <p>
+            Potential Cases and High-risk Populations: <a href="flatten.ca">flatten.ca</a> <br>
+            Confirmed Cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19 Outbreak in Canada. 
+            <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
         </p>
     </div>
 </div>
@@ -70,24 +76,9 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="close2" class="close">&times;</span>
-        <h3>About us</h3>
-        <p>We are FLATTEN: a team of students from various Canadian universities who built this tool for you.
-            We aim to stop COVID-19 epidemic by making information about virus spread available for all Canadians.
-        </p>
-    </div>
-</div>
-
-<div id="myModal3" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span id="close3" class="close">&times;</span>
-        <span id="data_last_updated"></span>
-        <h3>Data Source</h3>
-        <p id="data_source">
-            Potential Cases and High-risk Populations: <a href="flatten.ca">flatten.ca</a> <br>
-            Confirmed Cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19 Outbreak in Canada. 
-            <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
+        <h3>About Us</h3>
+        <p>We are a group of scientists, engineers and clinicians who have created an online screening tool to provide information on COVID-19. 
+            This app is designed to help increase awareness and flatten the curve of the spread of COVID-19.
         </p>
     </div>
 </div>

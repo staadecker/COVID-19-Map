@@ -6,7 +6,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 document.getElementById("update_time").innerHTML = data_last_updated;
-document.getElementById("data_source").innerHTML += "("+data_last_updated.toString()+")"
 
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
@@ -62,7 +61,7 @@ for (let fsa in postal_code_data) {
             //+ num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
             + (num_severe + num_mild) + " potential cases</p>");
 
-        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports of " + num_high_risk + " people vulnerable</p>");
+        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports of " + num_high_risk + " vulnerable individuals</p>");
 
         // Add polygons to polygon arrays and add click listeners.
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
