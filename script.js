@@ -46,7 +46,7 @@ let polygonCount = 0;
 let selfIsolatedPolygons = [];
 let highRiskPolygons = [];
 for (let fsa in postal_code_data) {
-    if (!postal_code_data.hasOwnProperty(fsa)) continue
+    if (!postal_code_data.hasOwnProperty(fsa)) continue;
     const num_in_self_isolation = in_self_isolation_data['fsa'][fsa];
     const num_high_risk = high_risk_data['fsa'][fsa];
 
@@ -80,7 +80,7 @@ for (let fsa in postal_code_data) {
         selfIsolatedPolygons[polygonCount] = selfIsolatedPolygon;
         highRiskPolygons[polygonCount] = highRiskPolygon;
         selfIsolatedPolygon.addListener('click', item_pressed);
-        highRiskPolygon.addListener('click', item_pressed)
+        highRiskPolygon.addListener('click', item_pressed);
 
         polygonCount++;
     }
@@ -127,18 +127,21 @@ function item_pressed(event) {
 
 function toggle_clicked(radio) {
     switch (radio.value) {
-        case "in_self_isolation": 
+        case "in_self_isolation":
             setMapOnAll(null, confirmedMarkers);
             setMapOnAll(map, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons); break;
-        case "high_risk": 
+            setMapOnAll(null, highRiskPolygons);
+            break;
+        case "high_risk":
             setMapOnAll(null, confirmedMarkers);
             setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(map, highRiskPolygons); break;
-        default: 
+            setMapOnAll(map, highRiskPolygons);
+            break;
+        default:
             setMapOnAll(map, confirmedMarkers);
             setMapOnAll(null, selfIsolatedPolygons);
-            setMapOnAll(null, highRiskPolygons); break;
+            setMapOnAll(null, highRiskPolygons);
+            break;
     }
 }
 
