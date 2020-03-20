@@ -29,11 +29,11 @@ for (let fsa in postal_code_data) {
     var opacity_selfIso = 0.4;
     var opacity_highRisk = 0.4;
 
-    if (num_severe + num_mild == 0) {
+    if (num_severe + num_mild === 0) {
         opacity_selfIso = 0;
     }
 
-    if (num_high_risk == 0) {
+    if (num_high_risk === 0) {
         opacity_highRisk = 0
     }
 
@@ -92,7 +92,7 @@ function getColor_highRisk(cases) {
 }
 
 //Legend for self-isolated cases
-var selfIso_legend = L.control({position: 'bottomright'});
+const selfIso_legend = L.control({position: 'bottomright'});
 
 selfIso_legend.onAdd = function (map) {
 
@@ -111,7 +111,7 @@ selfIso_legend.onAdd = function (map) {
 };
 
 //Legend for high risk cases
-var highRisk_legend = L.control({position: 'bottomright'});
+const highRisk_legend = L.control({position: 'bottomright'});
 
 highRisk_legend.onAdd = function (map) {
 
