@@ -45,9 +45,11 @@ confirmed_data = JSON.parse(data_confirmed);
 let polygonCount = 0;
 let selfIsolatedPolygons = [];
 let highRiskPolygons = [];
+
 for (let fsa in postal_code_data) {
     if (!postal_code_data.hasOwnProperty(fsa)) continue;
-    const num_in_self_isolation = in_self_isolation_data['fsa'][fsa];
+    const num_severe = in_self_isolation_data['fsa'][fsa]['severe'];
+    const num_mild = in_self_isolation_data['fsa'][fsa]['mild'];
     const num_high_risk = high_risk_data['fsa'][fsa];
 
     for (let i = 0; i < postal_code_data[fsa].length; i++) {
@@ -57,7 +59,7 @@ for (let fsa in postal_code_data) {
             paths: postal_code_data[fsa][i]['coord'],
             strokeWeight: 0.5,
             fillColor: '#FF8800',
-            fillOpacity: num_in_self_isolation / in_self_isolation_data['max'] * 0.5,
+            fillOpacity: (2 * num_severe + num_mild) / in_self_isolation_data['max'] * 0.5,
             indexID: polygonCount
         });
         const highRiskPolygon = new google.maps.Polygon({
@@ -68,9 +70,12 @@ for (let fsa in postal_code_data) {
             indexID: polygonCount
         });
 
-        // Initialize infowindow text
-        selfIsolatedPolygon.info = new google.maps.InfoWindow({ /*maxWidth : 250,*/
-            content: "<h3>" + fsa + "</h3><p>" + num_in_self_isolation + " people in self-isolation</p>"
+
+        //Initialize infowindow text
+        selfIsolatedPolygon.info = new google.maps.InfoWindow({
+            /*maxWidth : 250,*/ content: "<h3>" + fsa + "</h3><p>"
+                + num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
+                + (num_severe + num_mild) + " total people with symptoms</p>"
         });
         highRiskPolygon.info = new google.maps.InfoWindow({ /*maxWidth : 250,*/
             content: "<h3>" + fsa + "</h3><p>" + num_high_risk + " people at high risk</p>"
