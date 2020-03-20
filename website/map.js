@@ -5,7 +5,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-document.write(data_last_updated);
+document.getElementById("update_time").innerHTML = data_last_updated;
 
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
