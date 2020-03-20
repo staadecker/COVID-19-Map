@@ -1,7 +1,11 @@
+* {
+  font-family: Roboto, Tahoma, sans-serif !important;
+}
+
 body {
     background-color: #001f3f;
-    font-family: 'Roboto', 'sans-serif';
     color: white;
+    z-index: 0;
 }
 
 
@@ -9,6 +13,7 @@ body {
 #map {
     width: 100%; /* The width is the width of the web page */
     color: black;
+    z-index: 1;
 }
 
 /* Different button style for mobile devices */
@@ -101,7 +106,7 @@ body {
     /*background-color: #034f84; */
     color: white;
     text-align: center;
-    z-index: 3;
+    z-index: 2;
     background-color: #001f3f;
 }
 
@@ -126,7 +131,7 @@ body {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    z-index: 3; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
