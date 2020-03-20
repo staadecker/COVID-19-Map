@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "website",
+    "site": "map-54ec7",
     "ignore": [
       "firebase.json",
       "**/.*",
