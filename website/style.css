@@ -41,7 +41,7 @@ body {
 }
 
 
-/* Different button styly for mobile devices */
+/* Different button style for desktop devices */
  @media (min-width:700px) {
   .switch-field  {
     display: flex;
@@ -50,7 +50,7 @@ body {
     float: left;
     position: absolute;
     top: 10px;
-    left: 50%;
+    left: 35%;
   }
 }
 
