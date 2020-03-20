@@ -1,6 +1,9 @@
+* {
+  font-family: Roboto, Tahoma, sans-serif !important; //'Roboto', 'sans-serif';
+}
+
 body {
     background-color: #001f3f;
-    font-family: 'Roboto', 'sans-serif';
     color: white;
 }
 
@@ -9,6 +12,7 @@ body {
 #map {
     width: 100%; /* The width is the width of the web page */
     color: black;
+    z-index: -1;
 }
 
 /* Different button style for mobile devices */
@@ -126,7 +130,7 @@ body {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    z-index: 20; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
