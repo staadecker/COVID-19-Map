@@ -63,7 +63,7 @@ for (let fsa in postal_code_data) {
         const highRiskPolygon = new google.maps.Polygon({
             paths: postal_code_data[fsa][i]['coord'],
             strokeWeight: 0.5,
-            fillColor: '#FFCC00',
+            fillColor: '#FF4400',
             fillOpacity: num_high_risk / high_risk_data['max'] * 0.5,
             indexID: polygonCount
         });
