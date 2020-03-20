@@ -1,3 +1,3 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ["-h", "Cache-Control:no-cache, max-age=0", "-m", "rsync", "-r", "-c", "-d", "./website/", "gs://map.flatten.ca"]
+  - name: 'gcr.io/flatten-271620/firebase'
+    args: ['deploy']
