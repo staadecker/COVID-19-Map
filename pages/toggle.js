@@ -13,5 +13,5 @@ function toggle_clicked(radio) {
         map.removeLayer(highRiskPolygons);
 
     }
-    abc.bringToFront();
+    current_location.bringToFront();
 }
