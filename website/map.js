@@ -23,26 +23,29 @@ for (let fsa in postal_code_data) {
     const num_mild = in_self_isolation_data['fsa'][fsa]['mild'];
     const num_high_risk = high_risk_data['fsa'][fsa];
 
+    colour_selfIso = getColor_selfIso(num_severe + num_mild);
+    colour_highRisk = getColor_highRisk(num_high_risk);
+
     for (let i = 0; i < postal_code_data[fsa].length; i++) {
 
         // Add the polygons.
         const selfIsolatedPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: '#FF8800',
-            fillColor: '#FF8800',
-            fillOpacity: (2 * num_severe + num_mild) / in_self_isolation_data['max'] * 0.5,
+            color: colour_selfIso,
+            fillColor: colour_selfIso,
+            fillOpacity: 0.4,
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: '#FF4400',
-            fillColor: '#FF4400',
-            fillOpacity: num_high_risk / high_risk_data['max'] * 0.5,
+            color: colour_highRisk,
+            fillColor: colour_highRisk,
+            fillOpacity: 0.4,
         });
 
 
         //Initialize infowindow text
         selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>"
-            + num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
+            //+ num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
             + (num_severe + num_mild) + " total people with symptoms</p>");
 
         highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>" + num_high_risk + " people at high risk</p>");
@@ -51,6 +54,28 @@ for (let fsa in postal_code_data) {
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
         highRiskPolygon.addTo(highRiskPolygons);
     }
+}
+
+function getColor_selfIso(cases) {
+    return cases > 1000 ? '#800026' :
+        cases > 500  ? '#BD0026' :
+        cases > 200  ? '#E31A1C' :
+        cases > 100  ? '#FC4E2A' :
+        cases > 50   ? '#FD8D3C' :
+        cases > 20   ? '#FEB24C' :
+        cases > 10   ? '#FED976' :
+                       '#FFEDA0';
+}
+
+function getColor_highRisk(cases) {
+    return cases > 1000 ? '#0c2c84' :
+        cases > 500  ? '#225ea8' :
+        cases > 200  ? '#1d91c0' :
+        cases > 100  ? '#41b6c4' :
+        cases > 50   ? '#7fcdbb' :
+        cases > 20   ? '#c7e9b4' :
+        cases > 10   ? '#edf8b1' :
+                       '#ffffd9';
 }
 
 
