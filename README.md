@@ -14,7 +14,7 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
   - [Chrome](https://www.google.com/chrome) or [Chromium](https://www.chromium.org)-based browsers are recommended.
 - [Python 3.5+](https://www.python.org/)
 
-- For the confirmed generator script: `pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`
+- For the confirmed generator script: `pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib google-cloud-storage google-cloud-datastore`
 
 ## Usage
 
