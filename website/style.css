@@ -1,5 +1,5 @@
 * {
-  font-family: Roboto, Tahoma, sans-serif !important;
+    font-family: Roboto, Tahoma, sans-serif !important;
 }
 
 body {
@@ -17,13 +17,17 @@ body {
 }
 
 /* Different button style for mobile devices */
-@media (min-width:700px) {
-  #map  { height: calc(100vh - 150px);}
+@media (min-width: 700px) {
+    #map {
+        height: calc(100vh - 150px);
+    }
 }
 
 /* Different button style for desktop */
-@media (max-width:700px) {
-  #map  { height: calc(100vh - 300px);}
+@media (max-width: 700px) {
+    #map {
+        height: calc(100vh - 300px);
+    }
 }
 
 .name_div {
@@ -41,7 +45,7 @@ body {
 }
 
 
-/* Different button styly for mobile devices */
+/* Different button style for desktop devices */
  @media (min-width:700px) {
   .switch-field  {
     display: flex;
@@ -50,7 +54,7 @@ body {
     float: left;
     position: absolute;
     top: 10px;
-    left: 50%;
+    left: 35%;
   }
 }
 
@@ -110,7 +114,7 @@ body {
     color: white;
     text-align: center;
     z-index: 2;
-    background-color: #001f3f;
+    background-color: #001f3f;font-size: large;
 }
 
 
@@ -132,7 +136,9 @@ body {
 .legend {
     line-height: 18px;
     color: #555;
+    font-size: medium;
 }
+
 .legend i {
     width: 16px;
     height: 16px;
@@ -153,19 +159,22 @@ body {
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    /*overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
+    max-height: calc(100vh - 210px);
+    overflow: auto;
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     color: #001f3f;
+    word-wrap: break-word;
 }
 
 /* The Close Button */
@@ -181,6 +190,10 @@ body {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+ul li {
+    padding: 5px 0;
 }
 
 /* End pop up elements styling */

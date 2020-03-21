@@ -8,14 +8,13 @@
     <meta content="utf-8" http-equiv="encoding">
 
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-    <script type="text/javascript" src="data/in_self_isolation_SAMPLE.js"></script>
-    <script type="text/javascript" src="data/high_risk_SAMPLE.js"></script>
-    <script type="text/javascript" src="data/postal_code_boundaries.js"></script>
-    <script type="text/javascript" src="data/confirmed.js"></script>
+    <script type="text/javascript" src="data/form_data.js"></script>
+    <script type="text/javascript" src="res/postal_code_boundaries.js"></script>
+    <script type="text/javascript" src="data/confirmed_data.js"></script>
 </head>
 
 <body>
@@ -26,7 +25,7 @@
 
     <div class="switch-field">
         <input type="radio" id="confirmed" name="layers" onclick="toggle_clicked(this)" value="confirmed" checked>
-        <label for="confirmed">Confirmed</label>
+        <label for="confirmed">Confirmed Cases</label>
 
         <input type="radio" id="in_self_isolation" name="layers" onclick="toggle_clicked(this)"
                value="in_self_isolation">
@@ -38,16 +37,18 @@
 </div>
 
 <!--The div element for the map -->
+<div id="body">
 <div id="map"></div>
 
 <div id="update_time">
-        <p></p>
-    
+    <p></p>
+</div>
 </div>
 
 <div class="footer">
+    <div id="myBtn3" class="footer_element"> Instructions</div>
     <div id="myBtn1" class="footer_element"> About this map</div>
-    <div id="myBtn2" class="footer_element"> About Us</div>    
+    <div id="myBtn2" class="footer_element"> About Us</div>
 </div>
 
 <!-- The Modal (pop up) -->
@@ -56,18 +57,25 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span id="close1" class="close">&times;</span>
-        <h3> About this map </h3> 
-        <p> This map displays confirmed cases, Candians who are potential carriers of the virus, as well highlight regions where there are many elderly and immunocompromised individuals. 
-            The purpose of this map is to inform government agencies and healthcare systems of where there is an influx of potential cases to arise so that resources can be utilized in the most efficient manner. 
-            Additionally, through highlighting regions where there is a dense demographic of vulnerable individuals, we can inform agencies to have the resources to protect these individuals. </p> 
-        <p> The "confirmed" layer shows flags where individuals who have tested positive for COVID-19 are mapped. Through the submission of FLATTEN, the vulnerable populations as well as potential carriers are mapped. </p> 
-        
-        <h3>Data Sources:</h3>
+        <h3> About this map </h3>
         <p>
-            Potential Cases and High-risk Populations: <a href="flatten.ca">flatten.ca</a> <br>
-            Confirmed Cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19 Outbreak in Canada. 
-            <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
+            This map displays a) confirmed COVID-19 cases b) individuals who are believed to be potential cases based on
+            their form responses c) individuals who reported having previous medical conditions (ie. immunocompromised)
+            and/or being over the age of 60.
         </p>
+        <p>
+            The purpose of this map is to inform government agencies and healthcare services. We hope that the data
+            displayed on this map helps healthcare services optimize the use of their resources and protect the
+            vulnerable individuals mentioned above.
+        </p>
+
+        <h3>Data Sources:</h3>
+        <ul>
+            <li>Potential cases and vulnerable populations: <a href="https://www.flatten.ca/">flatten.ca</a></li>
+            <li>Confirmed cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19
+                Outbreak in Canada.
+                <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a></li>
+        </ul>
     </div>
 </div>
 
@@ -77,9 +85,24 @@
     <div class="modal-content">
         <span id="close2" class="close">&times;</span>
         <h3>About Us</h3>
-        <p>We are a group of scientists, engineers and clinicians who have created an online screening tool to provide information on COVID-19. 
-            This app is designed to help increase awareness and flatten the curve of the spread of COVID-19.
-        </p>
+        <p>We're a group of scientists, engineers and clinicians who have created an online form and map to provide
+            information on the COVID-19 pandemic.</p>
+        <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
+    </div>
+</div>
+
+<div id="myModal3" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="close3" class="close">&times;</span>
+        <h3>Instructions</h3>
+        <p>Welcome to Flatten's Heatmap!</p>
+        <p>To easily locate yourself, allow for Flatten to use your location. To view information about your region, click on your municipality or postal code region!</p>
+        <p><b>Confirmed Cases: </b>This tab displays all of the confirmed cases of COVID-19 in Canada. If a case's location
+        is not reported, it is displayed at the center of the province.</p>
+        <p><b>Potential Cases: </b>This tab displays all of the potential cases of COVID-19 in Canada, based on data inputted into Flatten's form</p>
+        <p><b>Vulnerable Individuals: </b>This tab displays all individuals that are especially vulnerable to COVID-19 in Canada,
+            based on data inputted into Flatten's form</p>
     </div>
 </div>
 
