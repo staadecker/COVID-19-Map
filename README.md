@@ -21,8 +21,28 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 - To run a data generator script, `cd` into the folder containing the `python` script you want to run, and copy the resulting `*SAMPLE.js` file into `/data`.
 - Open `index.html` in your browser.
 
+## Internal
+
+### Format for form data
+
+**`form_data.js`**
+
+```
+form_data = {
+            "time" : "Sun Jun 20 23:21:05 1993", 
+            "max" : {"pot": 1020, "risk": 20},
+            "fsa" : {
+                "B1A" : {"pot": 23, "risk": 18},
+                .
+                .
+                .
+            };  
+```
+Note: Time stamp can be generated with  `time.asctime()` in Python.
+
+
 ## Credits
 
 Thank you to Statistics Canada for the following data.
 
-_Census Forward Sortation Area Boundary File, 2016 Census._ Statistics Canada Catalogue no. 92-179-X.
+Census Forward Sortation Area Boundary File, 2016 Census._ Statistics Canada Catalogue no. 92-179-X.
