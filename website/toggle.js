@@ -26,7 +26,8 @@ function toggle_clicked(radio) {
             map.removeLayer(selfIsolatedPolygons);
             map.removeLayer(highRiskPolygons);
             document.getElementById("update_time").innerHTML = data_last_updated;
-
+            map.removeControl(selfIso_legend);
+            map.removeControl(highRisk_legend);
     }
 
     current_location.bringToFront();
