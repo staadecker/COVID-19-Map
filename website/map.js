@@ -1,5 +1,5 @@
 // Create map.
-const map = new L.map('map').setView([53.9902, -97.8155], 4);
+const map = new L.map('map').setView([43.6532, -79.3832], 10);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -42,14 +42,14 @@ for (let fsa in postal_code_data) {
         // Add the polygons.
         const selfIsolatedPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: 'white',
+            color: 'gray',
             dashArray: '3',
             fillColor: colour_selfIso,
             fillOpacity: opacity_selfIso,
         });
         const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
             weight: 0.9,
-            color: 'white',
+            color: 'gray',
             dashArray: '3',
             fillColor: colour_highRisk,
             fillOpacity: opacity_highRisk,
