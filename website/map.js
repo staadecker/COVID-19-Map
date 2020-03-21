@@ -9,14 +9,23 @@ document.getElementById("update_time").innerHTML = data_last_updated;
 instruction_page = document.getElementById("myModal3")
 instruction_page.style.display = "block";
 
-// Load data files
-postal_code_data = JSON.parse(data_postal_code_boundaries);
-form_data_obj = JSON.parse(form_data);
-confirmed_data = JSON.parse(data_confirmed);
+var postal_code_data, form_data_obj, confirmed_data;
+const loadTestData = function() {
+    // Load data files
+    postal_code_data = JSON.parse(data_postal_code_boundaries);
+    form_data_obj = JSON.parse(form_data);
+    confirmed_data = JSON.parse(data_confirmed);
+}
 
 
 const loadBucketData = function(bucket, file, xhr, callback) {
-    var storage = firebase.storage();
+    try {
+        var storage = firebase.storage();
+    } catch (error) {
+        loadTestData();
+        print("Couldn't load firebase.storage: please run using firebase to allow Google Cloud Storage Connection");
+        return;
+    }
     var gsReference = storage.refFromURL('gs://'.concat(bucket))
 
     gsReference.child(file).getDownloadURL().then(function(url) {
