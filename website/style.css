@@ -136,6 +136,7 @@ body {
 .legend {
     line-height: 18px;
     color: #555;
+    font-size: medium;
 }
 
 .legend i {
