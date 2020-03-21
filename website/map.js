@@ -136,6 +136,18 @@ highRisk_legend.onAdd = function (map) {
 // Array of Leaflet API markers for confirmed cases.
 const confirmedCircles = L.layerGroup();
 
+// find the max city case number in canada
+let max_cases = 0;
+for (let i = 0; i < confirmed_data.length; i++) {
+    if (confirmed_data[i]['coord'][0] !== "N/A") {
+        if (confirmed_data[i]['cases'] > max_cases) {
+            max_cases = confirmed_data[i]['cases'];
+        }
+    }
+}
+
+// draw circles
+const max_rad = 80;
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
     if (confirmed_data[i]['coord'][0] !== "N/A") {
@@ -143,7 +155,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
         if (confirmed_data[i]['cases'] < 10) {
             rad = 5;
         } else {
-            rad = 10 + confirmed_data[i]['cases'] / 5;
+            rad = 5 + confirmed_data[i]['cases'] / max_cases * max_rad;
         }
 
         const circle = new L.circleMarker(confirmed_data[i]['coord'], {
