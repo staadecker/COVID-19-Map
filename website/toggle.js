@@ -4,12 +4,20 @@ function toggle_clicked(radio) {
             map.removeLayer(confirmedCircles);
             selfIsolatedPolygons.addTo(map);
             map.removeLayer(highRiskPolygons);
+            selfIso_legend.addTo(map);
+            if (!(map.legend === null)) {
+                map.removeControl(highRisk_legend);
+            }
             document.getElementById("update_time").innerHTML = "Last update: " + in_self_isolation_data["time"];
             break;
         case "high_risk":
             map.removeLayer(confirmedCircles);
             map.removeLayer(selfIsolatedPolygons);
             highRiskPolygons.addTo(map);
+            highRisk_legend.addTo(map);
+            if (!(map.legend === null)) {
+                map.removeControl(selfIso_legend);
+            }
             document.getElementById("update_time").innerHTML = "Last update: " + high_risk_data["time"];
 
             break;

@@ -1,5 +1,5 @@
 * {
-  font-family: Roboto, Tahoma, sans-serif !important;
+    font-family: Roboto, Tahoma, sans-serif !important;
 }
 
 body {
@@ -17,13 +17,17 @@ body {
 }
 
 /* Different button style for mobile devices */
-@media (min-width:700px) {
-  #map  { height: calc(100vh - 150px);}
+@media (min-width: 700px) {
+    #map {
+        height: calc(100vh - 150px);
+    }
 }
 
 /* Different button style for desktop */
-@media (max-width:700px) {
-  #map  { height: calc(100vh - 300px);}
+@media (max-width: 700px) {
+    #map {
+        height: calc(100vh - 300px);
+    }
 }
 
 .name_div {
@@ -35,22 +39,23 @@ body {
 .switch-field {
     display: flex;
     margin: 0px 10px 10px 3px;
+    padding: 2px;
     overflow: hidden;
     float: left;
 }
 
 
 /* Different button styly for mobile devices */
- @media (min-width:700px) {
-  .switch-field  {
-    display: flex;
-    margin: 10px 10px 10px 3px;
-    overflow: hidden;
-    float: left;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-  }
+@media (min-width: 700px) {
+    .switch-field {
+        display: flex;
+        margin: 10px 10px 10px 3px;
+        overflow: hidden;
+        float: left;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+    }
 }
 
 .switch-field input {
@@ -69,8 +74,9 @@ body {
     line-height: 1;
     text-align: center;
     padding: 8px 16px;
-    margin-right: -1px;
+    margin-right: -2px;
     border: 2px solid #4da6ff; /* sky blue*/
+    /* border-left: 0px; */
     transition: all 0.1s ease-in-out;
 }
 
@@ -80,8 +86,9 @@ body {
 
 .switch-field input:checked + label {
     background-color: #4da6ff;
-    color: #001f3f; /* navy */
-    font-weight: bold;
+    /*color: #001f3f; /* navy */
+    color: white;
+    /* font-weight: bold;*/
     box-shadow: none;
 }
 
@@ -107,7 +114,7 @@ body {
     color: white;
     text-align: center;
     z-index: 2;
-    background-color: #001f3f;
+    background-color: #001f3f;font-size: large;
 }
 
 
@@ -125,6 +132,21 @@ body {
 
 /* End footer style */
 
+/*Styling for the legend*/
+.legend {
+    line-height: 18px;
+    color: #555;
+    font-size: medium;
+}
+
+.legend i {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
 
 /* Styling for footer pop up elements */
 /* The Modal (background) */
@@ -137,19 +159,22 @@ body {
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    /*overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
+    max-height: calc(100vh - 210px);
+    overflow: auto;
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     color: #001f3f;
+    word-wrap: break-word;
 }
 
 /* The Close Button */
@@ -165,6 +190,10 @@ body {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+ul li {
+    padding: 5px 0;
 }
 
 /* End pop up elements styling */
