@@ -19,9 +19,14 @@ const selfIsolatedPolygons = L.layerGroup();
 const highRiskPolygons = L.layerGroup();
 
 for (let fsa in postal_code_data) {
-    if (!postal_code_data.hasOwnProperty(fsa) || ! (fsa in form_data_obj['fsa'])) continue;
-    const num_potential = form_data_obj['fsa'][fsa]['pot'];
-    const num_high_risk = form_data_obj['fsa'][fsa]['risk'];
+    if (!postal_code_data.hasOwnProperty(fsa)) continue;
+
+    let num_potential = 0;
+    let num_high_risk = 0;
+    if (fsa in form_data_obj['fsa']) {
+        num_potential = form_data_obj['fsa'][fsa]['pot'];
+        num_high_risk = form_data_obj['fsa'][fsa]['risk'];
+    }
 
     const colour_selfIso = getColor_selfIso(num_potential);
     const colour_highRisk = getColor_highRisk(num_high_risk);
@@ -57,11 +62,10 @@ for (let fsa in postal_code_data) {
 
 
         //Initialize infowindow text
-        selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>"
-            //+ num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
+        selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports from "
             + num_potential + " potential cases</p>");
 
-        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports of " + num_high_risk + " vulnerable individuals</p>");
+        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p>");
 
         // Add polygons to polygon arrays and add click listeners.
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
@@ -71,24 +75,24 @@ for (let fsa in postal_code_data) {
 
 function getColor_selfIso(cases) {
     return cases > 1000 ? '#800026' :
-        cases > 500  ? '#BD0026' :
-        cases > 200  ? '#E31A1C' :
-        cases > 100  ? '#FC4E2A' :
-        cases > 50   ? '#FD8D3C' :
-        cases > 20   ? '#FEB24C' :
-        cases > 10   ? '#FED976' :
-                       '#FFEDA0';
+        cases > 500 ? '#BD0026' :
+            cases > 200 ? '#E31A1C' :
+                cases > 100 ? '#FC4E2A' :
+                    cases > 50 ? '#FD8D3C' :
+                        cases > 20 ? '#FEB24C' :
+                            cases > 10 ? '#FED976' :
+                                '#FFEDA0';
 }
 
 function getColor_highRisk(cases) {
     return cases > 1000 ? '#0c2c84' :
-        cases > 500  ? '#225ea8' :
-        cases > 200  ? '#1d91c0' :
-        cases > 100  ? '#41b6c4' :
-        cases > 50   ? '#7fcdbb' :
-        cases > 20   ? '#c7e9b4' :
-        cases > 10   ? '#edf8b1' :
-                       '#ffffd9';
+        cases > 500 ? '#225ea8' :
+            cases > 200 ? '#1d91c0' :
+                cases > 100 ? '#41b6c4' :
+                    cases > 50 ? '#7fcdbb' :
+                        cases > 20 ? '#c7e9b4' :
+                            cases > 10 ? '#edf8b1' :
+                                '#ffffd9';
 }
 
 //Legend for self-isolated cases
