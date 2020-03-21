@@ -45,17 +45,17 @@ body {
 }
 
 
-/* Different button styly for mobile devices */
-@media (min-width: 700px) {
-    .switch-field {
-        display: flex;
-        margin: 10px 10px 10px 3px;
-        overflow: hidden;
-        float: left;
-        position: absolute;
-        top: 10px;
-        left: 50%;
-    }
+/* Different button style for desktop devices */
+ @media (min-width:700px) {
+  .switch-field  {
+    display: flex;
+    margin: 10px 10px 10px 3px;
+    overflow: hidden;
+    float: left;
+    position: absolute;
+    top: 10px;
+    left: 35%;
+  }
 }
 
 .switch-field input {

@@ -8,7 +8,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(highRisk_legend);
             }
-            document.getElementById("update_time").innerHTML = "Last update: " + in_self_isolation_data["time"];
+            document.getElementById("update_time").innerHTML = "Last update: " + form_data_obj["time"];
             break;
         case "high_risk":
             map.removeLayer(confirmedCircles);
@@ -18,7 +18,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(selfIso_legend);
             }
-            document.getElementById("update_time").innerHTML = "Last update: " + high_risk_data["time"];
+            document.getElementById("update_time").innerHTML = "Last update: " + form_data_obj["time"];
 
             break;
         default:
@@ -26,8 +26,11 @@ function toggle_clicked(radio) {
             map.removeLayer(selfIsolatedPolygons);
             map.removeLayer(highRiskPolygons);
             document.getElementById("update_time").innerHTML = data_last_updated;
-
+            map.removeControl(selfIso_legend);
+            map.removeControl(highRisk_legend);
     }
 
-    current_location.bringToFront();
+    if (current_location) {
+        current_location.bringToFront();
+    }
 }

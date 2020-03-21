@@ -6,6 +6,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 document.getElementById("update_time").innerHTML = data_last_updated;
+instruction_page = document.getElementById("myModal3")
+instruction_page.style.display = "block";
 
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
