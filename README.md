@@ -38,6 +38,7 @@ form_data = {
                 .
             };  
 ```
+Note: Time stamp can be generated with  `time.asctime()` in Python.
 
 
 ## Credits
