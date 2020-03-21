@@ -1,3 +1,11 @@
+
+var request = new XMLHttpRequest();
+request.open("GET", "config.json", false);
+request.send(null);
+// config = request.responseText;
+var config = JSON.parse(request.responseText);
+console.log(config);
+
 // Create map.
 const map = new L.map('map').setView([43.6532, -79.3832], 10);
 
@@ -42,7 +50,7 @@ const loadBucketData = function(bucket, file, xhr, callback) {
 };
 
 var xhr = new XMLHttpRequest();
-loadBucketData("flatten-271620.appspot.com/", "user_map_data.json", xhr,
+loadBucketData(config['bucket'], "user_map_data.js", xhr,
     function(event) {
         var text = xhr.responseText;
         console.log(text);
