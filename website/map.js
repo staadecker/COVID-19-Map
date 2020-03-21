@@ -9,8 +9,7 @@ document.getElementById("update_time").innerHTML = data_last_updated;
 
 // Load data files
 postal_code_data = JSON.parse(data_postal_code_boundaries);
-in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
-high_risk_data = JSON.parse(data_high_risk_sample);
+form_data_obj = JSON.parse(form_data);
 confirmed_data = JSON.parse(data_confirmed);
 
 // Array of Google Map API polygons for self-isolated and high-risk addresse
@@ -18,18 +17,17 @@ const selfIsolatedPolygons = L.layerGroup();
 const highRiskPolygons = L.layerGroup();
 
 for (let fsa in postal_code_data) {
-    if (!postal_code_data.hasOwnProperty(fsa)) continue;
-    const num_severe = in_self_isolation_data['fsa'][fsa]['severe'];
-    const num_mild = in_self_isolation_data['fsa'][fsa]['mild'];
-    const num_high_risk = high_risk_data['fsa'][fsa];
+    if (!postal_code_data.hasOwnProperty(fsa) || ! (fsa in form_data_obj['fsa'])) continue;
+    const num_potential = form_data_obj['fsa'][fsa]['pot'];
+    const num_high_risk = form_data_obj['fsa'][fsa]['risk'];
 
-    colour_selfIso = getColor_selfIso(num_severe + num_mild);
-    colour_highRisk = getColor_highRisk(num_high_risk);
+    const colour_selfIso = getColor_selfIso(num_potential);
+    const colour_highRisk = getColor_highRisk(num_high_risk);
 
-    var opacity_selfIso = 0.4;
-    var opacity_highRisk = 0.4;
+    let opacity_selfIso = 0.4;
+    let opacity_highRisk = 0.4;
 
-    if (num_severe + num_mild === 0) {
+    if (num_potential === 0) {
         opacity_selfIso = 0;
     }
 
@@ -59,7 +57,7 @@ for (let fsa in postal_code_data) {
         //Initialize infowindow text
         selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>"
             //+ num_severe + " with severe symptoms / " + num_mild + " with mild symptoms</p>"
-            + (num_severe + num_mild) + " potential cases</p>");
+            + num_potential + " potential cases</p>");
 
         highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports of " + num_high_risk + " vulnerable individuals</p>");
 
@@ -96,12 +94,12 @@ const selfIso_legend = L.control({position: 'bottomright'});
 
 selfIso_legend.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
+    const div = L.DomUtil.create('div', 'info legend'),
         grades = [1, 10, 20, 50, 100, 200, 500, 1000],
         labels = [];
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
+    for (let i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor_selfIso(grades[i] + 1) + '"></i> ' +
             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
@@ -115,12 +113,12 @@ const highRisk_legend = L.control({position: 'bottomright'});
 
 highRisk_legend.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
+    const div = L.DomUtil.create('div', 'info legend'),
         grades = [1, 10, 20, 50, 100, 200, 500, 1000],
         labels = [];
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
+    for (let i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor_highRisk(grades[i] + 1) + '"></i> ' +
             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
@@ -134,15 +132,15 @@ const confirmedCircles = L.layerGroup();
 
 for (let i = 0; i < confirmed_data.length; i++) {
     //Add the marker
-    if (confirmed_data[i].coord[0] !== "N/A") {
+    if (confirmed_data[i]['coord'][0] !== "N/A") {
         let rad;
-        if (confirmed_data[i].cases < 10) {
+        if (confirmed_data[i]['cases'] < 10) {
             rad = 5;
         } else {
-            rad = 10 + confirmed_data[i].cases / 5;
+            rad = 10 + confirmed_data[i]['cases'] / 5;
         }
 
-        const circle = new L.circleMarker(confirmed_data[i].coord, {
+        const circle = new L.circleMarker(confirmed_data[i]['coord'], {
             weight: 0,
             color: 'red',
             fillColor: '#f03',
@@ -151,7 +149,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
         });
 
         //initialize infowindow text
-        circle.bindPopup("<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i].cases + " confirmed cases in this area</p>");
+        circle.bindPopup("<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i]['cases'] + " confirmed cases in this area</p>");
 
         //Add circle to circle array
         circle.addTo(confirmedCircles);
