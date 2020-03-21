@@ -1,3 +1,11 @@
+
+var request = new XMLHttpRequest();
+request.open("GET", "config.json", false);
+request.send(null);
+// config = request.responseText;
+var config = JSON.parse(request.responseText);
+console.log(config);
+
 // Create map.
 const map = new L.map('map').setView([43.6532, -79.3832], 10);
 
@@ -9,10 +17,46 @@ document.getElementById("update_time").innerHTML = data_last_updated;
 instruction_page = document.getElementById("myModal3")
 instruction_page.style.display = "block";
 
-// Load data files
-postal_code_data = JSON.parse(data_postal_code_boundaries);
-form_data_obj = JSON.parse(form_data);
-confirmed_data = JSON.parse(data_confirmed);
+var postal_code_data, form_data_obj, confirmed_data;
+const loadTestData = function() {
+    // Load data files
+    postal_code_data = JSON.parse(data_postal_code_boundaries);
+    form_data_obj = JSON.parse(form_data);
+    confirmed_data = JSON.parse(data_confirmed);
+}
+
+
+const loadBucketData = function(bucket, file, xhr, callback) {
+    try {
+        var storage = firebase.storage();
+    } catch (error) {
+        loadTestData();
+        print("Couldn't load firebase.storage: please run using firebase to allow Google Cloud Storage Connection");
+        return;
+    }
+    var gsReference = storage.refFromURL('gs://'.concat(bucket))
+
+    gsReference.child(file).getDownloadURL().then(function(url) {
+
+      xhr.responseType = '';
+      xhr.onload = callback;
+      xhr.open('GET', url);
+      xhr.send();
+
+    }).catch(function(error) {
+      // Handle any errors
+        console.log(error);
+    });
+};
+
+var xhr = new XMLHttpRequest();
+loadBucketData(config['bucket'], "user_map_data.js", xhr,
+    function(event) {
+        var text = xhr.responseText;
+        console.log(text);
+        // Do something instead of logging!
+});
+
 
 // Array of Google Map API polygons for self-isolated and high-risk addresse
 const selfIsolatedPolygons = L.layerGroup();
