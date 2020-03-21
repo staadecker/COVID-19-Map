@@ -13,6 +13,33 @@ in_self_isolation_data = JSON.parse(data_in_self_isolation_sample);
 high_risk_data = JSON.parse(data_high_risk_sample);
 confirmed_data = JSON.parse(data_confirmed);
 
+
+const loadBucketData = function(bucket, file, xhr, callback) {
+    var storage = firebase.storage();
+    var gsReference = storage.refFromURL('gs://'.concat(bucket))
+
+    gsReference.child(file).getDownloadURL().then(function(url) {
+
+      xhr.responseType = '';
+      xhr.onload = callback;
+      xhr.open('GET', url);
+      xhr.send();
+
+    }).catch(function(error) {
+      // Handle any errors
+        console.log(error);
+    });
+};
+
+var xhr = new XMLHttpRequest();
+loadBucketData("flatten-271620.appspot.com/", "user_map_data.json", xhr,
+    function(event) {
+        var text = xhr.responseText;
+        console.log(text);
+        // Do something instead of logging!
+});
+
+
 // Array of Google Map API polygons for self-isolated and high-risk addresse
 const selfIsolatedPolygons = L.layerGroup();
 const highRiskPolygons = L.layerGroup();
