@@ -1,9 +1,13 @@
-// 1. Load config.json file and print to console
-const request = new XMLHttpRequest();
-request.open("GET", "config.json", false);
-request.send(null);
-// config = request.responseText;
-const config = JSON.parse(request.responseText);
+// 1. Load remote config
+const remoteConfig = firebase.remoteConfig();
+remoteConfig.settings = {
+  minimumFetchIntervalMillis: 3600000,
+};
+remoteConfig.defaultConfig = ({
+  'bucket': 'flatten-271620',
+});
+
+console.log(remoteConfig.getValue('bucket'));
 
 // 2. Create map.
 const canada_bounds = [[38, -150], [87, -45]];
@@ -224,7 +228,7 @@ function getGSBucketReference(bucket) {
 }
 
 async function obtainAndDisplayMaps() {
-    const bucket_reference = getGSBucketReference(config['bucket']);
+    const bucket_reference = getGSBucketReference(remoteConfig.getValue('bucket'));
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
