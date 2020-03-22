@@ -23,7 +23,7 @@ let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, hi
 let form_data_obj, confirmed_data;
 
 function displayMaps() {
-    document.getElementById("update_time").innerHTML = form_data_obj['time'];
+    document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
 
     // Array of Google Map API polygons for self-isolated and high-risk addresse
     selfIsolatedPolygons = L.layerGroup();
