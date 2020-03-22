@@ -78,12 +78,17 @@ for (let fsa in postal_code_data) {
     let opacity_selfIso = 0.4;
     let opacity_highRisk = 0.4;
 
+    let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p>";
+    let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p>";
+
     if (num_potential === 0) {
         opacity_selfIso = 0;
+        msg_selfIso = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
     }
 
     if (num_high_risk === 0) {
         opacity_highRisk = 0
+        msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
     }
 
     for (let i = 0; i < postal_code_data[fsa].length; i++) {
@@ -106,10 +111,8 @@ for (let fsa in postal_code_data) {
 
 
         //Initialize infowindow text
-        selfIsolatedPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports from "
-            + num_potential + " potential cases</p>");
-
-        highRiskPolygon.bindPopup("<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p>");
+        selfIsolatedPolygon.bindPopup(msg_selfIso);
+        highRiskPolygon.bindPopup(msg_highRisk);
 
         // Add polygons to polygon arrays and add click listeners.
         selfIsolatedPolygon.addTo(selfIsolatedPolygons);
