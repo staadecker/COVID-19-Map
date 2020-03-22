@@ -134,14 +134,14 @@ function getColor_selfIso(cases) {
 }
 
 function getColor_highRisk(cases) {
-    return cases > 1000 ? '#0c2c84' :
-        cases > 500 ? '#225ea8' :
-            cases > 200 ? '#1d91c0' :
-                cases > 100 ? '#41b6c4' :
-                    cases > 50 ? '#7fcdbb' :
-                        cases > 20 ? '#c7e9b4' :
-                            cases > 10 ? '#edf8b1' :
-                                '#ffffd9';
+    return cases > 1000 ? '#7a0177' :
+        cases > 500 ? '#ae017e' :
+            cases > 200 ? '#dd3497' :
+                cases > 100 ? '#f768a1' :
+                    cases > 50 ? '#fa9fb5' :
+                        cases > 20 ? '#fcc5c0' :
+                            cases > 10 ? '#fde0dd' :
+                                '#fff7f3';
 }
 
 //Legend for self-isolated cases
