@@ -4,7 +4,6 @@ request.open("GET", "config.json", false);
 request.send(null);
 // config = request.responseText;
 const config = JSON.parse(request.responseText);
-console.log(config);
 
 // 2. Create map.
 const map = new L.map('map').setView([43.6532, -79.3832], 10);
@@ -186,7 +185,6 @@ function bucketRequest(url) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);
     xhr.send();
-    console.log(xhr);
     return JSON.parse(xhr.responseText);
 }
 
