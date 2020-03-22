@@ -180,17 +180,18 @@ highRisk_legend.onAdd = function (map) {
 // Array of Leaflet API markers for confirmed cases.
 const confirmedCircles = L.layerGroup();
 
-for (let i = 0; i < confirmed_data.length; i++) {
+const max_rad = 80;
+for (let i = 0; i < confirmed_data['confirmed_cases'].length; i++) {
     //Add the marker
-    if (confirmed_data[i]['coord'][0] !== "N/A") {
+    if (confirmed_data['confirmed_cases'][i]['coord'][0] !== "N/A") {
         let rad;
         if (confirmed_data[i]['cases'] < 10) {
             rad = 5;
         } else {
-            rad = 10 + confirmed_data[i]['cases'] / 5;
+            rad = 5 + confirmed_data[i]['cases'] / confirmed_data['max_cases'] * max_rad;
         }
 
-        const circle = new L.circleMarker(confirmed_data[i]['coord'], {
+        const circle = new L.circleMarker(confirmed_data['confirmed_cases'][i]['coord'], {
             weight: 0,
             color: 'red',
             fillColor: '#f03',
@@ -199,7 +200,7 @@ for (let i = 0; i < confirmed_data.length; i++) {
         });
 
         //initialize infowindow text
-        circle.bindPopup("<h3>" + confirmed_data[i].name + "</h3><p>" + confirmed_data[i]['cases'] + " confirmed cases in this area</p>");
+        circle.bindPopup("<h3>" + confirmed_data['confirmed_cases'][i].name + "</h3><p>" + confirmed_data['confirmed_cases'][i]['cases'] + " confirmed cases in this area</p>");
 
         //Add circle to circle array
         circle.addTo(confirmedCircles);
