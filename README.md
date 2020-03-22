@@ -38,7 +38,13 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
         .
 }  
 ```
-Note: Time stamp can be generated with  `time.asctime()` in Python.
+Note: Time stamp can be generated with  `datetime.datetime.utcnow().timestamp()` in Python.
+
+You will need to set the following environment variables to run the form data upload:
+* `GCS_BUCKET` - bucket where form data gets uploaded
+* `UPLOAD_FILE` - name of file within bucket where form data is uploaded to
+* `DS_NAMESPACE` - datastore namespace to pull form response data from
+* `DS_KIND` - kind of datastore object to pull form response data from
 
 
 ## Credits
