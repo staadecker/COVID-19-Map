@@ -1,5 +1,4 @@
 function toggle_clicked(radio) {
-    let time;
     switch (radio.value) {
         case "in_self_isolation":
             map.removeLayer(confirmedCircles);
@@ -9,8 +8,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(highRisk_legend);
             }
-            time = Date(form_data_obj["time"]);
-            document.getElementById("update_time").innerHTML = time;
+            document.getElementById("update_time").innerHTML = "Last update: " + Date(form_data_obj["time"]);
             break;
         case "high_risk":
             map.removeLayer(confirmedCircles);
@@ -20,15 +18,14 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(selfIso_legend);
             }
-            time = Date(form_data_obj["time"]);
-            document.getElementById("update_time").innerHTML = "Last update: " + time;
+            document.getElementById("update_time").innerHTML = "Last update: " + Date(form_data_obj["time"]);
 
             break;
         default:
             confirmedCircles.addTo(map);
             map.removeLayer(selfIsolatedPolygons);
             map.removeLayer(highRiskPolygons);
-            document.getElementById("update_time").innerHTML = confirmed_data['time'];
+            document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
             map.removeControl(selfIso_legend);
             map.removeControl(highRisk_legend);
     }
