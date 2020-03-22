@@ -208,6 +208,7 @@ async function obtainAndDisplayMaps() {
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
     displayMaps();
+    toggle_clicked(null);
 }
 
 // Calls the function
