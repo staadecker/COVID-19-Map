@@ -6,14 +6,15 @@ request.send(null);
 const config = JSON.parse(request.responseText);
 
 // 2. Create map.
-const map = new L.map('map').setView([43.6532, -79.3832], 10);
+const map = new L.map('map', {
+    minZoom: 4
+}).setView([43.6532, -79.3832], 10);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
-	maxZoom: 19
+	minZoom: 4
 }).addTo(map);
-
 
 instruction_page = document.getElementById("myModal3");
 instruction_page.style.display = "block";
@@ -99,14 +100,14 @@ function displayMaps() {
     }
 
     function getColor_highRisk(cases) {
-        return cases > 1000 ? '#7a0177' :
-            cases > 500 ? '#ae017e' :
-                cases > 200 ? '#dd3497' :
-                    cases > 100 ? '#f768a1' :
-                        cases > 50 ? '#fa9fb5' :
-                            cases > 20 ? '#fcc5c0' :
-                                cases > 10 ? '#fde0dd' :
-                                    '#fff7f3';
+        return cases > 1000 ? '#2e012d' :
+            cases > 500 ? '#620147' :
+                cases > 200 ? '#a81c6f' :
+                    cases > 100 ? '#f32074' :
+                        cases > 50 ? '#f6577d' :
+                            cases > 20 ? '#f98378' :
+                                cases > 10 ? '#fa9e95' :
+                                    '#ffc4a7';
     }
 
     //Legend for self-isolated cases
@@ -150,7 +151,7 @@ function displayMaps() {
     // Array of Leaflet API markers for confirmed cases.
     confirmedCircles = L.layerGroup();
 
-    const max_rad = 80;
+    const max_rad = 35;
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
         //Add the marker
