@@ -16,7 +16,7 @@ document.getElementById("update_time").innerHTML = data_last_updated;
 instruction_page = document.getElementById("myModal3")
 instruction_page.style.display = "block";
 
-var postal_code_data;
+var postal_code_data = JSON.parse(data_postal_code_boundaries);
 var confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
 
 function displayMaps(form_data_obj, confirmed_data) {
