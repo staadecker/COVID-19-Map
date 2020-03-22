@@ -25,26 +25,20 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 
 ### Format for form data
 
-**`form_data.json`**
+**`form_data.js`**
 
 ```
-{
-    "time" : "Sun Jun 20 23:21:05 1993", 
-    "max" : {"pot": 1020, "risk": 20},
-    "fsa" : {
-        "B1A" : {"pot": 23, "risk": 18},
-        .
-        .
-        .
-}  
+form_data = {
+            "time" : "Sun Jun 20 23:21:05 1993", 
+            "max" : {"pot": 1020, "risk": 20},
+            "fsa" : {
+                "B1A" : {"pot": 23, "risk": 18},
+                .
+                .
+                .
+            };  
 ```
-Note: Time stamp can be generated with  `datetime.datetime.utcnow().timestamp()` in Python.
-
-You will need to set the following environment variables to run the form data upload:
-* `GCS_BUCKET` - bucket where form data gets uploaded
-* `UPLOAD_FILE` - name of file within bucket where form data is uploaded to
-* `DS_NAMESPACE` - datastore namespace to pull form response data from
-* `DS_KIND` - kind of datastore object to pull form response data from
+Note: Time stamp can be generated with  `time.asctime()` in Python.
 
 
 ## Credits
