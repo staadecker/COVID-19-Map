@@ -17,7 +17,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 instruction_page = document.getElementById("myModal3");
 instruction_page.style.display = "block";
 
-let postal_code_data;
+const postal_code_data = JSON.parse(data_postal_code_boundaries);
 let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
 
 function displayMaps(form_data_obj, confirmed_data) {
