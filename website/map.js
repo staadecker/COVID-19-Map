@@ -184,7 +184,6 @@ function getGSDownloadURL(bucket_reference, file) {
 
 function bucketRequest(url) {
     const xhr = new XMLHttpRequest();
-    xhr.responseType = 'text/json';
     xhr.open('GET', url, false);
     xhr.send();
     console.log(xhr);
