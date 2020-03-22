@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "website",
+    "site": "map-staging-883e9",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
