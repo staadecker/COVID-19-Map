@@ -4,10 +4,10 @@ remoteConfig.settings = {
   minimumFetchIntervalMillis: 3600000,
 };
 remoteConfig.defaultConfig = ({
-  'bucket': 'flatten-271620',
+  'bucket': 'gs://flatten-271620.appspot.com',
 });
 
-console.log(remoteConfig.getValue('bucket'));
+const bucket = remoteConfig.getValue('bucket').asString();
 
 // 2. Create map.
 const canada_bounds = [[38, -150], [87, -45]];
@@ -228,7 +228,7 @@ function getGSBucketReference(bucket) {
 }
 
 async function obtainAndDisplayMaps() {
-    const bucket_reference = getGSBucketReference(remoteConfig.getValue('bucket'));
+    const bucket_reference = getGSBucketReference(bucket);
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
