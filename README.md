@@ -25,18 +25,18 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 
 ### Format for form data
 
-**`form_data.js`**
+**`form_data.json`**
 
 ```
-form_data = {
-            "time" : "Sun Jun 20 23:21:05 1993", 
-            "max" : {"pot": 1020, "risk": 20},
-            "fsa" : {
-                "B1A" : {"pot": 23, "risk": 18},
-                .
-                .
-                .
-            };  
+{
+    "time" : "Sun Jun 20 23:21:05 1993", 
+    "max" : {"pot": 1020, "risk": 20},
+    "fsa" : {
+        "B1A" : {"pot": 23, "risk": 18},
+        .
+        .
+        .
+}  
 ```
 Note: Time stamp can be generated with  `time.asctime()` in Python.
 
