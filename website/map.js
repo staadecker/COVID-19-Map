@@ -50,7 +50,7 @@ const loadBucketData = function(bucket, file, xhr, callback) {
 };
 
 var xhr = new XMLHttpRequest();
-loadBucketData(config['bucket'], "user_map_data.js", xhr,
+loadBucketData(config['bucket'], "user_map_data.json", xhr,
     function(event) {
         var text = xhr.responseText;
         console.log(text);
