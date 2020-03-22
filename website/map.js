@@ -170,8 +170,14 @@ function displayMaps() {
                 radius: rad
             });
 
-            //initialize infowindow text
-            circle.bindPopup("<h3>" + confirmed_cases_data[i].name + "</h3><p>" + confirmed_cases_data[i]['cases'] + " confirmed cases in this area</p>");
+            // create the popup text and bind to the correct circle.
+            // store popup index as a member of the popup so that we can set the popup to be
+            // in the centre of the circle on callback when clicked
+            let text = "<h3>" + confirmed_cases_data[i].name + "</h3><p>" + confirmed_cases_data[i]['cases'] + " confirmed cases in this area</p>";
+            let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(text);
+            popup.popup_idx = i;
+
+            circle.bindPopup(popup);
 
             //Add circle to circle array
             circle.addTo(confirmedCircles);
@@ -181,6 +187,13 @@ function displayMaps() {
     // Enable marker layer
     map.addLayer(confirmedCircles);
 }
+
+// sets the pop up to be in the center of the circle when you click on it
+map.on("popupopen", function(event) {
+    if(typeof(event.popup.popup_idx) != 'undefined') {
+        event.popup.setLatLng(confirmed_data['confirmed_cases'][event.popup.popup_idx]['coord']);
+    }
+});
 
 function getGSDownloadURL(bucket_reference, file) {
     return bucket_reference.child(file).getDownloadURL();
