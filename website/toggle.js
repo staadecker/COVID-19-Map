@@ -1,4 +1,5 @@
 function toggle_clicked(radio) {
+    let time;
     switch (radio.value) {
         case "in_self_isolation":
             map.removeLayer(confirmedCircles);
@@ -8,7 +9,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(highRisk_legend);
             }
-            let time = form_data_obj["time"];
+            time = Date(form_data_obj["time"]);
             document.getElementById("update_time").innerHTML = time;
             break;
         case "high_risk":

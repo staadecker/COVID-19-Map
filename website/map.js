@@ -41,8 +41,8 @@ function displayMaps() {
         const colour_selfIso = getColor_selfIso(num_potential);
         const colour_highRisk = getColor_highRisk(num_high_risk);
 
-    let opacity_selfIso = 0.4;
-    let opacity_highRisk = 0.4;
+        let opacity_selfIso = 0.4;
+        let opacity_highRisk = 0.4;
 
         if (num_potential === 0) {
             opacity_selfIso = 0;
@@ -146,37 +146,39 @@ function displayMaps() {
     // Array of Leaflet API markers for confirmed cases.
     confirmedCircles = L.layerGroup();
 
-const max_rad = 80;
-for (let i = 0; i < confirmed_data['confirmed_cases'].length; i++) {
-    //Add the marker
-    if (confirmed_data['confirmed_cases'][i]['coord'][0] !== "N/A") {
-        let rad;
-        if (confirmed_data[i]['cases'] < 10) {
-            rad = 5;
-        } else {
-            rad = 5 + confirmed_data[i]['cases'] / confirmed_data['max_cases'] * max_rad;
+    const max_rad = 80;
+    let confirmed_cases_data = confirmed_data['confirmed_cases'];
+    for (let i = 0; i < confirmed_cases_data.length; i++) {
+        //Add the marker
+        if (confirmed_cases_data[i]['coord'][0] !== "N/A") {
+            let rad;
+            if (confirmed_cases_data[i]['cases'] < 10) {
+                rad = 5;
+            } else {
+                rad = 5 + confirmed_cases_data[i]['cases'] / confirmed_data['max_cases'] * max_rad;
+            }
+
+            const circle = new L.circleMarker(confirmed_cases_data[i]['coord'], {
+                weight: 0,
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: rad
+            });
+
+            //initialize infowindow text
+            circle.bindPopup("<h3>" + confirmed_cases_data[i].name + "</h3><p>" + confirmed_cases_data[i]['cases'] + " confirmed cases in this area</p>");
+
+            //Add circle to circle array
+            circle.addTo(confirmedCircles);
         }
-
-        const circle = new L.circleMarker(confirmed_data['confirmed_cases'][i]['coord'], {
-            weight: 0,
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: rad
-        });
-
-        //initialize infowindow text
-        circle.bindPopup("<h3>" + confirmed_data['confirmed_cases'][i].name + "</h3><p>" + confirmed_data['confirmed_cases'][i]['cases'] + " confirmed cases in this area</p>");
-
-        //Add circle to circle array
-        circle.addTo(confirmedCircles);
     }
+
+    // Enable marker layer
+    map.addLayer(confirmedCircles);
 }
 
-// Enable marker layer
-map.addLayer(confirmedCircles);
-
-function getGSDownloadURL(bucket_reference, file){
+function getGSDownloadURL(bucket_reference, file) {
     return bucket_reference.child(file).getDownloadURL();
 }
 
@@ -189,6 +191,15 @@ function bucketRequest(url) {
     return JSON.parse(xhr.responseText);
 }
 
+function getGSBucketReference(bucket) {
+    try {
+        const storage = firebase.storage();
+        return storage.refFromURL(bucket);
+    } catch (error) {
+        console.log("Couldn't load firebase.storage. Please use 'firebase serve' to allow Google Cloud Storage Connection");
+    }
+}
+
 async function obtainAndDisplayMaps() {
     const bucket_reference = getGSBucketReference(config['bucket']);
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
@@ -199,3 +210,4 @@ async function obtainAndDisplayMaps() {
 
 // Calls the function
 obtainAndDisplayMaps();
+
