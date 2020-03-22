@@ -19,9 +19,10 @@ instruction_page.style.display = "block";
 
 const postal_code_data = JSON.parse(data_postal_code_boundaries);
 let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
+let form_data_obj, confirmed_data;
 
-function displayMaps(form_data_obj, confirmed_data) {
-    document.getElementById("update_time").innerHTML = form_data_obj['timestamp'];
+function displayMaps() {
+    document.getElementById("update_time").innerHTML = form_data_obj['time'];
 
     // Array of Google Map API polygons for self-isolated and high-risk addresse
     selfIsolatedPolygons = L.layerGroup();
@@ -199,10 +200,10 @@ function bucketRequest(url) {
 
 async function obtainAndDisplayMaps() {
     const bucket_reference = getGSBucketReference(config['bucket']);
-    const form = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
-    const confirmed = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
+    form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
+    confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
-    displayMaps(form, confirmed);
+    displayMaps();
 }
 
 // Calls the function
