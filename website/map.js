@@ -184,14 +184,14 @@ function getGSBucketReference(bucket) {
     }
 }
 
-async function getGSDownloadURL(bucket_reference, file){
+function getGSDownloadURL(bucket_reference, file){
     return bucket_reference.child(file).getDownloadURL();
 }
 
-function bucketRequest(gsReference, file) {
+function bucketRequest(url) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'text/json';
-    xhr.open('GET', gsReference, false);
+    xhr.open('GET', url, false);
     xhr.send();
     console.log(xhr);
     return JSON.parse(xhr.responseText);
@@ -199,8 +199,8 @@ function bucketRequest(gsReference, file) {
 
 async function obtainAndDisplayMaps() {
     const bucket_reference = getGSBucketReference(config['bucket']);
-    const form = bucketRequest(getGSDownloadURL(bucket_reference, 'form_data.json'));
-    const confirmed = bucketRequest(getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
+    const form = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
+    const confirmed = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
     displayMaps(form, confirmed);
 }
