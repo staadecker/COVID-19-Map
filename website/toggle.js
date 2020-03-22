@@ -1,4 +1,10 @@
+var current = "confirmed";
+
 function toggle_clicked(radio) {
+    if (radio == null) {
+        radio = current;
+    }
+    current = radio;
     switch (radio.value) {
         case "in_self_isolation":
             map.removeLayer(confirmedCircles);
