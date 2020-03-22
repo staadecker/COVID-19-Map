@@ -1,4 +1,3 @@
-
 var request = new XMLHttpRequest();
 request.open("GET", "config.json", false);
 request.send(null);
@@ -18,15 +17,9 @@ instruction_page = document.getElementById("myModal3")
 instruction_page.style.display = "block";
 
 var postal_code_data, form_data_obj, confirmed_data;
-postal_code_data = JSON.parse(data_postal_code_boundaries);
-//form_data_obj = JSON.parse(form_data);
-//confirmed_data = JSON.parse(data_confirmed);
-
-//console.log(postal_code_data)
-
 const loadTestData = function() {
     // Load data files
-    //postal_code_data = JSON.parse(data_postal_code_boundaries);
+    postal_code_data = JSON.parse(data_postal_code_boundaries);
     form_data_obj = JSON.parse(form_data);
     confirmed_data = JSON.parse(data_confirmed);
 }
@@ -55,44 +48,23 @@ const loadBucketData = function(bucket, file, xhr, callback) {
     });
 };
 
-
-
 var xhr = new XMLHttpRequest();
-var substring;
-loadBucketData(config['bucket'], "confirmed_data.txt", xhr,
-    function(event) {
-        var text = xhr.responseText;
-        substring = text.substring(80, text.length-3);
-        //console.log(substring);
-        confirmed_data = JSON.parse(substring);
-        console.log(confirmed_data); // WORKS
-
-});
-
-
-//var xhr2 = new XMLHttpRequest();
-var sub;
 loadBucketData(config['bucket'], "user_map_data.js", xhr,
     function(event) {
         var text = xhr.responseText;
-        sub = text.substring(13);
-        form_data_obj = JSON.parse(sub);
-        console.log(form_data_obj);  // WORKS
-
+        text = text.substring(13, text.length-2)
+        form_data_obj = JSON.parse(form_data);
+        console.log(form_data_obj); // WORKS
+        // Do something instead of logging!
 });
 
-
-console.log(form_data_obj);   // !!!!! GETS UNDEFINED
-
-console.log(confirmed_data);  // !!!!!  GETS UNDEFINED
-
+console.log(form_data_obj); // !!! UNDEFINED
 
 // Array of Google Map API polygons for self-isolated and high-risk addresse
 const selfIsolatedPolygons = L.layerGroup();
 const highRiskPolygons = L.layerGroup();
 
 for (let fsa in postal_code_data) {
-    //console.log(fsa);
     if (!postal_code_data.hasOwnProperty(fsa)) continue;
 
     let num_potential = 0;
