@@ -28,22 +28,44 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 **`form_data.js`**
 
 ```
-form_data = {
-            "time" : "Sun Jun 20 23:21:05 1993", 
-            "max" : {"pot": 1020, "risk": 20},
-            "fsa" : {
-                "B1A" : {"pot": 23, "risk": 18},
+{
+    "time" : "Sun Jun 20 23:21:05 1993", 
+    "max" : {"pot": 1020, "risk": 20},
+    "fsa" : {
+        "B1A" : {"pot": 23, "risk": 18},
                 .
                 .
                 .
-            };  
+    }
+} 
 ```
-Note: Time stamp can be generated with  `time.asctime()` in Python.
+`confirmed.json`
+
+```
+{
+    "last_updated" : "Date accessed at: 23/03/2020...",
+    "max_cases" : 230,
+    "confirmed_cases": [
+        {
+            "name" : "Algoma, Ontario",
+            "cases" : 1,
+            "coord" : [44.289, -79.8536]
+        },
+        {
+            "name" : "Bas-Saint-Laurent, Quebec",
+            "cases" : 2,
+            "coord" : [48.30, 23.4]
+        }
+    ]
+}
+```
 
 
-### Setting up Firebase Storage
+### Setting up Firebase Storage for the first time
 
-To allow the frontend of the map to read from the cloud storage buckets, you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
+This only needs to be done once per project, so don't worry about it.
+
+To allow the frontend of the map to read from the cloud storage buckets (storing the data), you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
 ```
     [
       {
@@ -58,12 +80,6 @@ then run
 
 You need to ensure that the firebase rules on the bucket are set up to allow reading of the files externally.
 
-
-## Deploying on Cloud Build
-
-Everything should work more or less out of the box, apart from the fact that you have to set the `_BRANCH` envoronment variable to `prod` for prouduction or `dev` for development.
-
-
 ## Deploying the cloud functions
 
 You will need to set the appropriate environment variables for each.
@@ -71,11 +87,11 @@ You will need to set the appropriate environment variables for each.
 For form_data_generator, these are
 * GCS_BUCKET, should point to that which to upload the data
 * UPLOAD_FILE, the name of the file to upload the confirmed cases data to
-* DS_NAMEPSACE, datastore namespaace to get the data from
+* DS_NAMEPSACE, datastore namespace to get the data from
 * DS_KIND, the datastore kind to load data from
 
 For `confirmed_cases`, they are:
-* SPREADSHEET_ID, should (at the moment) be 
+* SPREADSHEET_ID, should (at the moment) be `1D6okqtBS3S2NRC7GFVHzaZ67DuTw7LX49-fqSLwJyeo`
 * GCS_BUCKET, should point to that which to upload the data
 * UPLOAD_FILE, the name of the file to upload the confirmed cases data to
 * SHEETS_API_KEY, API key for google sheets.
