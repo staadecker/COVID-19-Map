@@ -29,7 +29,8 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 
 ```
 form_data = {
-            "time" : "Sun Jun 20 23:21:05 1993", 
+            "time" : "29483929829", # UTC unix timestamp in ms since the origin
+            "number_reported" : "6969", # total number of reports recieved
             "max" : {"pot": 1020, "risk": 20},
             "fsa" : {
                 "B1A" : {"pot": 23, "risk": 18},
