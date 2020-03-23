@@ -63,7 +63,7 @@ function displayMaps() {
         let opacity_highRisk = 0.4;
 
         let msg_selfIso = "<h3>" + fsa + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
-        let msg_highRisk = "<h3>" + fsa + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>" + total_reports_region + " reports in total.</p>";
+        let msg_highRisk = "<h3>" + fsa + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " + total_reports_region + " reports in total.</p>";
 
         if (num_potential === 0) {
             opacity_selfIso = 0;
