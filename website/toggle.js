@@ -14,7 +14,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(highRisk_legend);
             }
-            document.getElementById("update_time").innerHTML = "Last update: " + Date(form_data_obj["time"]);
+            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(form_data_obj["time"]);
             break;
         case "high_risk":
             map.removeLayer(confirmedCircles);
@@ -24,7 +24,7 @@ function toggle_clicked(radio) {
             if (!(map.legend === null)) {
                 map.removeControl(selfIso_legend);
             }
-            document.getElementById("update_time").innerHTML = "Last update: " + Date(form_data_obj["time"]);
+            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(form_data_obj["time"]);
 
             break;
         default:
