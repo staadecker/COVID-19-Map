@@ -41,6 +41,45 @@ form_data = {
 Note: Time stamp can be generated with  `time.asctime()` in Python.
 
 
+### Setting up Firebase Storage
+
+To allow the frontend of the map to read from the cloud storage buckets, you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
+```
+    [
+      {
+    "origin": ["*"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+then run 
+```gsutil cors set cors.json gs://flatten-staging-271921.appspot.com```
+
+You need to ensure that the firebase rules on the bucket are set up to allow reading of the files externally.
+
+
+## Deploying on Cloud Build
+
+Everything should work more or less out of the box, apart from the fact that you have to set the `_BRANCH` envoronment variable to `prod` for prouduction or `dev` for development.
+
+
+## Deploying the cloud functions
+
+You will need to set the appropriate environment variables for each.
+
+For form_data_generator, these are
+* GCS_BUCKET, should point to that which to upload the data
+* UPLOAD_FILE, the name of the file to upload the confirmed cases data to
+* DS_NAMEPSACE, datastore namespaace to get the data from
+* DS_KIND, the datastore kind to load data from
+
+For `confirmed_cases`, they are:
+* SPREADSHEET_ID, should (at the moment) be 
+* GCS_BUCKET, should point to that which to upload the data
+* UPLOAD_FILE, the name of the file to upload the confirmed cases data to
+* SHEETS_API_KEY, API key for google sheets.
+
 ## Credits
 
 Thank you to Statistics Canada for the following data.

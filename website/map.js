@@ -1,15 +1,22 @@
-// 1. Load config.json file and print to console
-const request = new XMLHttpRequest();
-request.open("GET", "config.json", false);
-request.send(null);
-// config = request.responseText;
-const config = JSON.parse(request.responseText);
+// 1. Load remote config
+const remoteConfig = firebase.remoteConfig();
+remoteConfig.settings = {
+  minimumFetchIntervalMillis: 3600000,
+};
+remoteConfig.defaultConfig = ({
+  'bucket': 'gs://flatten-271620.appspot.com',
+  // 'bucket': 'gs://flatten-staging-271921.appspot.com',
+});
+
+var bucket;
 
 // 2. Create map.
 const canada_bounds = [[38, -150], [87, -45]];
+
 const map = new L.map('map', {
     'maxBounds': canada_bounds
 });
+
 const tiles = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
  	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
@@ -219,7 +226,10 @@ function getGSBucketReference(bucket) {
 }
 
 async function obtainAndDisplayMaps() {
-    const bucket_reference = getGSBucketReference(config['bucket']);
+    await remoteConfig.fetchAndActivate();
+
+    bucket = remoteConfig.getValue('bucket').asString();
+    const bucket_reference = getGSBucketReference(bucket);
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
