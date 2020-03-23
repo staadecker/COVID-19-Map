@@ -33,10 +33,7 @@ let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, hi
 let form_data_obj, confirmed_data;
 
 function displayMaps() {
-    // 1. Set the time
-    document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
-
-    // 2. Create the layers
+    // 1. Create the layers
     // Array of Google Map API polygons for self-isolated and high-risk addresse
     selfIsolatedPolygons = L.layerGroup();
     highRiskPolygons = L.layerGroup();
@@ -45,7 +42,7 @@ function displayMaps() {
     for (let fsa in postal_code_data) {
         if (!postal_code_data.hasOwnProperty(fsa)) continue;
 
-        //3. Get the number of reports
+        //2. Get the number of reports
         let num_potential = 0;
         let num_high_risk = 0;
         let total_reports_region = 0;
@@ -203,9 +200,6 @@ function displayMaps() {
             circle.addTo(confirmedCircles);
         }
     }
-
-    // Enable marker layer
-    map.addLayer(confirmedCircles);
 }
 
 // sets the pop up to be in the center of the circle when you click on it
@@ -248,7 +242,7 @@ async function obtainAndDisplayMaps() {
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
     displayMaps();
-    toggle_clicked(null);
+    toggle_clicked("potential");
 }
 
 // Calls the function
