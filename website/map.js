@@ -5,9 +5,11 @@ remoteConfig.settings = {
 };
 remoteConfig.defaultConfig = ({
   'bucket': 'gs://flatten-271620.appspot.com',
+  // 'bucket': 'gs://flatten-staging-271921.appspot.com',
 });
 
-const bucket = remoteConfig.getValue('bucket').asString();
+var bucket;
+
 
 // 2. Create map.
 const canada_bounds = [[38, -150], [87, -45]];
@@ -228,6 +230,9 @@ function getGSBucketReference(bucket) {
 }
 
 async function obtainAndDisplayMaps() {
+    await remoteConfig.fetchAndActivate();
+
+    bucket = remoteConfig.getValue('bucket').asString();
     const bucket_reference = getGSBucketReference(bucket);
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));

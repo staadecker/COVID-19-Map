@@ -41,6 +41,25 @@ form_data = {
 Note: Time stamp can be generated with  `time.asctime()` in Python.
 
 
+### Setting up Firebase Storage
+
+To allow the frontend of the map to read from the cloud storage buckets, you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
+```
+    [
+      {
+    "origin": ["*"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+then run 
+```gsutil cors set cors.json gs://flatten-staging-271921.appspot.com```
+
+You need to ensure that the firebase rules on the bucket are set up to allow reading of the files externally.
+
+
+
 ## Credits
 
 Thank you to Statistics Canada for the following data.
