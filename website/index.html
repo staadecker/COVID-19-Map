@@ -23,15 +23,15 @@
     </div>
 
     <div class="switch-field">
-        <input type="radio" id="confirmed" name="layers" onclick="toggle_clicked(this)" value="confirmed" checked>
-        <label for="confirmed">Cumulative Confirmed Cases</label>
-
-        <input type="radio" id="in_self_isolation" name="layers" onclick="toggle_clicked(this)"
-               value="in_self_isolation">
+        <input type="radio" id="in_self_isolation" name="layers" onclick="toggle_clicked(this.value)"
+               value="potential" checked>
         <label for="in_self_isolation">Potential Cases</label>
 
-        <input type="radio" id="high_risk" name="layers" onclick="toggle_clicked(this)" value="high_risk">
+        <input type="radio" id="high_risk" name="layers" onclick="toggle_clicked(this.value)" value="vulnerable">
         <label for="high_risk">Vulnerable Individuals</label>
+
+        <input type="radio" id="confirmed" name="layers" onclick="toggle_clicked(this.value)" value="confirmed" >
+        <label for="confirmed">Cumulative Confirmed Cases</label>
     </div>
 </div>
 

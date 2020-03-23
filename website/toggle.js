@@ -1,12 +1,25 @@
-var current = "confirmed";
+function toggle_clicked(radioValue) {
+    switch (radioValue) {
+        case "confirmed":
+            confirmedCircles.addTo(map);
+            map.removeLayer(selfIsolatedPolygons);
+            map.removeLayer(highRiskPolygons);
+            document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
+            map.removeControl(selfIso_legend);
+            map.removeControl(highRisk_legend);
+            break;
 
-function toggle_clicked(radio) {
-    if (radio == null) {
-        radio = current;
-    }
-    current = radio;
-    switch (radio.value) {
-        case "in_self_isolation":
+        case "vulnerable":
+            map.removeLayer(confirmedCircles);
+            map.removeLayer(selfIsolatedPolygons);
+            highRiskPolygons.addTo(map);
+            highRisk_legend.addTo(map);
+            if (!(map.legend === null)) {
+                map.removeControl(selfIso_legend);
+            }
+            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(form_data_obj["time"]);
+            break;
+        case "potential":
             map.removeLayer(confirmedCircles);
             selfIsolatedPolygons.addTo(map);
             map.removeLayer(highRiskPolygons);
@@ -16,24 +29,8 @@ function toggle_clicked(radio) {
             }
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(form_data_obj["time"]);
             break;
-        case "high_risk":
-            map.removeLayer(confirmedCircles);
-            map.removeLayer(selfIsolatedPolygons);
-            highRiskPolygons.addTo(map);
-            highRisk_legend.addTo(map);
-            if (!(map.legend === null)) {
-                map.removeControl(selfIso_legend);
-            }
-            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(form_data_obj["time"]);
-
-            break;
         default:
-            confirmedCircles.addTo(map);
-            map.removeLayer(selfIsolatedPolygons);
-            map.removeLayer(highRiskPolygons);
-            document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
-            map.removeControl(selfIso_legend);
-            map.removeControl(highRisk_legend);
+            console.log("Toggle called with the wrong option. " + radioValue)
     }
 
     if (current_location) {
