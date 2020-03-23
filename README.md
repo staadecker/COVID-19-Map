@@ -28,22 +28,45 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 **`form_data.js`**
 
 ```
-form_data = {
-            "time" : "Sun Jun 20 23:21:05 1993", 
+{
+            "time" : 29483929829, # UTC unix timestamp in ms since the origin
+            "number_reported" : "6969", # total number of reports recieved
             "max" : {"pot": 1020, "risk": 20},
             "fsa" : {
                 "B1A" : {"pot": 23, "risk": 18},
                 .
                 .
                 .
-            };  
+    }
+} 
 ```
-Note: Time stamp can be generated with  `time.asctime()` in Python.
+`confirmed.json`
+
+```
+{
+    "last_updated" : "Date accessed at: 23/03/2020...",
+    "max_cases" : 230,
+    "confirmed_cases": [
+        {
+            "name" : "Algoma, Ontario",
+            "cases" : 1,
+            "coord" : [44.289, -79.8536]
+        },
+        {
+            "name" : "Bas-Saint-Laurent, Quebec",
+            "cases" : 2,
+            "coord" : [48.30, 23.4]
+        }
+    ]
+}
+```
 
 
-### Setting up Firebase Storage
+### Setting up Firebase Storage for the first time
 
-To allow the frontend of the map to read from the cloud storage buckets, you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
+This only needs to be done once per project, so don't worry about it.
+
+To allow the frontend of the map to read from the cloud storage buckets (storing the data), you will need to set the origin policy to allow reading of the cloud storage buckets. Add the following to a file called cors.json:
 ```
     [
       {
