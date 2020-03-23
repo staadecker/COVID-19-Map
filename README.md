@@ -30,10 +30,10 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 ```
 {
             "time" : "Sun Jun 20 23:21:05 1993",
-            "number_reported" : "6969", # total number of reports recieved
-            "max" : {"pot": 1020, "risk": 20},
+            "total_responses" : "6969", # total number of reports recieved
+            "max" : 9992,
             "fsa" : {
-                "B1A" : {"pot": 23, "risk": 18},
+                "B1A" : {"number_reports": 4938, "pot": 23, "risk": 18},
                 .
                 .
                 .
