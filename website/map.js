@@ -15,19 +15,14 @@ var bucket;
 const canada_bounds = [[38, -150], [87, -45]];
 const map = new L.map('map', {
     'maxBounds': canada_bounds
-}).setView([43.6532, -79.3832], 10);
-
-$.getJSON('https://cdn.rawgit.com/johan/world.geo.json/34c96bba/countries/CAN.geo.json').then(function(geoJSON) {
-  var osm = new L.TileLayer.BoundaryCanvas("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    boundary: geoJSON,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+});
+const tiles = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+ 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     minZoom: 4
-  });
-  map.addLayer(osm);
-  var canLayer = L.geoJSON(geoJSON);
-  map.fitBounds(canLayer.getBounds());
-});
+ }).addTo(map);
+ 
+ map.setView([43.6532, -79.3832], 10);
 
 instruction_page = document.getElementById("myModal3");
 instruction_page.style.display = "block";
