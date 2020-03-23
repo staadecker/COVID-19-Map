@@ -10,12 +10,13 @@ remoteConfig.defaultConfig = ({
 
 var bucket;
 
-
 // 2. Create map.
 const canada_bounds = [[38, -150], [87, -45]];
+
 const map = new L.map('map', {
     'maxBounds': canada_bounds
 });
+
 const tiles = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
  	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
