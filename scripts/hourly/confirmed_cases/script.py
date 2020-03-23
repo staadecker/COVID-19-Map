@@ -50,7 +50,7 @@ def get_spreadsheet_data():
 
 def geocode_sheet(values_input):
     df = pd.DataFrame(values_input)
-    df = df.drop([0, 1])
+    df = df.drop([0, 1, 2])
 
     column_names = []
 
