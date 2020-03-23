@@ -34,7 +34,7 @@ let form_data_obj, confirmed_data;
 
 function displayMaps() {
     document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
-
+    
     // Array of Google Map API polygons for self-isolated and high-risk addresse
     selfIsolatedPolygons = L.layerGroup();
     highRiskPolygons = L.layerGroup();
@@ -44,9 +44,11 @@ function displayMaps() {
 
         let num_potential = 0;
         let num_high_risk = 0;
+        let total_reports_region = 0;
         if (fsa in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][fsa]['pot'];
             num_high_risk = form_data_obj['fsa'][fsa]['risk'];
+            total_reports_region = form_data_obj['fsa'][fsa]['number_reports'];
         }
 
         const colour_selfIso = getColor_selfIso(num_potential);
@@ -55,17 +57,17 @@ function displayMaps() {
         let opacity_selfIso = 0.4;
         let opacity_highRisk = 0.4;
 
-    let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p>";
-    let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p>";
+    let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p><p>" + total_reports_region + " region reports received</p>";
+    let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p><p>" + total_reports_region + " region reports received</p>";
 
     if (num_potential === 0) {
         opacity_selfIso = 0;
-        msg_selfIso = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+        //msg_selfIso = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
     }
 
     if (num_high_risk === 0) {
         opacity_highRisk = 0;
-        msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+        //msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
     }
 
         for (let i = 0; i < postal_code_data[fsa].length; i++) {

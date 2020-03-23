@@ -29,11 +29,11 @@ Web-based map showing confirmed cases and self-isolation and at-risk counts in C
 
 ```
 {
+            "total_responses" : 6969, # total number of reports recieved
+            "max" : 9992,
             "time" : 29483929829, # UTC unix timestamp in ms since the origin
-            "number_reported" : "6969", # total number of reports recieved
-            "max" : {"pot": 1020, "risk": 20},
             "fsa" : {
-                "B1A" : {"pot": 23, "risk": 18},
+                "B1A" : {"number_reports": 4938, "pot": 23, "risk": 18},
                 .
                 .
                 .
