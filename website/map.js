@@ -1,11 +1,11 @@
 // 1. Load remote config
 const remoteConfig = firebase.remoteConfig();
 remoteConfig.settings = {
-  minimumFetchIntervalMillis: 3600000,
+    minimumFetchIntervalMillis: 3600000,
 };
 remoteConfig.defaultConfig = ({
-  'bucket': 'gs://flatten-271620.appspot.com',
-  // 'bucket': 'gs://flatten-staging-271921.appspot.com',
+    'bucket': 'gs://flatten-271620.appspot.com',
+    // 'bucket': 'gs://flatten-staging-271921.appspot.com',
 });
 
 var bucket;
@@ -18,12 +18,12 @@ const map = new L.map('map', {
 });
 
 const tiles = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
- 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     minZoom: 4
- }).addTo(map);
- 
- map.setView([43.6532, -79.3832], 10);
+}).addTo(map);
+
+map.setView([43.6532, -79.3832], 10);
 
 instruction_page = document.getElementById("myModal3");
 instruction_page.style.display = "block";
@@ -33,15 +33,19 @@ let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, hi
 let form_data_obj, confirmed_data;
 
 function displayMaps() {
+    // 1. Set the time
     document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
-    
+
+    // 2. Create the layers
     // Array of Google Map API polygons for self-isolated and high-risk addresse
     selfIsolatedPolygons = L.layerGroup();
     highRiskPolygons = L.layerGroup();
 
+    // For each postal code in Canada
     for (let fsa in postal_code_data) {
         if (!postal_code_data.hasOwnProperty(fsa)) continue;
 
+        //3. Get the number of reports
         let num_potential = 0;
         let num_high_risk = 0;
         let total_reports_region = 0;
@@ -51,27 +55,29 @@ function displayMaps() {
             total_reports_region = form_data_obj['fsa'][fsa]['number_reports'];
         }
 
+        // Get the colors
         const colour_selfIso = getColor_selfIso(num_potential);
         const colour_highRisk = getColor_highRisk(num_high_risk);
 
         let opacity_selfIso = 0.4;
         let opacity_highRisk = 0.4;
 
-    let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p><p>" + total_reports_region + " region reports received</p>";
-    let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p><p>" + total_reports_region + " region reports received</p>";
+        let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p><p>" + total_reports_region + " reports in this region in total were received.</p>";
+        let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p><p>" + total_reports_region + " reports in this region in total were received.</p>";
 
-    if (num_potential === 0) {
-        opacity_selfIso = 0;
-        //msg_selfIso = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-    }
+        if (num_potential === 0) {
+            opacity_selfIso = 0;
+        }
 
-    if (num_high_risk === 0) {
-        opacity_highRisk = 0;
-        //msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-    }
+        if (num_high_risk === 0) {
+            opacity_highRisk = 0;
+        }
+
+        if (total_reports_region === 0){
+            msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+        }
 
         for (let i = 0; i < postal_code_data[fsa].length; i++) {
-
             // Add the polygons.
             const selfIsolatedPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
                 weight: 0.9,
@@ -80,6 +86,7 @@ function displayMaps() {
                 fillColor: colour_selfIso,
                 fillOpacity: opacity_selfIso,
             });
+
             const highRiskPolygon = new L.Polygon(postal_code_data[fsa][i]['coord'], {
                 weight: 0.9,
                 color: 'gray',
@@ -89,9 +96,9 @@ function displayMaps() {
             });
 
 
-        //Initialize infowindow text
-        selfIsolatedPolygon.bindPopup(msg_selfIso);
-        highRiskPolygon.bindPopup(msg_highRisk);
+            //Initialize infowindow text
+            selfIsolatedPolygon.bindPopup(msg_selfIso);
+            highRiskPolygon.bindPopup(msg_highRisk);
 
             // Add polygons to polygon arrays and add click listeners.
             selfIsolatedPolygon.addTo(selfIsolatedPolygons);
@@ -201,8 +208,8 @@ function displayMaps() {
 }
 
 // sets the pop up to be in the center of the circle when you click on it
-map.on("popupopen", function(event) {
-    if(typeof(event.popup.popup_idx) != 'undefined') {
+map.on("popupopen", function (event) {
+    if (typeof (event.popup.popup_idx) != 'undefined') {
         event.popup.setLatLng(confirmed_data['confirmed_cases'][event.popup.popup_idx]['coord']);
     }
 });
@@ -230,7 +237,7 @@ function getGSBucketReference(bucket) {
 async function obtainAndDisplayMaps() {
     try {
         await remoteConfig.fetchAndActivate();
-    } catch(e) {
+    } catch (e) {
         console.log("Issue fetching remote config...");
     }
 
