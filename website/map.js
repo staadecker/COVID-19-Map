@@ -226,7 +226,11 @@ function getGSBucketReference(bucket) {
 }
 
 async function obtainAndDisplayMaps() {
-    await remoteConfig.fetchAndActivate();
+    try {
+        await remoteConfig.fetchAndActivate();
+    } catch(e) {
+        console.log("Issue fetching remote config...");
+    }
 
     bucket = remoteConfig.getValue('bucket').asString();
     const bucket_reference = getGSBucketReference(bucket);
