@@ -59,6 +59,11 @@ then run
 You need to ensure that the firebase rules on the bucket are set up to allow reading of the files externally.
 
 
+## Deploying on Cloud Build
+
+Everything should work more or less out of the box, apart from the fact that you have to set the `_BRANCH` envoronment variable to `prod` for prouduction or `dev` for development.
+
+
 
 ## Credits
 
