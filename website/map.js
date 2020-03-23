@@ -62,8 +62,8 @@ function displayMaps() {
         let opacity_selfIso = 0.4;
         let opacity_highRisk = 0.4;
 
-        let msg_selfIso = "<h3>" + fsa + "</h3><p>Received reports from " + num_potential + " potential cases</p><p>" + total_reports_region + " reports in this region in total were received.</p>";
-        let msg_highRisk = "<h3>" + fsa + "</h3><p>Received reports from " + num_high_risk + " vulnerable individuals</p><p>" + total_reports_region + " reports in this region in total were received.</p>";
+        let msg_selfIso = "<h3>" + fsa + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
+        let msg_highRisk = "<h3>" + fsa + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>" + total_reports_region + " reports in total.</p>";
 
         if (num_potential === 0) {
             opacity_selfIso = 0;
@@ -73,7 +73,8 @@ function displayMaps() {
             opacity_highRisk = 0;
         }
 
-        if (total_reports_region === 0){
+        if (total_reports_region === 0) {
+            msg_selfIso = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
             msg_highRisk = "<h3>" + fsa + "</h3><p>We haven't had enough form responses in this region yet.</p>";
         }
 
