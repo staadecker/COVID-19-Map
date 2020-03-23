@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "website",
+    "site": "flatten-staging-271921",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
