@@ -2,16 +2,18 @@
 
 Web-based map showing confirmed cases, potential cases and vulnerable populations in Canada based on publicly available data and data from [flatten.ca](flatten.ca).
 
-## Details
+## Important Details
 
-- The basics of a webpage (markup, styles, scripts) can be found in the `/website` directory.
-- Randomized generators for local data are in `/data_generator_scripts` (to be moved shortly).
+- The repository contains two components a webpage and background scripts contained in the `\website` and `\data_generator_scripts` directories.
+- Any changes to the stagging branch are automatically pushed to https://flatten-staging-271921.web.app/. Any changes to master are automatically pushed to https://flatten.ca.
+- **All contributions should be made on a new branch and a pull request to *staging* should be made.**
 
 ## Prerequisites
 
 For front-end:
 - A web browser.
-  - [Chrome](https://www.google.com/chrome) or [Chromium](https://www.chromium.org)-based browsers are recommended.
+- The firebase command line interface (CLI).
+  - Available [https://firebase.google.com/docs/cli#install_the_firebase_cli](here).
 
 For back-end:
 - [Python 3.5+](https://www.python.org/)
@@ -22,11 +24,9 @@ Front-end:
 
 1. Ask Martin to create you a flatten Google account and give you read permissions to the storage.
 
-2. Install the Firebase command line interface from [https://firebase.google.com/docs/cli#install_the_firebase_cli](here) if not already.
+2. If you were already logged in run `firebase logout` then `firebase login`. Use your newly generated Google account.
 
-3. If you were already logged in run `firebase logout` then `firebase login`. Use your newly generated Google account.
-
-4. Create two new files in the root directory called `firebase.json` and `.firebasec`. They should have the same contents as `deployment/firebase.staging.json` and `deployment/.firebasec.staging`.
+3. Create two new files in the root directory called `firebase.json` and `.firebasec`. They should have the same contents as `deployment/firebase.staging.json` and `deployment/.firebasec.staging`. Do not commit these files (they should be automatically ignored).
 
 Back-end:
 
@@ -42,7 +42,7 @@ Front-end
 
 Back-end
 
-- Run the Python script
+- Run the Python script.
 
 ## Internal Notes
 
