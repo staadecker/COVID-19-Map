@@ -7,6 +7,7 @@ Web-based map showing confirmed cases, potential cases and vulnerable population
 - The repository contains two components a webpage and background scripts contained in the `\website` and `\data_generator_scripts` directories.
 - Any changes to the stagging branch are automatically pushed to https://flatten-staging-271921.web.app/. Any changes to master are automatically pushed to https://flatten.ca.
 - **All contributions should be made on a new branch and a pull request to *staging* should be made.**
+- **Use  the Issues tabs to keep track of bugs, improvements and more. Use the Projects tab to keep track of work!**
 
 ## Prerequisites
 
