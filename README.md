@@ -14,7 +14,7 @@ Web-based map showing confirmed cases, potential cases and vulnerable population
 For front-end:
 - A web browser.
 - The firebase command line interface (CLI).
-  - Available [https://firebase.google.com/docs/cli#install_the_firebase_cli](here).
+  - Available https://firebase.google.com/docs/cli#install_the_firebase_cli.
 
 For back-end:
 - [Python 3.5+](https://www.python.org/)
