@@ -67,7 +67,7 @@ function displayMaps() {
             total_reports_region = form_data_obj['fsa'][fsa]['number_reports'];
         }
 
-        // Get the Colours.
+        // Get the colours.
         const colour_selfIso = getColour_selfIso(num_potential);
         const colour_highRisk = getColour_highRisk(num_high_risk);
 
@@ -83,25 +83,29 @@ function displayMaps() {
         }
 
         postal_code_data[fsa].forEach(function (datum) {
+            const selfIsolatedPolygon = new L.Polygon(datum['coord'], {
+                weight: 0.9,
+                color: 'gray',
+                dashArray: '3',
+                fillColor: colour_selfIso,
+                fillOpacity: opacity_selfIso,
+            });
+
+            const highRiskPolygon = new L.Polygon(datum['coord'], {
+                weight: 0.9,
+                color: 'gray',
+                dashArray: '3',
+                fillColor: colour_highRisk,
+                fillOpacity: opacity_highRisk,
+            });
+
             // Initialize infowindow text.
             selfIsolatedPolygon.bindPopup(msg_selfIso);
             highRiskPolygon.bindPopup(msg_highRisk);
 
-            // Create polygons, add click listeners and add to polygon arrays.
-            selfIsolatedPolygon.addTo(new L.Polygon(datum['coord'], {
-                weight: 0.9,
-                Colour: 'gray',
-                dashArray: '3',
-                fillColour: colour_selfIso,
-                fillOpacity: opacity_selfIso,
-            }));
-            highRiskPolygon.addTo(new L.Polygon(datum['coord'], {
-                weight: 0.9,
-                Colour: 'gray',
-                dashArray: '3',
-                fillColour: colour_highRisk,
-                fillOpacity: opacity_highRisk,
-            }));
+            // Add polygons to polygon arrays and add click listeners.
+            selfIsolatedPolygon.addTo(selfIsolatedPolygons);
+            highRiskPolygon.addTo(highRiskPolygons);
         });
     }
 
@@ -112,7 +116,7 @@ function displayMaps() {
             grades = [1, 10, 20, 50, 100, 200, 500, 1000],
 
         /*  Loop through our density intervals and generate a label with a
-            Coloured square for each interval. */
+            coloured square for each interval. */
         for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour_selfIso(grades[i] + 1) + '"></i> ' +
@@ -129,7 +133,7 @@ function displayMaps() {
         const div = L.DomUtil.create('div', 'info legend'),
         grades = [1, 10, 20, 50, 100, 200, 500, 1000],
 
-        // Loop through our density intervals and generate a label with a Coloured square for each interval.
+        // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour_highRisk(grades[i] + 1) + '"></i> ' +
@@ -155,8 +159,8 @@ function displayMaps() {
 
         const circle = new L.circleMarker(confirmed_cases_data[i]['coord'], {
             weight: 0,
-            Colour: 'red',
-            fillColour: '#f03',
+            color: 'red',
+            fillColor: '#f03',
             fillOpacity: 0.5,
             radius: rad
         });
