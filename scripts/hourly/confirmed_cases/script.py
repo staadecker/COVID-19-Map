@@ -86,7 +86,11 @@ def geocode_sheet(values_input):
                        "Haliburton Kawartha Pineridge, Ontario": "Haliburton, Ontario",
                        "Labrador-Grenfell, NL": "Labrador City, NL",
                        "Fraser, BC": "Fraser Valley, BC",
-                       "Zone 3 (Fredericton area), New Brunswick": "Fredericton, New Brunswick"
+                       "Zone 3 (Fredericton area), New Brunswick": "Fredericton, New Brunswick",
+                       "Zone 1 (Moncton Area), New Brunswick": "Moncton, New Brunswick",
+                       "North, Saskatchewan": "La Ronge, Saskatchewan",
+                       "North, Alberta": "Peerless Lake, Alberta",
+                       "South, Saskatchewan": "Moose Jaw, Saskatchewan"
                        }
 
     output = {'last_updated': last_updated, 'max_cases': int(df.max()), 'confirmed_cases':[]}
