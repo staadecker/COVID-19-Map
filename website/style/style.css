@@ -8,7 +8,6 @@ body {
     z-index: 0;
 }
 
-
 /* Set the size of the div element that contains the map */
 #map {
     width: 100%; /* The width is the width of the web page */
@@ -38,7 +37,7 @@ body {
 /* Define styling for radio buttons */
 .switch-field {
     display: flex;
-    margin: 0px 10px 10px 3px;
+    margin: 0 10px 10px 3px;
     padding: 2px;
     overflow: hidden;
     float: left;

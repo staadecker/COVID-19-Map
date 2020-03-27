@@ -1,57 +1,31 @@
-// Get the modal
-const modal1 = document.getElementById("myModal1");
-const modal2 = document.getElementById("myModal2");
-const modal3 = document.getElementById("myModal3");
+// Get the modal.
+const about_map_modal = document.getElementById("about_map_modal");
+const about_us_modal = document.getElementById("about_us_modal");
+const instructions_modal = document.getElementById("instructions_modal");
 
-// Get the button that opens the modal
-const btn1 = document.getElementById("myBtn1");
-const btn2 = document.getElementById("myBtn2");
-const btn3 = document.getElementById("myBtn3");
+//  Functions
+const displayModal = modal => modal.style.display = "block";
+const hideModal = modal => modal.style.display = "none";
 
-// Get the <span> element that closes the modal
-//var span = document.getElementsByClassName("close")[0];
-const span1 = document.getElementById("close1");
-const span2 = document.getElementById("close2");
-const span3 = document.getElementById("close3");
+// Open modal when button is pressed
+document.getElementById("about_map_btn").onclick = () => displayModal(about_map_modal);
+document.getElementById("about_us_btn").onclick = () => displayModal(about_us_modal);
+document.getElementById("instructions_btn").onclick = () => displayModal(instructions_modal);
 
-// When the user clicks the button, open the modal
-btn1.onclick = function () {
-    modal1.style.display = "block";
-};
+// When the user clicks on <span> (x), close the modal.
+document.getElementById("close1").onclick = () => hideModal(about_map_modal);
+document.getElementById("close2").onclick = () => hideModal(about_us_modal);
+document.getElementById("close3").onclick = () => hideModal(instructions_modal);
 
-btn2.onclick = function () {
-    modal2.style.display = "block";
-};
-
-btn3.onclick = function () {
-    modal3.style.display = "block";
-};
-
-
-// When the user clicks on <span> (x), close the modal
-span1.onclick = function () {
-    modal1.style.display = "none";
-};
-
-span2.onclick = function () {
-    modal2.style.display = "none";
-};
-
-span3.onclick = function () {
-    modal3.style.display = "none";
-};
-
-// When the user clicks anywhere outside of the modal, close it
+// When the user clicks anywhere outside of the modal, close it.
 window.onclick = function (event) {
-    if (event.target === modal1) {
-        modal1.style.display = "none";
-    }
-
-    if (event.target === modal2) {
-        modal2.style.display = "none";
-    }
-
-    if (event.target === modal3) {
-        modal3.style.display = "none";
+    switch (event.target) {
+        case about_map_modal:
+        case about_us_modal:
+        case instructions_modal:
+            hideModal(event.target);
+            break;
     }
 };
+
+displayModal(instructions_modal);

@@ -7,7 +7,7 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
@@ -44,13 +44,13 @@
     </div>
 
     <div class="footer">
-        <div id="myBtn3" class="footer_element"> Instructions</div>
-        <div id="myBtn1" class="footer_element"> About this map</div>
-        <div id="myBtn2" class="footer_element"> About Us</div>
+        <div id="instructions_btn" class="footer_element"> Instructions</div>
+        <div id="about_map_btn" class="footer_element"> About this map</div>
+        <div id="about_us_btn" class="footer_element"> About Us</div>
     </div>
 
-    <!-- The Modal (pop up) -->
-    <div id="myModal1" class="modal">
+    <!-- The Modals (pop ups) -->
+    <div id="about_map_modal" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
@@ -87,9 +87,7 @@
             </ul>
         </div>
     </div>
-
-
-    <div id="myModal2" class="modal">
+    <div id="about_us_modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close2" class="close">&times;</span>
@@ -99,8 +97,7 @@
             <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
         </div>
     </div>
-
-    <div id="myModal3" class="modal">
+    <div id="instructions_modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close3" class="close">&times;</span>
@@ -120,18 +117,20 @@
             <p>In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.</p>
         </div>
     </div>
+</div>
 
-    <!-- Firebase JS SDK -->
-    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-remote-config.js"></script>
-    <script src="/__/firebase/7.12.0/firebase-storage.js"></script>
-    <script src="/__/firebase/init.js"></script>
+<!-- Firebase JS SDK -->
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-remote-config.js"></script>
+<script src="/__/firebase/7.12.0/firebase-storage.js"></script>
+<script src="/__/firebase/init.js"></script>
 
 
-    <script type="text/javascript" src="map.js"></script>
-    <script type="text/javascript" src="location.js"></script>
-    <script type="text/javascript" src="toggle.js"></script>
-    <script type="text/javascript" src="modal.js"></script>
+<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="location.js"></script>
+<script type="text/javascript" src="toggle.js"></script>
+<script type="text/javascript" src="modal.js"></script>
+<script type="text/javascript" src="data_loader.js"></script>
 
 </body>
 </html>
