@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "website",
+    "public": "/",
     "site": "flatten-staging-271921",
     "ignore": [
       "firebase.json",
@@ -10,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "index.html"
       }
     ]
   }
