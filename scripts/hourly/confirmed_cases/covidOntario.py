@@ -385,33 +385,38 @@ def getYorkData():
 
 
 def main():
-    covidOntario = {'Algoma': get_algoma_data(), 'Brant County': getBrantCountyData(),
-                    'Chatham Kent': getChathamKentData(), 'Durham': getDurhamData(),
-                    'Eastern Ontario': getEasternOntarioData(),
-                    'Haliburton Kawartha Pine Ridge': getHaliburtonKawarthaPineRidgeData(), 'Halton': getHaltonData(),
-                    'Hamilton': getHamiltonData(), "Hastings Prince Edward": getHastingsPrinceEdwardData(),
-                    "Huron and Perth": getHuronData(),
-                    "Kingston Frontenac Lennox and Addington": getKingstonFrontenacLennoxAddingtonData(),
-                    "Lambton": getLambtonData(), 'Leeds, Grenvile and Lanark': getLeedsGrenvilleLanarkData(),
-                    'Middlesex-London': getMiddlesexLondonData(), 'Niagara Region': getNiagaraData(),
-                    'North Bay Parry Sound': getNorthBayParrySoundData(), 'Northwestern Ontario': getNorthWesternData(),
-                    "Ottawa": getOttawaData(), "Peel": getPeelData(), "Peterborough": getPeterboroughData(),
-                    "Porcupine": getPorcupineData(), "Renfrew County": getRenfrewCountyData(),
-                    "Simcoe Muskoka": getSimcoeMuskokaData(), "Southwestern": getSouthwesternData(),
-                    "Sudbury": getSudburyData(), "Thunder Bay": getThunderBayData(),
-                    "Timiskaming": getTimiskamingData(), "Toronto": getTorontoData(), "Waterloo": getWaterlooData(),
-                    "Wellington-Dufferin-Guelph": getWellingtonDufferinGuelphData(),
-                    "Windsor-Essex County": getWindsorEssexCountyData(), "York": getYorkData()}
-    #
-    #
+    covidOntarioFunctions = {'Algoma': get_algoma_data, 'Brant County': getBrantCountyData,
+                    'Chatham Kent': getChathamKentData, 'Durham': getDurhamData,
+                    'Eastern Ontario': getEasternOntarioData,
+                    'Haliburton Kawartha Pine Ridge': getHaliburtonKawarthaPineRidgeData, 'Halton': getHaltonData,
+                    'Hamilton': getHamiltonData, "Hastings Prince Edward": getHastingsPrinceEdwardData,
+                    "Huron and Perth": getHuronData,
+                    "Kingston Frontenac Lennox and Addington": getKingstonFrontenacLennoxAddingtonData,
+                    "Lambton": getLambtonData, 'Leeds, Grenvile and Lanark': getLeedsGrenvilleLanarkData,
+                    'Middlesex-London': getMiddlesexLondonData, 'Niagara Region': getNiagaraData,
+                    'North Bay Parry Sound': getNorthBayParrySoundData, 'Northwestern Ontario': getNorthWesternData,
+                    "Ottawa": getOttawaData, "Peel": getPeelData, "Peterborough": getPeterboroughData,
+                    "Porcupine": getPorcupineData, "Renfrew County": getRenfrewCountyData,
+                    "Simcoe Muskoka": getSimcoeMuskokaData, "Southwestern": getSouthwesternData,
+                    "Sudbury": getSudburyData, "Thunder Bay": getThunderBayData,
+                    "Timiskaming": getTimiskamingData, "Toronto": getTorontoData, "Waterloo": getWaterlooData,
+                    "Wellington-Dufferin-Guelph": getWellingtonDufferinGuelphData,
+                    "Windsor-Essex County": getWindsorEssexCountyData, "York": getYorkData}
+
+    covidOntarioResults = {}
 
     total = 0
-    for value in covidOntario.values():
-        total += value["Positive"]
+    for key, value in covidOntarioFunctions.items():
+        try:
+            covidOntarioResults[key] = value()
+            total += covidOntarioResults[key]["Positive"]
+        except:
+            print("Error on function: " + key)
+
     print(total)
 
     with open(f"covidOntario{date.today().isoformat()}.json", 'w') as jsonFile:
-        json.dump(covidOntario, jsonFile, indent=1)
+        json.dump(covidOntarioResults, jsonFile, indent=1)
 
 
 if __name__ == '__main__':
