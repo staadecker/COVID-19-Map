@@ -37,7 +37,7 @@ body {
 /* Define styling for radio buttons */
 .switch-field {
     display: flex;
-    margin: 0px 10px 10px 3px;
+    margin: 0 10px 10px 3px;
     padding: 2px;
     overflow: hidden;
     float: left;
