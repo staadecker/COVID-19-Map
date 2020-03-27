@@ -113,7 +113,7 @@ function displayMaps() {
     selfIso_legend = L.control({position: 'bottomright'});
     selfIso_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+            grades = [1, 10, 20, 50, 100, 200, 500, 1000];
 
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
@@ -131,7 +131,7 @@ function displayMaps() {
 
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend'),
-        grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+        grades = [1, 10, 20, 50, 100, 200, 500, 1000];
 
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < grades.length; i++) {
