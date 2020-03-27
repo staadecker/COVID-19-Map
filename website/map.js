@@ -105,24 +105,24 @@ function displayMaps() {
     }
 
     function getColor_selfIso(cases) {
-        return cases > 1000 ? '#800026' :
-            cases > 500 ? '#BD0026' :
-                cases > 200 ? '#E31A1C' :
-                    cases > 100 ? '#FC4E2A' :
-                        cases > 50 ? '#FD8D3C' :
-                            cases > 20 ? '#FEB24C' :
-                                cases > 10 ? '#FED976' :
+        return cases > 30 ? '#800026' :
+            cases > 25 ? '#BD0026' :
+                cases > 20 ? '#E31A1C' :
+                    cases > 15 ? '#FC4E2A' :
+                        cases > 10 ? '#FD8D3C' :
+                            cases > 7 ? '#FEB24C' :
+                                cases > 3 ? '#FED976' :
                                     '#FFEDA0';
     }
 
     function getColor_highRisk(cases) {
-        return cases > 1000 ? '#2e012d' :
-            cases > 500 ? '#620147' :
-                cases > 200 ? '#a81c6f' :
-                    cases > 100 ? '#f32074' :
-                        cases > 50 ? '#f6577d' :
-                            cases > 20 ? '#f98378' :
-                                cases > 10 ? '#fa9e95' :
+        return cases > 30 ? '#2e012d' :
+            cases > 25 ? '#620147' :
+                cases > 20 ? '#a81c6f' :
+                    cases > 15 ? '#f32074' :
+                        cases > 10 ? '#f6577d' :
+                            cases > 7 ? '#f98378' :
+                                cases > 3 ? '#fa9e95' :
                                     '#ffc4a7';
     }
 
@@ -132,7 +132,7 @@ function displayMaps() {
     selfIso_legend.onAdd = function (map) {
 
         const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+            grades = [1, 3, 7, 10, 15, 20, 25, 30],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
@@ -151,7 +151,7 @@ function displayMaps() {
     highRisk_legend.onAdd = function (map) {
 
         const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+            grades = [1, 3, 7, 10, 15, 20, 25, 30],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
