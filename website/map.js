@@ -1,10 +1,11 @@
 // 2. Create map.
 const CANADA_BOUNDS = [[38, -150], [87, -45]];
 const TORONTO = [43.6532, -79.3832];
-const POT_COLOUR_SCHEME = ['#800026', '#BD0026', '#E31A1C', '#FC4E2A', '#FD8D3C', '#FEB24C', '#FED976', '#FFEDA0'];
-const HIGH_RISK_COLOUR_SCHEME = ['#2e012d', '#620147', '#a81c6f', '#f32074', '#f6577d', '#f98378', '#fa9e95', '#ffc4a7'];
-const COLOUR_SCHEME_THRESHOLD = [1000, 500, 200, 100, 50, 20, 10, 0];
 const INITIAL_ZOOM = 10;
+
+const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
+const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
+const COLOUR_SCHEME_THRESHOLDS = [0, 3, 7, 10, 15, 20, 25, 30];
 
 // Create map
 const map = new L.map('map', {
@@ -27,15 +28,15 @@ let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, hi
 let form_data_obj, confirmed_data;
 
 function getColour(cases, colour_scheme) {
-    if (COLOUR_SCHEME_THRESHOLD.length !== colour_scheme.length)
+    if (COLOUR_SCHEME_THRESHOLDS.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
 
 
-    for (let i = 0; i < COLOUR_SCHEME_THRESHOLD.length; i++) {
-        if (cases >= COLOUR_SCHEME_THRESHOLD[i]) return colour_scheme[i];
+    for (let i = 1; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
+        if (cases <= COLOUR_SCHEME_THRESHOLDS[i]) return colour_scheme[i - 1];
     }
 
-    return colour_scheme[colour_scheme.length - 1];
+    return colour_scheme[COLOUR_SCHEME_THRESHOLDS.length - 1];
 }
 
 function displayMaps() {
@@ -103,16 +104,15 @@ function displayMaps() {
 
     // Legend for self-isolated cases.
     selfIso_legend = L.control({position: 'bottomright'});
-    selfIso_legend.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000];
 
+    selfIso_legend.onAdd = function (map) {
+        const div = L.DomUtil.create('div', 'info legend');
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
-        for (let i = 0; i < grades.length; i++) {
+        for (let i = 0; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(grades[i] + 1, POT_COLOUR_SCHEME) + '"></i> ' +
-                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColour(COLOUR_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME) + '"></i> ' +
+                (COLOUR_SCHEME_THRESHOLDS[i]+1) + (COLOUR_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + COLOUR_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
@@ -123,7 +123,7 @@ function displayMaps() {
 
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000];
+            grades = COLOUR_SCHEME_THRESHOLDS;
 
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < grades.length; i++) {
@@ -173,8 +173,6 @@ function displayMaps() {
 }
 
 // Sets the popup to be in the center of the circle when you click on it.
-
-
 function onPopupOpen(event) {
     if (typeof (event.popup.popup_idx) != 'undefined')
         event.popup.setLatLng(confirmed_data['confirmed_cases'][event.popup.popup_idx]['coord']);
