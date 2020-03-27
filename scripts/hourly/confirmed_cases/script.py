@@ -78,7 +78,7 @@ def geocode_sheet(values_input):
     geolocator = Nominatim(user_agent="COVIDScript")
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
 
-    name_exceptions = {"`, Ontario": "Kingston, Ontario",
+    name_exceptions = {"Kingston Frontenac Lennox & Addington, Ontario": "Kingston, Ontario",
                        "Zone 2 (Saint John area), New Brunswick": "Saint John, New Brunswick",
                        "Island, BC": "Vancouver Island, BC",
                        "Interior, BC": "Golden, BC",
@@ -92,7 +92,6 @@ def geocode_sheet(values_input):
                        "North, Saskatchewan": "La Ronge, Saskatchewan",
                        "North, Alberta": "Peerless Lake, Alberta",
                        "South, Saskatchewan": "Moose Jaw, Saskatchewan",
-                       "Kingston Frontenac Lennox & Addington, Ontario": "Kingston, Ontario",
                        "North Bay Parry Sound, Ontario": "North Bay, Ontario",
                        "Leeds Grenville Lanark": "Brockville, Ontario",
                        "Southwestern": "St. Thomas, Ontario"
