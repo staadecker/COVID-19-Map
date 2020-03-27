@@ -1,8 +1,6 @@
 .idea
 .DS_Store
-.firebase
-/firebase-debug.log
-**/__pycache__
 
+firebase-debug.log
 .firebaserc
 firebase.json
