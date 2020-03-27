@@ -12,6 +12,7 @@ from datetime import datetime
 import script
 import os
 import covidOntario
+import pytz
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -65,7 +66,7 @@ def geocode_sheet(values_input):
 
     print(df.iloc[-1])
 
-    now = datetime.now()
+    now = datetime.now(pytz.timezone('US/Eastern'))
     dt_string = now.strftime("%d/%m/%Y %H:%M")
     dt_string.replace('/', '-')
     last_updated = "Data last accessed at: " + dt_string + ". Latest case reported on: " + str(df.iloc[-1]['date_report']) + "."
@@ -94,7 +95,8 @@ def geocode_sheet(values_input):
                        "South, Saskatchewan": "Moose Jaw, Saskatchewan",
                        "North Bay Parry Sound, Ontario": "North Bay, Ontario",
                        "Leeds Grenville Lanark": "Brockville, Ontario",
-                       "Southwestern": "St. Thomas, Ontario"
+                       "Southwestern": "St. Thomas, Ontario",
+                       "Zone 4 (Edmundston area), New Brunswick": "Edmundston, New Brunswick"
                        }
 
     output = {'last_updated': last_updated, 'max_cases': int(df.max()), 'confirmed_cases':[]}
