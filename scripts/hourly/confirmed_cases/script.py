@@ -179,7 +179,7 @@ def output_json(output):
     upload_blob(bucket, output_string, UPLOAD_FILE)
 
 dispatcher = {
-    'Algoma': covidOntario.getAlgomaData,
+    'Algoma': covidOntario.get_algoma_data,
     'Brant': covidOntario.getBrantCountyData,
     'Chatham-Kent': covidOntario.getChathamKentData,
     'Durham': covidOntario.getDurhamData,
