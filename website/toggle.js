@@ -14,26 +14,24 @@ function toggle_clicked(radioValue) {
             map.removeLayer(selfIsolatedPolygons);
             highRiskPolygons.addTo(map);
             highRisk_legend.addTo(map);
-            if (!(map.legend === null)) {
-                map.removeControl(selfIso_legend);
-            }
+            if (!(map.legend === null)) map.removeControl(selfIso_legend);
+
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
             break;
+
         case "potential":
             map.removeLayer(confirmedCircles);
             selfIsolatedPolygons.addTo(map);
             map.removeLayer(highRiskPolygons);
             selfIso_legend.addTo(map);
-            if (!(map.legend === null)) {
-                map.removeControl(highRisk_legend);
-            }
+            if (!(map.legend === null)) map.removeControl(highRisk_legend);
+
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
             break;
+
         default:
             console.log("Toggle called with the wrong option. " + radioValue)
     }
 
-    if (current_location) {
-        current_location.bringToFront();
-    }
+    if (current_location) current_location.bringToFront();
 }

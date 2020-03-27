@@ -2,11 +2,11 @@
 let current_location;
 
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
         const latit = position.coords.latitude;
         const longit = position.coords.longitude;
 
-        // this is just a marker placed in that position
+        // This is just a marker placed in that position.
         current_location = L.circleMarker([position.coords.latitude, position.coords.longitude], {
             color: 'white',
             fillColor: 'blue',
@@ -15,7 +15,8 @@ if (navigator.geolocation) {
             weight: 2
         }).addTo(map);
         current_location.bindPopup("<h3>Current Location</h3>");
-        // move the map to have the location in its center
+
+        // Move the map to have the location in its center.
         map.setView(new L.LatLng(latit, longit), 10);
     });
 }

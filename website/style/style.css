@@ -8,7 +8,6 @@ body {
     z-index: 0;
 }
 
-
 /* Set the size of the div element that contains the map */
 #map {
     width: 100%; /* The width is the width of the web page */
@@ -38,7 +37,7 @@ body {
 /* Define styling for radio buttons */
 .switch-field {
     display: flex;
-    margin: 0px 10px 10px 3px;
+    margin: 0 10px 10px 3px;
     padding: 2px;
     overflow: hidden;
     float: left;
@@ -46,16 +45,16 @@ body {
 
 
 /* Different button style for desktop devices */
- @media (min-width:700px) {
-  .switch-field  {
-    display: flex;
-    margin: 10px 10px 10px 3px;
-    overflow: hidden;
-    float: left;
-    position: absolute;
-    top: 10px;
-    left: 35%;
-  }
+@media (min-width: 700px) {
+    .switch-field {
+        display: flex;
+        margin: 10px 10px 10px 3px;
+        overflow: hidden;
+        float: left;
+        position: absolute;
+        top: 10px;
+        left: 35%;
+    }
 }
 
 .switch-field input {
@@ -114,7 +113,8 @@ body {
     color: white;
     text-align: center;
     z-index: 2;
-    background-color: #001f3f;font-size: large;
+    background-color: #001f3f;
+    font-size: large;
 }
 
 
