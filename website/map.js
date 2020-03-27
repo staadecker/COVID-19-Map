@@ -41,7 +41,7 @@ function getColour_highRisk(cases) {
 function getColour(cases, colours) {
     let thresholds = [1000, 500, 200, 100, 50, 20, 10, -1];
     for (let i = 0; i < Math.max(thresholds.length, colours.length); i++) {
-        if (cases > thresolds[i]) return colours[i];
+        if (cases > thresholds[i]) return colours[i];
     }
     return colours[colours.length-1];
 }
