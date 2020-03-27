@@ -122,14 +122,12 @@ function displayMaps() {
     highRisk_legend = L.control({position: 'bottomright'});
 
     highRisk_legend.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'info legend'),
-            grades = COLOUR_SCHEME_THRESHOLDS;
-
+        const div = L.DomUtil.create('div', 'info legend');
         // Loop through our density intervals and generate a label with a coloured square for each interval.
-        for (let i = 0; i < grades.length; i++) {
+        for (let i = 0; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(grades[i] + 1, HIGH_RISK_COLOUR_SCHEME) + '"></i> ' +
-                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColour(COLOUR_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME) + '"></i> ' +
+                (COLOUR_SCHEME_THRESHOLDS[i]+1) + (COLOUR_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + COLOUR_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
