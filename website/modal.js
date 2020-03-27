@@ -15,37 +15,43 @@ const span2 = document.getElementById("close2");
 const span3 = document.getElementById("close3");
 
 // When the user clicks the button, open the modal.
-btn1.onclick = function() {
+btn1.onclick = function () {
     modal1.style.display = "block";
 };
 
-btn2.onclick = function() {
+btn2.onclick = function () {
     modal2.style.display = "block";
 };
 
-btn3.onclick = function() {
+btn3.onclick = function () {
     modal3.style.display = "block";
 };
 
 
 // When the user clicks on <span> (x), close the modal.
-span1.onclick = function() {
+span1.onclick = function () {
     modal1.style.display = "none";
 };
 
-span2.onclick = function() {
+span2.onclick = function () {
     modal2.style.display = "none";
 };
 
-span3.onclick = function() {
+span3.onclick = function () {
     modal3.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it.
-window.onclick = function(event) {
+window.onclick = function (event) {
     switch (event.target) {
-        case modal1: modal1.style.display = "none"; break;
-        case modal2: modal2.style.display = "none"; break;
-        case modal3: modal3.style.display = "none"; break;
+        case modal1:
+            modal1.style.display = "none";
+            break;
+        case modal2:
+            modal2.style.display = "none";
+            break;
+        case modal3:
+            modal3.style.display = "none";
+            break;
     }
 };
