@@ -8,7 +8,6 @@ body {
     z-index: 0;
 }
 
-
 /* Set the size of the div element that contains the map */
 #map {
     width: 100%; /* The width is the width of the web page */

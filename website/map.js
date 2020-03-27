@@ -1,39 +1,41 @@
-
-
 // 2. Create map.
-const canada_bounds = [[38, -150], [87, -45]];
+const CANADA_BOUNDS = [[38, -150], [87, -45]];
+const TORONTO = [43.6532, -79.3832];
+const POT_COLOUR_SCHEME = ['#800026', '#BD0026', '#E31A1C', '#FC4E2A', '#FD8D3C', '#FEB24C', '#FED976', '#FFEDA0'];
+const HIGH_RISK_COLOUR_SCHEME = ['#2e012d', '#620147', '#a81c6f', '#f32074', '#f6577d', '#f98378', '#fa9e95', '#ffc4a7'];
+const COLOUR_SCHEME_THRESHOLD = [1000, 500, 200, 100, 50, 20, 10, 0];
+const INITIAL_ZOOM = 10;
 
-const map = new L.map('map', {'maxBounds': canada_bounds});
+// Create map
+const map = new L.map('map', {
+    'maxBounds': CANADA_BOUNDS,
+    'center': TORONTO,
+    'zoom': INITIAL_ZOOM,
+    'layers': [
+        new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            minZoom: 4
+        })
+    ]
+});
 
-const tiles = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    minZoom: 4
-}).addTo(map);
-
-map.setView([43.6532, -79.3832], 10);
-
-instruction_page = document.getElementById("myModal3");
-instruction_page.style.display = "block";
+map.on("popupopen", onPopupOpen);
 
 const postal_code_data = JSON.parse(data_postal_code_boundaries);
 let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
 
-function getColour_selfIso(cases) {
-    return getColour(cases, ['#800026', '#BD0026', '#E31A1C', '#FC4E2A', '#FD8D3C', '#FEB24C', '#FED976', '#FFEDA0']);
-}
+function getColour(cases, colour_scheme) {
+    if (COLOUR_SCHEME_THRESHOLD.length !== colour_scheme.length)
+        console.log("WARNING: list lengths don't match in getColour.");
 
-function getColour_highRisk(cases) {
-    return getColour(cases, ['#2e012d', '#620147', '#a81c6f', '#f32074', '#f6577d', '#f98378', '#fa9e95', '#ffc4a7']);
-}
 
-function getColour(cases, colours) {
-    let thresholds = [1000, 500, 200, 100, 50, 20, 10, -1];
-    for (let i = 0; i < Math.max(thresholds.length, colours.length); i++) {
-        if (cases > thresholds[i]) return colours[i];
+    for (let i = 0; i < COLOUR_SCHEME_THRESHOLD.length; i++) {
+        if (cases >= COLOUR_SCHEME_THRESHOLD[i]) return colour_scheme[i];
     }
-    return colours[colours.length - 1];
+
+    return colour_scheme[colour_scheme.length - 1];
 }
 
 function displayMaps() {
@@ -58,8 +60,8 @@ function displayMaps() {
         }
 
         // Get the colours.
-        const colour_selfIso = getColour_selfIso(num_potential);
-        const colour_highRisk = getColour_highRisk(num_high_risk);
+        const colour_selfIso = getColour(num_potential, POT_COLOUR_SCHEME);
+        const colour_highRisk = getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME);
 
         let opacity_selfIso = (num_potential === 0) ? 0 : 0.4;
         let opacity_highRisk = (num_high_risk === 0) ? 0 : 0.4;
@@ -109,7 +111,7 @@ function displayMaps() {
             coloured square for each interval. */
         for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour_selfIso(grades[i] + 1) + '"></i> ' +
+                '<i style="background:' + getColour(grades[i] + 1, POT_COLOUR_SCHEME) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 
@@ -126,7 +128,7 @@ function displayMaps() {
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour_highRisk(grades[i] + 1) + '"></i> ' +
+                '<i style="background:' + getColour(grades[i] + 1, HIGH_RISK_COLOUR_SCHEME) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 
@@ -171,10 +173,12 @@ function displayMaps() {
 }
 
 // Sets the popup to be in the center of the circle when you click on it.
-map.on("popupopen", function (event) {
+
+
+function onPopupOpen(event) {
     if (typeof (event.popup.popup_idx) != 'undefined')
         event.popup.setLatLng(confirmed_data['confirmed_cases'][event.popup.popup_idx]['coord']);
-});
+}
 
 
 
