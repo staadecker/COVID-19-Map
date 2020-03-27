@@ -15,7 +15,7 @@ function toggle_clicked(radioValue) {
             highRiskPolygons.addTo(map);
             highRisk_legend.addTo(map);
             if (!(map.legend === null)) map.removeControl(selfIso_legend);
-
+            
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
             break;
 

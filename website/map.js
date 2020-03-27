@@ -43,7 +43,7 @@ function getColour(cases, colours) {
     for (let i = 0; i < Math.max(thresholds.length, colours.length); i++) {
         if (cases > thresolds[i]) return colours[i];
     }
-    return colours[colours.length - 1];
+    return colours[colours.length-1];
 }
 
 function displayMaps() {
@@ -71,8 +71,8 @@ function displayMaps() {
         const colour_selfIso = getColour_selfIso(num_potential);
         const colour_highRisk = getColour_highRisk(num_high_risk);
 
-        let opacity_selfIso = (num_potential === 0) ? 0 : 0.4;
-        let opacity_highRisk = (num_high_risk === 0) ? 0 : 0.4;
+        let opacity_selfIso = (num_potential === 0) ? 0: 0.4;
+        let opacity_highRisk = (num_high_risk === 0) ? 0: 0.4;
 
         let msg_selfIso = "<h3>" + fsa + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
         let msg_highRisk = "<h3>" + fsa + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " + total_reports_region + " reports in total.</p>";
@@ -115,15 +115,9 @@ function displayMaps() {
         const div = L.DomUtil.create('div', 'info legend'),
             grades = [1, 10, 20, 50, 100, 200, 500, 1000],
 
-            /*  Loop through our density intervals and generate a label with a
-                coloured square for each interval. */
-            for
-        (let
-        i = 0;
-        i < grades.length;
-        i++
-    )
-        {
+        /*  Loop through our density intervals and generate a label with a
+            coloured square for each interval. */
+        for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour_selfIso(grades[i] + 1) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
@@ -137,16 +131,10 @@ function displayMaps() {
 
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 10, 20, 50, 100, 200, 500, 1000],
+        grades = [1, 10, 20, 50, 100, 200, 500, 1000],
 
-            // Loop through our density intervals and generate a label with a coloured square for each interval.
-            for
-        (let
-        i = 0;
-        i < grades.length;
-        i++
-    )
-        {
+        // Loop through our density intervals and generate a label with a coloured square for each interval.
+        for (let i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour_highRisk(grades[i] + 1) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
