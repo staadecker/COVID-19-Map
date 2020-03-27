@@ -1,4 +1,3 @@
-// 2. Create map.
 const CANADA_BOUNDS = [[38, -150], [87, -45]];
 const TORONTO = [43.6532, -79.3832];
 const INITIAL_ZOOM = 10;
