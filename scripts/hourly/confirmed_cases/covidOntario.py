@@ -385,7 +385,7 @@ def getYorkData():
 
 
 def main():
-    covidOntarioFunctions = {'Algoma': get_algoma_data, 'Brant County': getBrantCountyData,
+    covid_ontario_functions = {'Algoma': get_algoma_data, 'Brant County': getBrantCountyData,
                     'Chatham Kent': getChathamKentData, 'Durham': getDurhamData,
                     'Eastern Ontario': getEasternOntarioData,
                     'Haliburton Kawartha Pine Ridge': getHaliburtonKawarthaPineRidgeData, 'Halton': getHaltonData,
@@ -403,20 +403,20 @@ def main():
                     "Wellington-Dufferin-Guelph": getWellingtonDufferinGuelphData,
                     "Windsor-Essex County": getWindsorEssexCountyData, "York": getYorkData}
 
-    covidOntarioResults = {}
+    covid_ontario_results = {}
 
     total = 0
-    for key, value in covidOntarioFunctions.items():
+    for key, value in covid_ontario_functions.items():
         try:
-            covidOntarioResults[key] = value()
-            total += covidOntarioResults[key]["Positive"]
+            covid_ontario_results[key] = value()
+            total += covid_ontario_results[key]["Positive"]
         except:
             print("Error on function: " + key)
 
     print(total)
 
     with open(f"covidOntario{date.today().isoformat()}.json", 'w') as jsonFile:
-        json.dump(covidOntarioResults, jsonFile, indent=1)
+        json.dump(covid_ontario_results, jsonFile, indent=1)
 
 
 if __name__ == '__main__':
