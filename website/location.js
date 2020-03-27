@@ -2,7 +2,7 @@
 let current_location;
 
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
         const latit = position.coords.latitude;
         const longit = position.coords.longitude;
 
