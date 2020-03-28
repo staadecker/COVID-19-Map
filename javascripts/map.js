@@ -4,7 +4,8 @@ const INITIAL_ZOOM = 10;
 
 const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
 const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
-const COLOUR_SCHEME_THRESHOLDS = [0, 3, 7, 10, 15, 20, 25, 30];
+const POT_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 350, 500];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 500, 700];
 
 // Create map
 const map = new L.map('map', {
@@ -26,16 +27,16 @@ const postal_code_data = JSON.parse(data_postal_code_boundaries);
 let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
 
-function getColour(cases, colour_scheme) {
-    if (COLOUR_SCHEME_THRESHOLDS.length !== colour_scheme.length)
+function getColour(cases, colour_scheme, color_thresholds) {
+    if (color_thresholds.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
 
 
-    for (let i = 1; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
-        if (cases <= COLOUR_SCHEME_THRESHOLDS[i]) return colour_scheme[i - 1];
+    for (let i = 1; i < color_thresholds.length; i++) {
+        if (cases <= color_thresholds[i]) return colour_scheme[i - 1];
     }
 
-    return colour_scheme[COLOUR_SCHEME_THRESHOLDS.length - 1];
+    return colour_scheme[color_thresholds.length - 1];
 }
 
 function displayMaps() {
@@ -60,8 +61,8 @@ function displayMaps() {
         }
 
         // Get the colours.
-        const colour_selfIso = getColour(num_potential, POT_COLOUR_SCHEME);
-        const colour_highRisk = getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME);
+        const colour_selfIso = getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS);
+        const colour_highRisk = getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS);
 
         let opacity_selfIso = (num_potential === 0) ? 0 : 0.4;
         let opacity_highRisk = (num_high_risk === 0) ? 0 : 0.4;
@@ -108,10 +109,10 @@ function displayMaps() {
         const div = L.DomUtil.create('div', 'info legend');
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
-        for (let i = 0; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
+        for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(COLOUR_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME) + '"></i> ' +
-                (COLOUR_SCHEME_THRESHOLDS[i]+1) + (COLOUR_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + COLOUR_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
+                (POT_SCHEME_THRESHOLDS[i]+1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
@@ -123,10 +124,10 @@ function displayMaps() {
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         // Loop through our density intervals and generate a label with a coloured square for each interval.
-        for (let i = 0; i < COLOUR_SCHEME_THRESHOLDS.length; i++) {
+        for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(COLOUR_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME) + '"></i> ' +
-                (COLOUR_SCHEME_THRESHOLDS[i]+1) + (COLOUR_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + COLOUR_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
+                (HIGH_RISK_SCHEME_THRESHOLDS[i]+1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
