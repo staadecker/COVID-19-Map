@@ -1,199 +1,39 @@
+@import url("footer.css");
+@import url("legend.css");
+@import url("popup-elements.css");
+@import url("radio-buttons.css");
+
 * {
-    font-family: Roboto, Tahoma, sans-serif !important;
+  font-family: Roboto, Tahoma, sans-serif !important;
 }
 
 body {
-    background-color: #001f3f;
-    color: white;
-    z-index: 0;
+  background-color: #001f3f;
+  color: white;
+  z-index: 0;
 }
 
 /* Set the size of the div element that contains the map */
 #map {
-    width: 100%; /* The width is the width of the web page */
-    color: black;
-    z-index: 1;
+  width: 100%; /* The width is the width of the web page */
+  color: black;
+  z-index: 1;
 }
 
 /* Different button style for mobile devices */
 @media (min-width: 700px) {
-    #map {
-        height: calc(100vh - 200px);
-    }
+  #map {
+    height: calc(100vh - 200px);
+  }
 }
 
 /* Different button style for desktop */
 @media (max-width: 700px) {
-    #map {
-        height: calc(100vh - 300px);
-    }
+  #map {
+    height: calc(100vh - 300px);
+  }
 }
 
 .name_div {
-    float: left;
+  float: left;
 }
-
-
-/* Define styling for radio buttons */
-.switch-field {
-    display: flex;
-    margin: 0 10px 10px 3px;
-    padding: 2px;
-    overflow: hidden;
-    float: left;
-}
-
-
-/* Different button style for desktop devices */
-@media (min-width: 700px) {
-    .switch-field {
-        display: flex;
-        margin: 10px 10px 10px 3px;
-        overflow: hidden;
-        float: left;
-        position: absolute;
-        top: 10px;
-        left: 35%;
-    }
-}
-
-.switch-field input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-}
-
-.switch-field label {
-    background-color: #001f3f;
-    color: #4da6ff;
-    font-size: 14px;
-    line-height: 1;
-    text-align: center;
-    padding: 8px 16px;
-    margin-right: -2px;
-    border: 2px solid #4da6ff; /* sky blue*/
-    /* border-left: 0px; */
-    transition: all 0.1s ease-in-out;
-}
-
-.switch-field label:hover {
-    cursor: pointer;
-}
-
-.switch-field input:checked + label {
-    background-color: #4da6ff;
-    /*color: #001f3f; /* navy */
-    color: white;
-    /* font-weight: bold;*/
-    box-shadow: none;
-}
-
-.switch-field label:first-of-type {
-    border-radius: 8px 0 0 8px;
-}
-
-.switch-field label:last-of-type {
-    border-radius: 0 8px 8px 0;
-}
-
-
-/* End styling for radio buttons */
-
-
-/* Footer style */
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    /*background-color: #034f84; */
-    color: white;
-    text-align: center;
-    z-index: 2;
-    background-color: #001f3f;
-    font-size: large;
-}
-
-
-.footer_element {
-    display: inline-block;
-    margin: 10px;
-}
-
-.footer_element:hover,
-.footer_element:active,
-.footer_element:focus {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-/* End footer style */
-
-/*Styling for the legend*/
-.legend {
-    line-height: 18px;
-    color: #555;
-    font-size: medium;
-}
-
-.legend i {
-    width: 16px;
-    height: 16px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-}
-
-
-/* Styling for footer pop up elements */
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    /*overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    max-height: calc(100vh - 210px);
-    overflow: auto;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    color: #001f3f;
-    word-wrap: break-word;
-}
-
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-ul li {
-    padding: 5px 0;
-}
-
-/* End pop up elements styling */
