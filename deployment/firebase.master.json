@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "website",
+    "public": "/",
     "site": "flatten-271620",
     "ignore": [
       "firebase.json",
