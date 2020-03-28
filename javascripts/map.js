@@ -4,8 +4,8 @@ const INITIAL_ZOOM = 10;
 
 const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
 const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
-const POT_SCHEME_THRESHOLDS = [0, 5, 10, 20, 30, 40, 50, 100];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 25, 50, 100, 200, 250];
+const POT_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 350, 500];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 500, 700];
 
 // Create map
 const map = new L.map('map', {
