@@ -6,6 +6,7 @@ const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A'
 const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
 const POT_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 350, 500];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 500, 700];
+const MAX_RAD = 35;
 
 // Create map
 const map = new L.map('map', {
@@ -136,15 +137,14 @@ function displayMaps() {
     // Array of Leaflet API markers for confirmed cases.
     confirmedCircles = L.layerGroup();
 
-    const max_rad = 35;
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
         if (confirmed_cases_data[i]['coord'][0] === "N/A") continue;
 
         // Add the marker.
-        let rad = 5;
+        let rad = 6;
         if (confirmed_cases_data[i]['cases'] >= 10) {
-            rad += confirmed_cases_data[i]['cases'] / confirmed_data['max_cases'] * max_rad;
+            rad += confirmed_cases_data[i]['cases'] / confirmed_data['max_cases'] * MAX_RAD;
         }
 
         const circle = new L.circleMarker(confirmed_cases_data[i]['coord'], {
