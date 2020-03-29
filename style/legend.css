@@ -1,0 +1,14 @@
+/*Styling for the legend*/
+.legend {
+  line-height: 18px;
+  color: #555;
+  font-size: medium;
+}
+
+.legend i {
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
