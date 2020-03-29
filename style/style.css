@@ -1,16 +1,16 @@
 * {
-    font-family: Roboto, Tahoma, sans-serif !important;
+    font-family: Roboto, Tahoma, sans-serif;
 }
 
 body {
-    background-color: #001f3f;
-    color: white;
+    background-color: white;
+    color: black;
     z-index: 0;
 }
 
 /* Set the size of the div element that contains the map */
 #map {
-    width: 100%; /* The width is the width of the web page */
+    width: 99%; /* The width is the width of the web page */
     color: black;
     z-index: 1;
 }
@@ -33,17 +33,6 @@ body {
     float: left;
 }
 
-
-/* Define styling for radio buttons */
-.switch-field {
-    display: flex;
-    margin: 0 10px 10px 3px;
-    padding: 2px;
-    overflow: hidden;
-    float: left;
-}
-
-
 /* Different button style for desktop devices */
 @media (min-width: 700px) {
     .switch-field {
@@ -57,50 +46,130 @@ body {
     }
 }
 
-.switch-field input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-}
+/* Dividing Page into Two Unequal Columns */
+* {
+    box-sizing: border-box;
+    width: 100%
+  }
+  
+  /* Create two unequal columns that floats next to each other */
+  .column {
+    float: left;
+    padding: 10px;
+  }
+  .left {
+    width: 30%;
+  }
+  .right {
+    width: 70%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 
-.switch-field label {
-    background-color: #001f3f;
-    color: #4da6ff;
-    font-size: 14px;
-    line-height: 1;
+
+
+/* Dividing Page into Two Equal Columns */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Create two equal columns that floats next to each other */
+  .equalcolumn {
+    float: left;
+    padding: 10px;
+    background-color: white; /* White background */
+    background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
     text-align: center;
-    padding: 8px 16px;
-    margin-right: -2px;
-    border: 2px solid #4da6ff; /* sky blue*/
-    /* border-left: 0px; */
-    transition: all 0.1s ease-in-out;
-}
+    color: #ffffff;
+    font-size: 14px;
+    margin: 2px 2px; 
+  }
+  .equalleft {
+    width: 48.75%;
+  }
+  .equalright {
+    width: 48.75%;
+  }
+  
+  /* Clear floats after the columns */
+  .equalrow:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 
-.switch-field label:hover {
-    cursor: pointer;
-}
-
-.switch-field input:checked + label {
-    background-color: #4da6ff;
-    /*color: #001f3f; /* navy */
+/* These Buttons for the toggle */
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
     color: white;
-    /* font-weight: bold;*/
-    box-shadow: none;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 0px 0px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .button1 {
+    background-color: #8c8c8c; 
+    color: white; 
+    border: 2px solid 	#8c8c8c;
+    border-bottom: none;
+  }
+  
+  .button1:focus {
+    background-color: 	white;
+    color: #8c8c8c;
+  }
+
+  .button2 {
+    background-color: #8c8c8c; 
+    color: white; 
+    border: 2px solid 	#8c8c8c;
+    border-bottom: none;
+  }
+  
+  .button2:focus {
+    background-color: 	white;
+    color: #8c8c8c;
+  }
+
+  .button3 {
+    background-color: #8c8c8c; 
+    color: white; 
+    border: 2px solid 	#8c8c8c;
+    border-bottom: none;
+  }
+  
+  .button3:focus {
+    background-color: 	white;
+    color: #8c8c8c;
+  }
+
+
+/* Making a Rectangular Box */
+.rectangularbox {
+    float: left;
+    padding: 10px;
+    background-color:white; /* White background */
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    /*border: 2px solid #6e1313; /* Grey border */
+    color: rgb(151, 37, 37);
+    font-size: 14px;
+    margin: 2px 2px; 
+    text-align: center;
+    width: 99%;
 }
 
-.switch-field label:first-of-type {
-    border-radius: 8px 0 0 8px;
-}
-
-.switch-field label:last-of-type {
-    border-radius: 0 8px 8px 0;
-}
-
-
-/* End styling for radio buttons */
 
 
 /* Footer style */
@@ -110,16 +179,17 @@ body {
     bottom: 0;
     width: 100%;
     /*background-color: #034f84; */
-    color: white;
+    color: black;
     text-align: center;
     z-index: 2;
-    background-color: #001f3f;
+    background-color: #ffffff;
     font-size: large;
+    padding: 18px;
 }
 
 
 .footer_element {
-    display: inline-block;
+    display: inline;
     margin: 10px;
 }
 
@@ -135,7 +205,7 @@ body {
 /*Styling for the legend*/
 .legend {
     line-height: 18px;
-    color: #555;
+    color: #8c8c8c;
     font-size: medium;
 }
 
@@ -197,3 +267,61 @@ ul li {
 }
 
 /* End pop up elements styling */
+
+/*not sure how taking in the submission works, but this was seen in tutorial code*/
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #8c8c8c;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+  
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+  
+  /*this is for the search by postal code field*/
+  .container {
+    background-color: #8c8c8c;
+    color: white;
+    padding: 20px;
+  }
+  
+  .description-col {
+    float: left;
+    width: 35%;
+    margin-top: 6px;
+  }
+  
+  .field-col {
+    float: left;
+    width: 40%;
+    margin-top: 6px;
+  }
+  .submit-col {
+      float: right;
+      width: 20%;
+      margin-top: 6px;
+  }
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

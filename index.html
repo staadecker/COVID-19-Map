@@ -10,44 +10,114 @@
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
+    
+  
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script type="text/javascript" src="res/postal_code_boundaries.js"></script>
+
+    <title>Font Awesome Icons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
 <div id='header'>
     <div class='name_div'>
-        <h3>Canadian Coronavirus Map</h3>
+       <h2><center>Canadian COVID-19 Map</center></h2> 
+      
+        <div class="row">
+        <div class="column left" style="background-color:white">
+         
+            <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+                <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
+
+              &nbsp;
+
+            <div class="container">
+                <form action="/action_page.php">
+                <div class="row">
+                    <div class="description-col">
+                    <label for="postal">View a Specific Region </label>
+                    </div>
+                    <div class="field-col">
+                    <input type="text" id="postal" name="postalcode" placeholder="First 3 digits of postal code">
+                    </div>
+                    <div class="submit-col">
+                    <input type="submit" value="Search">
+                    </div>
+                </div>  
+                </form>
+            </div>
+
+           
+
+              <h3><center>L5H Numbers</center></h3> 
+
+              <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                     style="background-image: linear-gradient(to top right, #F1BF7B , rgb(247, 218, 177));">
+                  <p>Total Responses</p>
+                  <h1>956</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                     style="background-image: linear-gradient(to top right, #F1BF7B , rgb(247, 218, 177));">
+                  <p>Potential Cases</p>
+                  <h1>672</h1>
+                </div>
+              </div>
+
+              <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                     style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                  <p>Cumulative Confirmed Cases</p>
+                  <h1>22</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                     style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                  <p>Current Confirmed Cases</p>
+                  <h1>1300</h1>
+                </div>
+              </div>
+
+              <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                     style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                  <p>Total Vulnerable Individuals</p>
+                  <h1>79</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                     style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                     <p>Total Recovered Individuals</p>
+                     <h1>45</h1>
+                </div>
+              </div>
+      
+         
+        </div>
+        <div class="column right" style="background-color:white">
+            <!--The div element for the map -->
+            <div id="map"></div>
+
+            <div id="update_time">
+                <p></p>
+            </div>
+            </div>
+        </div>
+
+
     </div>
 
-    <div class="switch-field">
-        <input type="radio" id="in_self_isolation" name="layers" onclick="toggle_clicked(this.value)"
-               value="potential" checked>
-        <label for="in_self_isolation">Potential Cases</label>
-
-        <input type="radio" id="high_risk" name="layers" onclick="toggle_clicked(this.value)" value="vulnerable">
-        <label for="high_risk">Vulnerable Individuals</label>
-
-        <input type="radio" id="confirmed" name="layers" onclick="toggle_clicked(this.value)" value="confirmed">
-        <label for="confirmed">Cumulative Confirmed Cases</label>
-    </div>
+ 
 </div>
 
-<!--The div element for the map -->
-<div id="body">
-    <div id="map"></div>
-
-    <div id="update_time">
-        <p></p>
-    </div>
 
     <div class="footer">
-        <div id="instructions_btn" class="footer_element"> Instructions</div>
-        <div id="about_map_btn" class="footer_element"> About this map</div>
-        <div id="about_us_btn" class="footer_element"> About Us</div>
-    </div>
+        <div id="instructions_btn" class="footer_element"><i class="fas fa-question-circle" style="font-size:24px;"></i></div>
+        <div id="about_map_btn" class="footer_element"> <i class="fas fa-info-circle" style="font-size:24px;"></i></div>
+        <div id="about_us_btn" class="footer_element"> <i class="fas fa-user-friends" style="font-size:24px;"></i></div>
+     </div>
 
     <!-- The Modals (pop ups) -->
     <div id="about_map_modal" class="modal">
@@ -55,7 +125,7 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close1" class="close">&times;</span>
-            <h3> About this map </h3>
+            <h3> About This Map </h3>
             <p>
                 This map displays a) confirmed COVID-19 cases b) individuals who are believed to be potential cases
                 based on
@@ -84,6 +154,7 @@
                     Outbreak in Canada.
                     <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
                 </li>
+                <li>Confirmed cases in Ontario: Regional Public Health Units.</li>
             </ul>
         </div>
     </div>
@@ -114,7 +185,7 @@
             <p><b>Vulnerable Individuals: </b>This tab displays all individuals that are especially vulnerable to
                 COVID-19 in Canada,
                 based on data inputted into Flatten's form.</p>
-            <p>In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.</p>
+            <p>In order to ensure non-trolling, we use cookies, recaptcha and track suspicious IP addresses.</p>
         </div>
     </div>
 </div>
