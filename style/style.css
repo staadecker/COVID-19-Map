@@ -295,22 +295,25 @@ input[type=text], select, textarea {
   .container {
     background-color: #8c8c8c;
     color: white;
-    padding: 10px;
-    width: 98%;
+    padding: 20px;
   }
   
   .description-col {
     float: left;
-    width: 35%;
+    width: 28%;
     margin-top: 6px;
   }
   
   .field-col {
     float: left;
-    width: 65%;
+    width: 40%;
     margin-top: 6px;
   }
-  
+  .submit-col {
+      float: right;
+      width: 19%;
+      margin-top: 6px;
+  }
   .row:after {
     content: "";
     display: table;
