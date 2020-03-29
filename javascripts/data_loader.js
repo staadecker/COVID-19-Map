@@ -5,7 +5,6 @@ remoteConfig.settings = {
 };
 remoteConfig.defaultConfig = ({
     'bucket': 'gs://flatten-271620.appspot.com',
-    // 'bucket': 'gs://flatten-staging-271921.appspot.com',
 });
 
 var bucket;
