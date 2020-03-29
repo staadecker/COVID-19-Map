@@ -1,233 +1,40 @@
+@import url("footer.css");
+@import url("legend.css");
+@import url("popup-elements.css");
+@import url("radio-buttons.css");
+
 * {
-    font-family: Roboto, Tahoma, sans-serif;
+  font-family: Roboto, Tahoma, sans-serif !important;
 }
 
 body {
-    background-color: white;
-    color: black;
-    z-index: 0;
+  background-color: #001f3f;
+  color: white;
+  z-index: 0;
 }
 
 /* Set the size of the div element that contains the map */
 #map {
-    width: 99%; /* The width is the width of the web page */
-    color: black;
-    z-index: 1;
+  width: 100%; /* The width is the width of the web page */
+  color: black;
+  z-index: 1;
 }
 
 /* Different button style for mobile devices */
 @media (min-width: 700px) {
-    #map {
-        height: calc(100vh - 200px);
-    }
+  #map {
+    height: calc(100vh - 200px);
+  }
 }
 
 /* Different button style for desktop */
 @media (max-width: 700px) {
-    #map {
-        height: calc(100vh - 300px);
-    }
+  #map {
+    height: calc(100vh - 300px);
+  }
 }
 
-.name_div {
-    float: left;
-}
-
-/* Different button style for desktop devices */
-@media (min-width: 700px) {
-    .switch-field {
-        display: flex;
-        margin: 10px 10px 10px 3px;
-        overflow: hidden;
-        float: left;
-        position: absolute;
-        top: 10px;
-        left: 35%;
-    }
-}
-
-/* Dividing Page into Two Unequal Columns */
-* {
-    box-sizing: border-box;
-    width: 100%
-  }
-  
-  /* Create two unequal columns that floats next to each other */
-  .column {
-    float: left;
-    padding: 10px;
-  }
-  .left {
-    width: 30%;
-  }
-  .right {
-    width: 70%;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-
-
-/* Dividing Page into Two Equal Columns */
-* {
-    box-sizing: border-box;
-  }
-  
-  /* Create two equal columns that floats next to each other */
-  .equalcolumn {
-    float: left;
-    padding: 10px;
-    background-color: white; /* White background */
-    background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
-    text-align: center;
-    color: #ffffff;
-    font-size: 14px;
-    margin: 2px 2px; 
-  }
-  .equalleft {
-    width: 48.75%;
-  }
-  .equalright {
-    width: 48.75%;
-  }
-  
-  /* Clear floats after the columns */
-  .equalrow:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-/* These Buttons for the toggle */
-.button {
-  background-color: ffffff; /* Gray background */
-  /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
-  border: 2px solid #cccccc; /* Black border */
-  color: #6d6d6d; /* White text */
-  padding: 26px 24px; /* Some padding */
-  margin: 2px 0px;
-  cursor: pointer; /* Pointer/hand icon */
-  width: 32%; /* Set a width if needed */
-  font-size: 14px;
-  }
-  
-  .button1 {
-    background-color: #ffffff; 
-    color: #F0B666; 
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button1:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #F0B666;
-  }
-
-  .button2 {
-    background-color: #ffffff; 
-    color: #E6807C;
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button2:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #E6807C;
-  }
-
-  .button3 {
-    background-color: #ffffff; 
-    color: #ab6b79; 
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button3:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #ab6b79;
-  }
-
-
-/* Making a Rectangular Box */
-.rectangularbox {
-    float: left;
-    padding: 10px;
-    background-color:white; /* White background */
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    /*border: 2px solid #6e1313; /* Grey border */
-    color: rgb(151, 37, 37);
-    font-size: 14px;
-    margin: 2px 2px; 
-    text-align: center;
-    width: 99%;
-}
-
-
-
-/* Footer style */
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    /*background-color: #034f84; */
-    color: black;
-    text-align: center;
-    z-index: 2;
-    background-color: #ffffff;
-    font-size: large;
-    padding: 18px;
-}
-
-
-.footer_element {
-    display: inline;
-    margin: 10px;
-}
-
-.footer_element:hover,
-.footer_element:active,
-.footer_element:focus {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-/* End footer style */
-
-/*Styling for the legend*/
-.legend {
-    line-height: 18px;
-    color: #8c8c8c;
-    font-size: medium;
-}
-
-.legend i {
-    width: 16px;
-    height: 16px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-}
-
-
-/* Styling for footer pop up elements */
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    /*overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
-}
-
+<<<<<<< HEAD
 /* Modal Content */
 .modal-content {
     max-height: calc(100vh - 210px);
@@ -319,3 +126,8 @@ input[type=text], select, textarea {
     display: table;
     clear: both;
   }
+=======
+.name_div {
+  float: left;
+}
+>>>>>>> 691ed530df4e0d80659748abee5b9e487ebd30bb
