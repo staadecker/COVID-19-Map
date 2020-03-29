@@ -29,24 +29,26 @@
         <div class="row">
         <div class="column left" style="background-color:white">
          
-            <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
                 <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
                 <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
 
+              &nbsp;
               &nbsp;
 
             <div class="container">
                 <form action="/action_page.php">
                 <div class="row">
                     <div class="description-col">
-                    <label for="postal">View a Specific Region </label>
+                    <label for="postal">View a Region </label>
                     </div>
                     <div class="field-col">
                     <input type="text" id="postal" name="postalcode" placeholder="First 3 digits of postal code">
                     </div>
-                    <div class="submit-col">
-                    <input type="submit" value="Search">
-                    </div>
+                    &nbsp
+                <div class="row">
+                        <input type="submit" value="Search">
+                </div>
                 </div>  
                 </form>
             </div>
@@ -57,12 +59,12 @@
 
               <div class="equalrow">
                 <div class="equalcolumn equalleft" 
-                     style="background-image: linear-gradient(to top right, #F1BF7B , rgb(247, 218, 177));">
+                     style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
                   <p>Total Responses</p>
                   <h1>956</h1>
                 </div>
                 <div class="equalcolumn equalright" 
-                     style="background-image: linear-gradient(to top right, #F1BF7B , rgb(247, 218, 177));">
+                     style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
                   <p>Potential Cases</p>
                   <h1>672</h1>
                 </div>

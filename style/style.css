@@ -105,54 +105,48 @@ body {
 
 /* These Buttons for the toggle */
 .button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    margin: 0px 0px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    width: 100%;
+  background-color: ffffff; /* Gray background */
+  /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
+  border: 2px solid #cccccc; /* Black border */
+  color: #6d6d6d; /* White text */
+  padding: 26px 24px; /* Some padding */
+  margin: 2px 0px;
+  cursor: pointer; /* Pointer/hand icon */
+  width: 32%; /* Set a width if needed */
+  font-size: 14px;
   }
   
   .button1 {
-    background-color: #8c8c8c; 
-    color: white; 
+    background-color: #ffffff; 
+    color: #F0B666; 
     border: 2px solid 	#8c8c8c;
-    border-bottom: none;
   }
   
   .button1:focus {
-    background-color: 	white;
-    color: #8c8c8c;
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #F0B666;
   }
 
   .button2 {
-    background-color: #8c8c8c; 
-    color: white; 
+    background-color: #ffffff; 
+    color: #E6807C;
     border: 2px solid 	#8c8c8c;
-    border-bottom: none;
   }
   
   .button2:focus {
-    background-color: 	white;
-    color: #8c8c8c;
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #E6807C;
   }
 
   .button3 {
-    background-color: #8c8c8c; 
-    color: white; 
+    background-color: #ffffff; 
+    color: #ab6b79; 
     border: 2px solid 	#8c8c8c;
-    border-bottom: none;
   }
   
   .button3:focus {
-    background-color: 	white;
-    color: #8c8c8c;
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #ab6b79;
   }
 
 
@@ -283,7 +277,7 @@ input[type=text], select, textarea {
   }
   
   input[type=submit] {
-    background-color: #4CAF50;
+    background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));
     color: white;
     padding: 12px 20px;
     border: none;
@@ -293,7 +287,7 @@ input[type=text], select, textarea {
   }
   
   input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #ab6b79;
   }
   
   
@@ -301,7 +295,8 @@ input[type=text], select, textarea {
   .container {
     background-color: #8c8c8c;
     color: white;
-    padding: 20px;
+    padding: 10px;
+    width: 98%;
   }
   
   .description-col {
@@ -312,14 +307,10 @@ input[type=text], select, textarea {
   
   .field-col {
     float: left;
-    width: 40%;
+    width: 65%;
     margin-top: 6px;
   }
-  .submit-col {
-      float: right;
-      width: 20%;
-      margin-top: 6px;
-  }
+  
   .row:after {
     content: "";
     display: table;
