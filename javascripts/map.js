@@ -1,11 +1,15 @@
+// stays in Canada
 const CANADA_BOUNDS = [[38, -150], [87, -45]];
+// starts you in ontario
 const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
-const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
-const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
-const POT_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 350, 500];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 500, 700];
+// white, yellow, orange, brown, red, black
+const POT_COLOUR_SCHEME = ['#e6e600', '#ff9900', '#ff0000', '#663300', '#000000'];
+const HIGH_RISK_COLOUR_SCHEME = ['#e6e600', '#ff9900', '#ff0000', '#663300', '#000000'];
+const POT_SCHEME_THRESHOLDS = [0, 10, 50, 250, 500];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
+// max size circle can be on map
 const MAX_RAD = 35;
 
 // Create map
@@ -24,9 +28,12 @@ const map = new L.map('map', {
 
 map.on("popupopen", onPopupOpen);
 
+// toggles between polygons and circles
 let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
+// gets data from gcloud
 let form_data_obj, confirmed_data;
 
+// assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
     if (color_thresholds.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
@@ -39,10 +46,12 @@ function getColour(cases, colour_scheme, color_thresholds) {
     return colour_scheme[color_thresholds.length - 1];
 }
 
+
 function displayMaps() {
     // 1. Create the layers
 
     // Leaflet layerGroups to help with toggling
+    // polygons in each layer group
     selfIsolatedPolygons = L.layerGroup();
     highRiskPolygons = L.layerGroup();
 
@@ -50,14 +59,18 @@ function displayMaps() {
     function selfIso_style(feature) {
         let num_potential = 0;
         let num_total = 0;
+
+        // only set numbers if it exists in form_data_obj
         if (feature.properties.CFSAUID in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
             num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
         }
         return {
+            // define the outlines of the map
             weight: 0.9,
             color: 'gray',
             dashArray: '3',
+            // define the color and opacity of each polygon
             fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
             fillOpacity: (num_potential === 0) ? 0 : 0.4,
         }
@@ -82,6 +95,7 @@ function displayMaps() {
 
     // Add self-isolation polygons
     L.geoJSON(post_code_boundaries, {
+        //styles each polygons individually based on their features
         style: selfIso_style,
 
         // Adding modals to each post code
@@ -123,7 +137,7 @@ function displayMaps() {
 
             layer.bindPopup(msg_highRisk);
         }
-
+    // add to layer group
     }).addTo(highRiskPolygons);
 
     // Legend for self-isolated cases.
