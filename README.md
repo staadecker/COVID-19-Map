@@ -18,15 +18,21 @@ Web-based map showing confirmed cases, potential cases and vulnerable population
 
 ## Setting up
 
-1. Ask Martin to create you a flatten Google account and give you read permissions to the storage.
+1. Ask Martin to create you a flatten Google account and give you read permissions to the storage (so you can load data on the map).
 
-2. If you were already logged in run `firebase logout` then `firebase login`. Use your newly generated Google account.
+2. Copy over the content from `deployment/firebase.staging.json` into a new file in your root directory called `firebase.json`. Do not commit this new file (it should be automatically ignored).
 
-3. Create two new files in the root directory called `firebase.json` and `.firebasec`. They should have the same contents as `deployment/firebase.staging.json` and `deployment/.firebasec.staging`. Do not commit these files (they should be automatically ignored).
+3. Run `firebase login`. Use your flatten credentials. If you're already logged in you might need to run `firebase logout`.
+
+4. Run `firebase use --add flatten-staging-271921`. To set the project.
 
 ## Running the app
 
-- Run `firebase serve` and go to the indicated URL (usually `localhost:5000`)!
+- Run `firebase serve` and go to the indicated URL (usually `localhost:5000`).
+
+- If `firebase serve` gives you an authentication error you might need to run `firebase logout` and `firebase login`.
+
+- To display the real data run `firebase serve --project flatten-271620`.
 
 ## Internal Notes
 
@@ -53,23 +59,3 @@ then run
 
 You need to ensure that the firebase rules on the bucket are set up to allow reading of the files externally.
 
-
-### Deploying on Cloud Build
-
-Everything should work more or less out of the box, apart from the fact that you have to set the `_BRANCH` envoronment variable to `prod` for prouduction or `dev` for development.
-
-### Deploying the cloud functions
-
-You will need to set the appropriate environment variables for each.
-
-For form_data_generator, these are
-* GCS_BUCKET, should point to that which to upload the data
-* UPLOAD_FILE, the name of the file to upload the confirmed cases data to
-* DS_NAMEPSACE, datastore namespaace to get the data from
-* DS_KIND, the datastore kind to load data from
-
-For `confirmed_cases`, they are:
-* SPREADSHEET_ID, should (at the moment) be 
-* GCS_BUCKET, should point to that which to upload the data
-* UPLOAD_FILE, the name of the file to upload the confirmed cases data to
-* SHEETS_API_KEY, API key for google sheets.
