@@ -1,0 +1,27 @@
+/* Footer style */
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  /*background-color: #034f84; */
+  color: black;
+  text-align: center;
+  z-index: 2;
+  background-color: #ffffff;
+  font-size: large;
+  padding: 18px;
+}
+
+.footer_element {
+  display: inline;
+  margin: 10px;
+}
+
+.footer_element:hover,
+.footer_element:active,
+.footer_element:focus {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* End footer style */
