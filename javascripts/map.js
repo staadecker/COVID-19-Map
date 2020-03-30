@@ -5,10 +5,11 @@ const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
 // white, yellow, orange, brown, red, black
-const POT_COLOUR_SCHEME = ['#e6e600', '#ff9900', '#ff0000', '#663300', '#000000'];
-const HIGH_RISK_COLOUR_SCHEME = ['#e6e600', '#ff9900', '#ff0000', '#663300', '#000000'];
+const POT_COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
+const HIGH_RISK_COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
 const POT_SCHEME_THRESHOLDS = [0, 10, 50, 250, 500];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
+const POLYGON_OPACITY = 0.4;
 // max size circle can be on map
 const MAX_RAD = 35;
 
@@ -47,6 +48,8 @@ function getColour(cases, colour_scheme, color_thresholds) {
 }
 
 
+
+
 function displayMaps() {
     // 1. Create the layers
 
@@ -72,7 +75,7 @@ function displayMaps() {
             dashArray: '3',
             // define the color and opacity of each polygon
             fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
-            fillOpacity: (num_potential === 0) ? 0 : 0.4,
+            fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
         }
     }
 
@@ -89,7 +92,7 @@ function displayMaps() {
             color: 'gray',
             dashArray: '3',
             fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
-            fillOpacity: (num_high_risk === 0) ? 0 : 0.4,
+            fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
         }
     }
 
