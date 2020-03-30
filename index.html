@@ -13,61 +13,108 @@
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script type="text/javascript" src="res/converted_boundaries.js"></script>
+
+    <title>Font Awesome Icons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 <div id="header">
     <div class="name_div">
-        <h3>Canadian Coronavirus Map</h3>
+        <h3><center>Canadian COVID-19 Map</center></h3>
     </div>
 
-    <div class="switch-field">
-        <input
-                type="radio"
-                id="in_self_isolation"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="potential"
-                checked
-        />
-        <label class="noselect" for="in_self_isolation">Potential Cases</label>
+    <div class="row">
+        <div class="column left" style="background-color:white">
+            <div class="container">
+                <form action="/action_page.php">
+                <div class="row">
+                    <div class="description-col">
+                    <label for="postal">View a Specific Region </label>
+                    </div>
+                    <div class="field-col">
+                    <input type="text" id="postal" name="postalcode" placeholder="First 3 digits of postal code">
+                    </div>
+                    <div class="submit-col">
+                    <input type="submit" value="Search">
+                    </div>
+                </div>  
+                </form>
+            </div>
+            
+            &nbsp;
+            <!--The div element for the map -->
+            <div id="map"></div>
 
-        <input
-                type="radio"
-                id="high_risk"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="vulnerable"
-        />
-        <label class="noselect" for="high_risk">Vulnerable Individuals</label>
+            <div id="update_time">
+                <p></p>
+            </div>
+        </div>
 
-        <input
-                type="radio"
-                id="confirmed"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="confirmed"
-        />
-        <label class="noselect" for="confirmed"
-        >Cumulative Confirmed Cases</label
-        >
-    </div>
-</div>
+        <div class="column right" style="background-color:white">
+            <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+            <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+            <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
 
-<!--The div element for the map -->
-<div id="body">
-    <div id="map"></div>
+          &nbsp;
+          &nbsp;
 
-    <div id="update_time">
-        <p></p>
+          <h3><center>L5H Numbers</center></h3> 
+
+            <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                    style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                <p>Total Responses</p>
+                <h1>956</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                    style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                <p>Potential Cases</p>
+                <h1>672</h1>
+                </div>
+            </div>
+
+            <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                    style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                <p>Total Confirmed Cases   </p>
+                <h1>22</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                    style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                <p>Current Confirmed Cases</p>
+                <h1>1300</h1>
+                </div>
+            </div>
+
+            <div class="equalrow">
+                <div class="equalcolumn equalleft" 
+                    style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                <p>Total Vulnerable Individuals</p>
+                <h1>79</h1>
+                </div>
+                <div class="equalcolumn equalright" 
+                    style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                    <p>Total Recovered Individuals</p>
+                    <h1>45</h1>
+                </div>
+            </div>
+    
+        
+        </div>
+
+
     </div>
 
     <div class="footer">
-        <div id="instructions_btn" class="footer_element">Instructions</div>
-        <div id="about_map_btn" class="footer_element">About this map</div>
-        <div id="about_us_btn" class="footer_element">About Us</div>
-    </div>
-
+        <div id="instructions_btn" class="footer_element"><i class="fas fa-question-circle" style="font-size:24px;"></i></div>
+        <div id="about_map_btn" class="footer_element"> <i class="fas fa-info-circle" style="font-size:24px;"></i></div>
+        <div id="about_us_btn" class="footer_element"> <i class="fas fa-user-friends" style="font-size:24px;"></i></div>
+     </div>
+    
+    
     <!-- The Modals (pop ups) -->
     <div id="about_map_modal" class="modal">
         <!-- Modal content -->
