@@ -11,6 +11,7 @@ body {
   background-color: white;
   color: black;
   z-index: 0;
+  max-width: 100%;
 }
 
 /* Set the size of the div element that contains the map */
@@ -78,11 +79,6 @@ body {
   float: left;
 }
 
-/* Dividing Page into Two Unequal Columns */
-* {
-  box-sizing: border-box;
-  width: 100%
-}
 
 /* Create two unequal columns that floats next to each other */
 .column {
@@ -90,11 +86,22 @@ body {
   padding: 10px;
 }
 .left {
-  width: 70%;
+  width: 875px;
 }
 .right {
-  width: 30%;
+  width: 475px;
 }
+
+@media (max-width: 1132px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }     
+}
+
+
 
 /* Clear floats after the columns */
 .row:after {
@@ -134,18 +141,10 @@ body {
   clear: both;
 }
 
-@media (max-width: 1132px) {
-  .left {
-    width: 100%;
-  }
-  .right {
-    width: 100%;
-  }     
-}
 
 
 .column2 {
-  float: left;
+  float: center;
   padding: 10px;
 }
 .left2 {
@@ -193,14 +192,6 @@ body {
   clear: both;
 }
 
-@media (max-width: 1132px) {
-  .left {
-    width: 100%;
-  }
-  .right {
-    width: 100%;
-  }     
-}
 
 
 /* These Buttons for the toggle */
