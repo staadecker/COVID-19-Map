@@ -4,7 +4,7 @@
 @import url("radio-buttons.css");
 
 * {
-  font-family: Roboto, Tahoma, sans-serif !important;
+  font-family: Roboto, Tahoma, sans-serif;
 }
 
 body {
@@ -15,24 +15,64 @@ body {
 
 /* Set the size of the div element that contains the map */
 #map {
-  width: 100%; /* The width is the width of the web page */
+  width: 99%; /* The width is the width of the web page */
   color: black;
   z-index: 1;
 }
 
 /* Different button style for mobile devices */
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   #map {
-    height: calc(100vh - 200px);
+      height: calc(100vh - 200px);
+  }
+  .topnav{
+    display:none;
   }
 }
 
 /* Different button style for desktop */
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   #map {
-    height: calc(100vh - 300px);
+      height: calc(100vh - 300px);
   }
+  h3{
+    display: none;
+  }
+
+  .column2 {
+    display: none;
+  }
+  .left2 {
+    display:none;
+  }
+  .right2 {
+   display:none;
+  }
+  
+  /* Clear floats after the columns */
+  .row2:after {
+    content: "";
+    display: none;
+    clear: both;
+  }
+  
+  /* Create two equal columns that floats next to each other */
+  .equalcolumn2 {
+    display: none; 
+  }
+  .equalleft2 {
+    display: none;
+  }
+  .equalright2 {
+    display:none;
+  }
+  
+  .equalrow2:after {
+    display: table;
+  }
+  
 }
+
 
 .name_div {
   float: left;
@@ -62,8 +102,6 @@ body {
   display: table;
   clear: both;
 }
-
-
 
 /* Dividing Page into Two Equal Columns */
 * {
@@ -106,6 +144,64 @@ body {
 }
 
 
+.column2 {
+  float: left;
+  padding: 10px;
+}
+.left2 {
+  width: 70%;
+}
+.right2 {
+  width: 30%;
+}
+
+/* Clear floats after the columns */
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Dividing Page into Two Equal Columns */
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.equalcolumn2 {
+  float: left;
+  padding: 10px;
+  background-color: white; /* White background */
+  background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin: 2px 2px;
+  height: 120px; 
+}
+.equalleft2 {
+  width: 48.75%;
+}
+.equalright2 {
+  width: 48.75%;
+}
+
+/* Clear floats after the columns */
+.equalrow2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 1132px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }     
+}
+
 
 /* These Buttons for the toggle */
 .button {
@@ -113,15 +209,15 @@ background-color: ffffff; /* Gray background */
 /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
 border: 2px solid #cccccc; /* Black border */
 color: #6d6d6d; /* White text */
-padding: 26px 24px; /* Some padding */
-margin: 2px 0px;
+padding: 2px 24px; /* Some padding */
+margin: 22px 0px;
 cursor: pointer; /* Pointer/hand icon */
 width: 32%; /* Set a width if needed */
 font-size: 14px;
 height: 90px;
 }
 
-@media (max-width: 608px) {
+@media (max-width: 600px) {
   .button {
     background-color: ffffff; /* Gray background */
     /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
@@ -170,7 +266,7 @@ height: 90px;
 }
 
 
-/* Making a Rectangular Box */
+/* Making a Rectangular Box vgwiueoiqhop'what does this do*/
 .rectangularbox {
   float: left;
   padding: 10px;
@@ -183,6 +279,8 @@ height: 90px;
   text-align: center;
   width: 99%;
 }
+
+
 
 
 
@@ -243,4 +341,49 @@ input[type=submit]:hover {
   content: "";
   display: table;
   clear: both;
+}
+
+/*mobile top nav bar*/
+.topnav {
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+
+.topnav #myLinks {
+  display: none;
+}
+
+.topnav a {
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+  padding: 27px;
+  text-align: center;
+}
+
+.topnav a.icon {
+  background: white;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 6px;
+  padding: 27px;
+  text-align: center;
+}
+
+.topnav a.icon:hover {
+  background-color: rgb(184, 181, 181);
+  color: black;
+  text-align: center;
+}
+
+.active {
+  background-color: white;
+  color: black;
+  padding: 27px;
+  z-index: 2;
 }
