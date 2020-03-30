@@ -1,323 +1,500 @@
 * {
-    font-family: Roboto, Tahoma, sans-serif;
+  font-family: Roboto, Tahoma, sans-serif;
 }
 
 body {
-    background-color: white;
-    color: black;
-    z-index: 0;
+  background-color: white;
+  color: black;
+  z-index: 0;
 }
 
 /* Set the size of the div element that contains the map */
 #map {
-    width: 99%; /* The width is the width of the web page */
-    color: black;
-    z-index: 1;
+  width: 99%; /* The width is the width of the web page */
+  color: black;
+  z-index: 1;
 }
 
 /* Different button style for mobile devices */
-@media (min-width: 700px) {
-    #map {
-        height: calc(100vh - 200px);
-    }
+@media (min-width: 600px) {
+  #map {
+      height: calc(100vh - 200px);
+  }
+  .topnav{
+    display:none;
+  }
 }
 
 /* Different button style for desktop */
-@media (max-width: 700px) {
-    #map {
-        height: calc(100vh - 300px);
-    }
+@media (max-width: 600px) {
+  #map {
+      height: calc(100vh - 300px);
+  }
+  h3{
+    display: none;
+  }
+
+  .column2 {
+    display: none;
+  }
+  .left2 {
+    display:none;
+  }
+  .right2 {
+   display:none;
+  }
+  
+  /* Clear floats after the columns */
+  .row2:after {
+    content: "";
+    display: none;
+    clear: both;
+  }
+  
+  /* Create two equal columns that floats next to each other */
+  .equalcolumn2 {
+    display: none; 
+  }
+  .equalleft2 {
+    display: none;
+  }
+  .equalright2 {
+    display:none;
+  }
+  
+  .equalrow2:after {
+    display: table;
+  }
+  
 }
 
+
+
 .name_div {
-    float: left;
+  float: left;
 }
 
 /* Different button style for desktop devices */
 @media (min-width: 700px) {
-    .switch-field {
-        display: flex;
-        margin: 10px 10px 10px 3px;
-        overflow: hidden;
-        float: left;
-        position: absolute;
-        top: 10px;
-        left: 35%;
-    }
+  .switch-field {
+      display: flex;
+      margin: 10px 10px 10px 3px;
+      overflow: hidden;
+      float: left;
+      position: absolute;
+      top: 10px;
+      left: 35%;
+  }
 }
 
 /* Dividing Page into Two Unequal Columns */
 * {
-    box-sizing: border-box;
-    width: 100%
-  }
-  
-  /* Create two unequal columns that floats next to each other */
-  .column {
-    float: left;
-    padding: 10px;
-  }
-  .left {
-    width: 30%;
-  }
-  .right {
-    width: 70%;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  box-sizing: border-box;
+  width: 100%
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+.left {
+  width: 70%;
+}
+.right {
+  width: 30%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 
 
 /* Dividing Page into Two Equal Columns */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.equalcolumn {
+  float: left;
+  padding: 10px;
+  background-color: white; /* White background */
+  background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin: 2px 2px;
+  height: 120px; 
+}
+.equalleft {
+  width: 48.75%;
+}
+.equalright {
+  width: 48.75%;
+}
+
+/* Clear floats after the columns */
+.equalrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 1132px) {
+  .left {
+    width: 100%;
   }
-  
-  /* Create two equal columns that floats next to each other */
-  .equalcolumn {
-    float: left;
-    padding: 10px;
-    background-color: white; /* White background */
-    background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
-    text-align: center;
-    color: #ffffff;
-    font-size: 14px;
-    margin: 2px 2px;
-    height: 120px; 
+  .right {
+    width: 100%;
+  }     
+}
+
+
+
+
+
+
+.column2 {
+  float: left;
+  padding: 10px;
+}
+.left2 {
+  width: 70%;
+}
+.right2 {
+  width: 30%;
+}
+
+/* Clear floats after the columns */
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+/* Dividing Page into Two Equal Columns */
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.equalcolumn2 {
+  float: left;
+  padding: 10px;
+  background-color: white; /* White background */
+  background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin: 2px 2px;
+  height: 120px; 
+}
+.equalleft2 {
+  width: 48.75%;
+}
+.equalright2 {
+  width: 48.75%;
+}
+
+/* Clear floats after the columns */
+.equalrow2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 1132px) {
+  .left {
+    width: 100%;
   }
-  .equalleft {
-    width: 48.75%;
-  }
-  .equalright {
-    width: 48.75%;
-  }
-  
-  /* Clear floats after the columns */
-  .equalrow:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  .right {
+    width: 100%;
+  }     
+}
+
 
 /* These Buttons for the toggle */
 .button {
-  background-color: ffffff; /* Gray background */
-  /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
-  border: 2px solid #cccccc; /* Black border */
-  color: #6d6d6d; /* White text */
-  padding: 26px 24px; /* Some padding */
-  margin: 2px 0px;
-  cursor: pointer; /* Pointer/hand icon */
-  width: 32%; /* Set a width if needed */
-  font-size: 14px;
-  height: 90px;
-  }
-  
-  .button1 {
-    background-color: #ffffff; 
-    color: #F0B666; 
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button1:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #F0B666;
-  }
+background-color: ffffff; /* Gray background */
+/* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
+border: 2px solid #cccccc; /* Black border */
+color: #6d6d6d; /* White text */
+padding: 26px 24px; /* Some padding */
+margin: 2px 0px;
+cursor: pointer; /* Pointer/hand icon */
+width: 32%; /* Set a width if needed */
+font-size: 14px;
+height: 90px;
+}
 
-  .button2 {
-    background-color: #ffffff; 
-    color: #E6807C;
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button2:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #E6807C;
-  }
-
-  .button3 {
-    background-color: #ffffff; 
-    color: #ab6b79; 
-    border: 2px solid 	#8c8c8c;
-  }
-  
-  .button3:focus {
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    color: #ab6b79;
-  }
-
-
-/* Making a Rectangular Box */
-.rectangularbox {
-    float: left;
-    padding: 10px;
-    background-color:white; /* White background */
-    background-image: linear-gradient(to top right, #cccccc , #ffffff);
-    /*border: 2px solid #6e1313; /* Grey border */
-    color: rgb(151, 37, 37);
+@media (max-width: 600px) {
+  .button {
+    background-color: ffffff; /* Gray background */
+    /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
+    border: 2px solid #cccccc; /* Black border */
+    color: #6d6d6d; /* White text */
+    padding: 24px 24px; /* Some padding */
+    margin: 2px 0px;
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
     font-size: 14px;
-    margin: 2px 2px; 
-    text-align: center;
-    width: 99%;
+    height: 20px;
+  }   
+}
+
+.button1 {
+  background-color: #ffffff; 
+  color: #F0B666; 
+  border: 2px solid 	#8c8c8c;
+}
+
+.button1:focus {
+  background-image: linear-gradient(to top right, #cccccc , #ffffff);
+  color: #F0B666;
+}
+
+.button2 {
+  background-color: #ffffff; 
+  color: #E6807C;
+  border: 2px solid 	#8c8c8c;
+}
+
+.button2:focus {
+  background-image: linear-gradient(to top right, #cccccc , #ffffff);
+  color: #E6807C;
+}
+
+.button3 {
+  background-color: #ffffff; 
+  color: #ab6b79; 
+  border: 2px solid 	#8c8c8c;
+}
+
+.button3:focus {
+  background-image: linear-gradient(to top right, #cccccc , #ffffff);
+  color: #ab6b79;
+}
+
+
+/* Making a Rectangular Box vgwiueoiqhop'what does this do*/
+.rectangularbox {
+  float: left;
+  padding: 10px;
+  background-color:white; /* White background */
+  background-image: linear-gradient(to top right, #cccccc , #ffffff);
+  /*border: 2px solid #6e1313; /* Grey border */
+  color: rgb(151, 37, 37);
+  font-size: 14px;
+  margin: 2px 2px; 
+  text-align: center;
+  width: 99%;
 }
 
 
 
 /* Footer style */
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    /*background-color: #034f84; */
-    color: black;
-    text-align: center;
-    z-index: 2;
-    background-color: #ffffff;
-    font-size: large;
-    padding: 18px;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /*background-color: #034f84; */
+  color: black;
+  text-align: center;
+  z-index: 2;
+  background-color: #ffffff;
+  font-size: large;
+  padding: 18px;
 }
 
 
 .footer_element {
-    display: inline;
-    margin: 10px;
+  display: inline;
+  margin: 10px;
 }
 
 .footer_element:hover,
 .footer_element:active,
 .footer_element:focus {
-    cursor: pointer;
-    text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* End footer style */
 
 /*Styling for the legend*/
 .legend {
-    line-height: 18px;
-    color: #8c8c8c;
-    font-size: medium;
+  line-height: 18px;
+  color: #8c8c8c;
+  font-size: medium;
 }
 
 .legend i {
-    width: 16px;
-    height: 16px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
 }
 
 
 /* Styling for footer pop up elements */
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    /*overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  /*overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-    max-height: calc(100vh - 210px);
-    overflow: auto;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    color: #001f3f;
-    word-wrap: break-word;
+  max-height: calc(100vh - 210px);
+  overflow: auto;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: #001f3f;
+  word-wrap: break-word;
 }
 
 /* The Close Button */
 .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 ul li {
-    padding: 5px 0;
+  padding: 5px 0;
 }
 
 /* End pop up elements styling */
 
 /*not sure how taking in the submission works, but this was seen in tutorial code*/
 input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #8c8c8c;
-    border-radius: 4px;
-    resize: vertical;
-  }
-  
-  label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
-  }
-  
-  input[type=submit] {
-    background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #ab6b79;
-  }
-  
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #8c8c8c;
+  border-radius: 4px;
+  resize: vertical;
+}
 
-  /*this is for the search by postal code field*/
-  .container {
-    background-color: #8c8c8c;
-    color: white;
-    padding: 20px;
-  }
-  
-  .description-col {
-    float: left;
-    width: 28%;
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #ab6b79;
+}
+
+
+/*this is for the search by postal code field*/
+.container {
+  background-color: #8c8c8c;
+  color: white;
+  padding: 10px;
+  width: 99%;
+}
+
+.description-col {
+  float: left;
+  width: 35%;
+  margin-top: 6px;
+}
+
+.field-col {
+  float: left;
+  width: 40%;
+  margin-top: 6px;
+}
+.submit-col {
+    float: right;
+    width: 20%;
     margin-top: 6px;
-  }
-  
-  .field-col {
-    float: left;
-    width: 40%;
-    margin-top: 6px;
-  }
-  .submit-col {
-      float: right;
-      width: 19%;
-      margin-top: 6px;
-  }
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/*mobile top nav bar*/
+.topnav {
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+
+.topnav #myLinks {
+  display: none;
+}
+
+.topnav a {
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+  padding: 27px;
+  text-align: center;
+}
+
+.topnav a.icon {
+  background: white;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 6px;
+  padding: 27px;
+  text-align: center;
+}
+
+.topnav a.icon:hover {
+  background-color: rgb(184, 181, 181);
+  color: black;
+  text-align: center;
+}
+
+.active {
+  background-color: white;
+  color: black;
+  padding: 27px;
+  z-index: 2;
+}
