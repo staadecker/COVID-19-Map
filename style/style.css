@@ -38,19 +38,6 @@ body {
   float: left;
 }
 
-/* Different button style for desktop devices */
-@media (min-width: 700px) {
-  .switch-field {
-      display: flex;
-      margin: 10px 10px 10px 3px;
-      overflow: hidden;
-      float: left;
-      position: absolute;
-      top: 10px;
-      left: 35%;
-  }
-}
-
 /* Dividing Page into Two Unequal Columns */
 * {
   box-sizing: border-box;
@@ -198,102 +185,6 @@ height: 90px;
 }
 
 
-
-/* Footer style */
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  /*background-color: #034f84; */
-  color: black;
-  text-align: center;
-  z-index: 2;
-  background-color: #ffffff;
-  font-size: large;
-  padding: 18px;
-}
-
-
-.footer_element {
-  display: inline;
-  margin: 10px;
-}
-
-.footer_element:hover,
-.footer_element:active,
-.footer_element:focus {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-/* End footer style */
-
-/*Styling for the legend*/
-.legend {
-  line-height: 18px;
-  color: #8c8c8c;
-  font-size: medium;
-}
-
-.legend i {
-  width: 16px;
-  height: 16px;
-  float: left;
-  margin-right: 8px;
-  opacity: 0.7;
-}
-
-
-/* Styling for footer pop up elements */
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 3; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  /*overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  max-height: calc(100vh - 210px);
-  overflow: auto;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  color: #001f3f;
-  word-wrap: break-word;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-ul li {
-  padding: 5px 0;
-}
-
-/* End pop up elements styling */
 
 /*not sure how taking in the submission works, but this was seen in tutorial code*/
 input[type=text], select, textarea {

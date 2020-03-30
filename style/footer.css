@@ -5,15 +5,16 @@
   bottom: 0;
   width: 100%;
   /*background-color: #034f84; */
-  color: white;
+  color: black;
   text-align: center;
   z-index: 2;
-  background-color: #001f3f;
+  background-color: #ffffff;
   font-size: large;
+  padding: 18px;
 }
 
 .footer_element {
-  display: inline-block;
+  display: inline;
   margin: 10px;
 }
 
