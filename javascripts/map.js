@@ -199,5 +199,15 @@ function onPopupOpen(event) {
         event.popup.setLatLng(confirmed_data['confirmed_cases'][event.popup.popup_idx]['coord']);
 }
 
+// Toggle numbers on mobile
+function toggleStats() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+    } else {
+    x.style.display = "block";
+    }
+}
+
 
 

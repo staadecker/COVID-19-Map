@@ -1,270 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head>
-    <title>COVID-19 Map</title>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="utf-8" http-equiv="encoding">
+    <head>
+        <title>COVID-19 Map</title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
 
-    <link rel="stylesheet" type="text/css" href="style/style.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script type="text/javascript" src="res/converted_boundaries.js"></script>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+        <script type="text/javascript" src="res/converted_boundaries.js"></script>
 
-    <title>Font Awesome Icons</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
+        <title>Font Awesome Icons</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
-</head>
+    </head>
 
-<body>
-<div id='header'>
-    <div class='name_div'>
-       <h2><center>Canadian COVID-19 Map</center></h2>
-       <div class="topnav">
-        <a href="javascript:void(0);" class="a" onclick="myFunction()" >
-            Click Here for Numbers</i>
-        </a>
-        <div id="myLinks">
-            <h3><center>L5H Numbers</center></h3>
-            <div class="equalrowmobile">
-                        <div class="equalcolumnmobile equalleftmobile"
-                            style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                        <p>Total Responses</p>
-                        <h1>956</h1>
+    <body>
+        <header>
+            <h2><center>Canadian COVID-19 Map</center></h2>
+        </header>
+        <content>
+        <div class="topnav">
+            <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()" >
+                Toggle statistics</i>
+            </button>
+            <div id="myLinks">
+                <h3><center>L5H Numbers</center></h3>
+                <div class="equalrowmobile">
+                            <div class="equalcolumnmobile equalleftmobile"
+                                style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                            <p>Total Responses</p>
+                            <h1>956</h1>
+                            </div>
+                            <div class="equalcolumnmobile equalrightmobile"
+                                style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                            <p>Potential Cases</p>
+                            <h1>672</h1>
+                            </div>
                         </div>
-                        <div class="equalcolumnmobile equalrightmobile"
-                            style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                        <p>Potential Cases</p>
-                        <h1>672</h1>
+
+                <div class="equalrow">
+                            <div class="equalcolumnmobile equalleftmobile"
+                                style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                            <p>         Total Confirmed Cases   </p>
+                            <h1>22</h1>
+                            </div>
+                            <div class="equalcolumnmobile equalrightmobile"
+                                style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                            <p>Current Confirmed Cases</p>
+                            <h1>1300</h1>
+                            </div>
+                        </div>
+
+                        <div class="equalrow">
+                            <div class="equalcolumnmobile equalleftmobile"
+                                style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                            <p>Total Vulnerable Individuals</p>
+                            <h1>79</h1>
+                            </div>
+                            <div class="equalcolumnmobile equalrightmobile"
+                                style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                                <p>Total Recovered Individuals</p>
+                                <h1>45</h1>
+                            </div>
+                        </div>
+
+            </div>
+            </div>
+
+        <div class="row map-info">
+            <div class="column left" style="background-color:white">
+                <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+                <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
+
+
+                &nbsp;
+                <!--The div element for the map -->
+                <div id="map"></div>
+
+                <div id="update_time">
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="column right" style="background-color:white">
+                &nbsp;
+                &nbsp;
+                <div class="container">
+                    <form action="/action_page.php">
+                    <div class="row">
+                        <div class="description-col">
+                        <label for="postal">View a Specific Region </label>
+                        </div>
+                        <div class="field-col">
+                        <input type="text" id="postal" name="postalcode" placeholder="First 3 digits of postal code">
+                        </div>
+                        <div class="submit-col">
+                        <input type="submit" value="Search">
                         </div>
                     </div>
-
-            <div class="equalrow">
-                        <div class="equalcolumnmobile equalleftmobile"
-                            style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                        <p>         Total Confirmed Cases   </p>
-                        <h1>22</h1>
-                        </div>
-                        <div class="equalcolumnmobile equalrightmobile"
-                            style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                        <p>Current Confirmed Cases</p>
-                        <h1>1300</h1>
-                        </div>
-                    </div>
-
-                    <div class="equalrow">
-                        <div class="equalcolumnmobile equalleftmobile"
-                            style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                        <p>Total Vulnerable Individuals</p>
-                        <h1>79</h1>
-                        </div>
-                        <div class="equalcolumnmobile equalrightmobile"
-                            style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                            <p>Total Recovered Individuals</p>
-                            <h1>45</h1>
-                        </div>
-                    </div>
-
-        </div>
-        </div>
-
-       <div class="row map-info">
-        <div class="column left" style="background-color:white">
-            <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
-            <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
-            <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
-
+                    </form>
+                </div>
 
             &nbsp;
-            <!--The div element for the map -->
-            <div id="map"></div>
-
-            <div id="update_time">
-                <p></p>
-            </div>
-        </div>
-
-        <script>
-            function myFunction() {
-              var x = document.getElementById("myLinks");
-              if (x.style.display === "block") {
-                x.style.display = "none";
-              } else {
-                x.style.display = "block";
-              }
-            }
-            </script>
-
-
-
-        <div class="column right" style="background-color:white">
             &nbsp;
-            &nbsp;
-            <div class="container">
-                <form action="/action_page.php">
-                <div class="row">
-                    <div class="description-col">
-                    <label for="postal">View a Specific Region </label>
+
+
+                <h3><center>L5H Numbers</center></h3>
+
+                <div class="equalrow">
+                    <div class="equalcolumn equalleft"
+                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                    <p>Total Responses</p>
+                    <h1>956</h1>
                     </div>
-                    <div class="field-col">
-                    <input type="text" id="postal" name="postalcode" placeholder="First 3 digits of postal code">
+                    <div class="equalcolumn equalright"
+                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                    <p>Potential Cases</p>
+                    <h1>672</h1>
                     </div>
-                    <div class="submit-col">
-                    <input type="submit" value="Search">
+                </div>
+
+                <div class="equalrow2">
+                    <div class="equalcolumn equalleft"
+                        style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                    <p>Total Confirmed Cases   </p>
+                    <h1>22</h1>
+                    </div>
+                    <div class="equalcolumn equalright"
+                        style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                    <p>Current Confirmed Cases</p>
+                    <h1>1300</h1>
                     </div>
                 </div>
-                </form>
-            </div>
 
-          &nbsp;
-          &nbsp;
-
-
-            <h3><center>L5H Numbers</center></h3>
-
-            <div class="equalrow">
-                <div class="equalcolumn equalleft"
-                    style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                <p>Total Responses</p>
-                <h1>956</h1>
-                </div>
-                <div class="equalcolumn equalright"
-                    style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                <p>Potential Cases</p>
-                <h1>672</h1>
+                <div class="equalrow2">
+                    <div class="equalcolumn equalleft"
+                        style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                    <p>Total Vulnerable Individuals</p>
+                    <h1>79</h1>
+                    </div>
+                    <div class="equalcolumn equalright"
+                        style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                        <p>Total Recovered Individuals</p>
+                        <h1>45</h1>
+                    </div>
                 </div>
             </div>
+        </content>
 
-            <div class="equalrow2">
-                <div class="equalcolumn equalleft"
-                    style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                <p>Total Confirmed Cases   </p>
-                <h1>22</h1>
-                </div>
-                <div class="equalcolumn equalright"
-                    style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                <p>Current Confirmed Cases</p>
-                <h1>1300</h1>
-                </div>
+
+        <div class="footer">
+            <div id="instructions_btn" class="footer_element"><i class="fas fa-question-circle" style="font-size:24px;"></i></div>
+            <div id="about_map_btn" class="footer_element"> <i class="fas fa-info-circle" style="font-size:24px;"></i></div>
+            <div id="about_us_btn" class="footer_element"> <i class="fas fa-user-friends" style="font-size:24px;"></i></div>
+        </div>
+
+        <!-- The Modals (pop ups) -->
+        <div id="about_map_modal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span id="close1" class="close">&times;</span>
+                <h3> About This Map </h3>
+                <p>
+                    This map displays a) confirmed COVID-19 cases b) individuals who are believed to be potential cases
+                    based on
+                    their form responses c) individuals who reported having previous medical conditions (ie.
+                    immunocompromised)
+                    and/or being over the age of 60.
+                </p>
+                <p>
+                    The purpose of this map is to inform government agencies and healthcare services. We hope that the data
+                    displayed on this map helps healthcare services optimize the use of their resources and protect the
+                    vulnerable individuals mentioned above.
+                </p>
+                <p>In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses. </p>
+
+                <h3>How is this map segmented?</h3>
+                <p>
+                    We differentiate regions by the first three digits of the postal code.
+                    With the first three digits we ensure not to invade Canadians privacy, but still segment data to be
+                    granular and valuable.
+                </p>
+
+                <h3>Data Sources:</h3>
+                <ul>
+                    <li>Potential cases and vulnerable populations: <a href="https://www.flatten.ca/">flatten.ca</a></li>
+                    <li>Confirmed cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19
+                        Outbreak in Canada.
+                        <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
+                    </li>
+                    <li>Confirmed cases in Ontario: Regional Public Health Units.</li>
+                </ul>
             </div>
-
-            <div class="equalrow2">
-                <div class="equalcolumn equalleft"
-                    style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                <p>Total Vulnerable Individuals</p>
-                <h1>79</h1>
-                </div>
-                <div class="equalcolumn equalright"
-                    style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                    <p>Total Recovered Individuals</p>
-                    <h1>45</h1>
-                </div>
+        </div>
+        <div id="about_us_modal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span id="close2" class="close">&times;</span>
+                <h3>About Us</h3>
+                <p>We're a group of scientists, engineers and clinicians who have created an online form and map to provide
+                    information on the COVID-19 pandemic.</p>
+                <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
             </div>
-
-
+        </div>
+        <div id="instructions_modal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span id="close3" class="close">&times;</span>
+                <h3>Instructions</h3>
+                <p>Welcome to Flatten's Heatmap!</p>
+                <p>To view information about your region, click on your municipality or postal code region! To easily locate
+                    yourself, let Flatten access your location.</p>
+                <p><b>Confirmed Cases: </b>This tab displays all of the confirmed cases of COVID-19 in Canada. If a case's
+                    municipality
+                    is not reported, it's displayed at the center of the province. Data from COVID-19 Canada Open Data
+                    Working Group (see About this Map).</p>
+                <p><b>Potential Cases: </b>This tab displays all of the potential cases of COVID-19 in Canada, based on data
+                    inputted into Flatten's form.</p>
+                <p><b>Vulnerable Individuals: </b>This tab displays all individuals that are especially vulnerable to
+                    COVID-19 in Canada,
+                    based on data inputted into Flatten's form.</p>
+                <p>In order to ensure non-trolling, we use cookies, recaptcha and track suspicious IP addresses.</p>
+            </div>
         </div>
 
-
-    </div>
-
-
-
-
-
-    <div class="footer">
-        <div id="instructions_btn" class="footer_element"><i class="fas fa-question-circle" style="font-size:24px;"></i></div>
-        <div id="about_map_btn" class="footer_element"> <i class="fas fa-info-circle" style="font-size:24px;"></i></div>
-        <div id="about_us_btn" class="footer_element"> <i class="fas fa-user-friends" style="font-size:24px;"></i></div>
-     </div>
-
-    <!-- The Modals (pop ups) -->
-    <div id="about_map_modal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="close1" class="close">&times;</span>
-            <h3> About This Map </h3>
-            <p>
-                This map displays a) confirmed COVID-19 cases b) individuals who are believed to be potential cases
-                based on
-                their form responses c) individuals who reported having previous medical conditions (ie.
-                immunocompromised)
-                and/or being over the age of 60.
-            </p>
-            <p>
-                The purpose of this map is to inform government agencies and healthcare services. We hope that the data
-                displayed on this map helps healthcare services optimize the use of their resources and protect the
-                vulnerable individuals mentioned above.
-            </p>
-            <p>In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses. </p>
-
-            <h3>How is this map segmented?</h3>
-            <p>
-                We differentiate regions by the first three digits of the postal code.
-                With the first three digits we ensure not to invade Canadians privacy, but still segment data to be
-                granular and valuable.
-            </p>
-
-            <h3>Data Sources:</h3>
-            <ul>
-                <li>Potential cases and vulnerable populations: <a href="https://www.flatten.ca/">flatten.ca</a></li>
-                <li>Confirmed cases: COVID-19 Canada Open Data Working Group. Epidemiological Data from the COVID-19
-                    Outbreak in Canada.
-                    <a href="https://github.com/ishaberry/Covid19Canada">https://github.com/ishaberry/Covid19Canada</a>
-                </li>
-                <li>Confirmed cases in Ontario: Regional Public Health Units.</li>
-            </ul>
-        </div>
-    </div>
-    <div id="about_us_modal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="close2" class="close">&times;</span>
-            <h3>About Us</h3>
-            <p>We're a group of scientists, engineers and clinicians who have created an online form and map to provide
-                information on the COVID-19 pandemic.</p>
-            <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
-        </div>
-    </div>
-    <div id="instructions_modal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span id="close3" class="close">&times;</span>
-            <h3>Instructions</h3>
-            <p>Welcome to Flatten's Heatmap!</p>
-            <p>To view information about your region, click on your municipality or postal code region! To easily locate
-                yourself, let Flatten access your location.</p>
-            <p><b>Confirmed Cases: </b>This tab displays all of the confirmed cases of COVID-19 in Canada. If a case's
-                municipality
-                is not reported, it's displayed at the center of the province. Data from COVID-19 Canada Open Data
-                Working Group (see About this Map).</p>
-            <p><b>Potential Cases: </b>This tab displays all of the potential cases of COVID-19 in Canada, based on data
-                inputted into Flatten's form.</p>
-            <p><b>Vulnerable Individuals: </b>This tab displays all individuals that are especially vulnerable to
-                COVID-19 in Canada,
-                based on data inputted into Flatten's form.</p>
-            <p>In order to ensure non-trolling, we use cookies, recaptcha and track suspicious IP addresses.</p>
-        </div>
-    </div>
-</div>
-
-<!-- Firebase JS SDK -->
-<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-remote-config.js"></script>
-<script src="/__/firebase/7.12.0/firebase-storage.js"></script>
-<script src="/__/firebase/init.js"></script>
+        <!-- Firebase JS SDK -->
+        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-remote-config.js"></script>
+        <script src="/__/firebase/7.12.0/firebase-storage.js"></script>
+        <script src="/__/firebase/init.js"></script>
 
 
-<script type="text/javascript" src="javascripts/map.js"></script>
-<script type="text/javascript" src="javascripts/location.js"></script>
-<script type="text/javascript" src="javascripts/toggle.js"></script>
-<script type="text/javascript" src="javascripts/modal.js"></script>
-<script type="text/javascript" src="javascripts/data_loader.js"></script>
+        <script type="text/javascript" src="javascripts/map.js"></script>
+        <script type="text/javascript" src="javascripts/location.js"></script>
+        <script type="text/javascript" src="javascripts/toggle.js"></script>
+        <script type="text/javascript" src="javascripts/modal.js"></script>
+        <script type="text/javascript" src="javascripts/data_loader.js"></script>
 
-</body>
+    </body>
 </html>
