@@ -76,15 +76,6 @@ function highRisk_style(feature) {
     }
 }
 
-function findPostal() {
-    var postalInput = document.getElementById("postal").value;
-    if (postalInput == "") {
-        alert("Plzz");
-        return false;
-    }
-    console.log(postalInput);
-}
-
 function displayMaps() {
     // Update dashboard
     function updateDash(postcode, layer) {
