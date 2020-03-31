@@ -81,24 +81,6 @@
 
         <div class="row map-info">
             <div class="column left" style="background-color:white">
-                <button class="button button1" onclick="toggle_clicked(this.value)" value="potential" checked>Potential
-                    Cases</button>
-                <button class="button button2" onclick="toggle_clicked(this.value)" value="vulnerable">Vulnerable
-                    Individuals</button>
-                <button class="button button3" onclick="toggle_clicked(this.value)" value="confirmed">Confirmed
-                    Cases</button>
-
-
-                &nbsp;
-                <!--The div element for the map -->
-                <div id="map"></div>
-
-                <div id="update_time">
-                    <p></p>
-                </div>
-            </div>
-
-            <div class="column right" style="background-color:white">
                 &nbsp;
                 &nbsp;
                 <div class="container">
@@ -117,6 +99,23 @@
                         </div>
                     </form>
                 </div>
+                
+                <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+                <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
+
+
+                &nbsp;
+                <!--The div element for the map -->
+                <div id="map"></div>
+
+                <div id="update_time">
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="column right" style="background-color:white">
+                
 
                 &nbsp;
                 &nbsp;

@@ -65,6 +65,7 @@ input[type=submit]:hover {
   overflow: hidden;
   background-color: white;
   position: relative;
+  width: 98%;
 }
 
 .topnav #myLinks {
