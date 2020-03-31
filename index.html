@@ -7,12 +7,13 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <link rel="stylesheet" type="text/css" href="style/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" href="leaflet-search/dist/leaflet-search.src.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="leaflet-search/dist/leaflet-search.src.js"></script>
     <script type="text/javascript" src="res/converted_boundaries.js"></script>
 
     <title>Font Awesome Icons</title>
@@ -50,7 +51,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 <div class="equalrow">
                     <div class="equalcolumnmobile equalleftmobile"
                         style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
@@ -63,7 +63,6 @@
                         <h1 id="curr_conf_num_mobile">1300</h1>
                     </div>
                 </div>
-=======
     <div class="switch-field">
         <input
                 type="radio"
@@ -94,7 +93,6 @@
         <label class="noselect" for="confirmed">Cumulative Confirmed Cases</label>
     </div>
 </div>
->>>>>>> data-structs
 
                 <div class="equalrow">
                     <div class="equalcolumnmobile equalleftmobile"
@@ -116,31 +114,16 @@
             <div class="column left" style="background-color:white">
                 &nbsp;
                 &nbsp;
-                <div class="container">
-                    <form action="/action_page.php">
-                        <div class="row">
-                            <div class="description-col">
-                                <label for="postal">View a Region </label>
-                            </div>
-                            <div class="field-col">
-                                <input type="text" id="postal" name="postalcode"
-                                    placeholder="First 3 digits of postal code">
-                            </div>
-                            <div class="submit-col">
-                                <input type="submit" value="Search">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
                 <div id="layerSelect">
-                    <button class="btn active"onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
-                    <button class="btn"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
-                    <button class="btn"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
-                  </div>
+                    <button class="btn active" onclick="toggle_clicked(this.value)" value="potential" checked>Potential
+                        Cases</button>
+                    <button class="btn" onclick="toggle_clicked(this.value)" value="vulnerable">Vulnerable
+                        Individuals</button>
+                    <button class="btn" onclick="toggle_clicked(this.value)" value="confirmed">Confirmed Cases</button>
+                </div>
 
 
-    
+
                 <!--The div element for the map -->
                 <div id="map"></div>
 
@@ -150,7 +133,7 @@
             </div>
 
             <div class="column right" style="background-color:white">
-                
+
 
                 &nbsp;
                 &nbsp;
@@ -253,11 +236,6 @@
         <div class="modal-content">
             <span id="close2" class="close">&times;</span>
             <h3>About Us</h3>
-<<<<<<< HEAD
-            <p>We're a group of scientists, engineers and clinicians who have created an online form and map to provide
-                information on the COVID-19 pandemic.</p>
-            <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
-=======
             <p>
                 We're a group of scientists, engineers and clinicians who have
                 created an online form and map to provide information on the
@@ -269,7 +247,6 @@
                     flattenofficial@gmail.com
                 </a>.
             </p>
->>>>>>> data-structs
         </div>
     </div>
     <div id="instructions_modal" class="modal">
