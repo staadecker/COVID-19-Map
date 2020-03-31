@@ -57,4 +57,23 @@
     background-image: linear-gradient(to top right, #cccccc , #ffffff);
     color: #ab6b79;
   }
+
+  /* Style the buttons */
+.btn {
+  background-color: #8c8c8c; /* White background */
+  border: 2px solid #cccccc; /* Light Grey border */
+  color: white; /* Dark Grey text */
+  padding: 2px 24px; 
+  margin: 22px 0px; 
+  cursor: pointer; /* Pointer/hand icon */
+  width: 32%; 
+  font-size: 14px;
+  height: 90px;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.active, .btn:hover {
+  background-color: #cccccc;
+  color: #6d6d6d;
+}
   
