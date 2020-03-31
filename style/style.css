@@ -30,32 +30,13 @@ body {
   #map {
       height: calc(100vh - 200px);
   }
-  .topnav{
-    display:none;
-  }
+
 }
 
 /* Different button style for desktop */
 @media (max-width: 600px) {
   #map {
       height: calc(100vh - 300px);
-  }
-  h3{
-    display: none;
-  }
-  .column2 {
-    display: none;
-  }
-  .left2 {
-    display:none;
-  }
-  .right2 {
-   display:none;
-  }
-  .row2:after {
-    content: "";
-    display: none;
-    clear: both;
   }
 }
 
@@ -88,15 +69,15 @@ body {
 }
 
 
-
 @media (min-width: 1132px) {
   .left {
     width: 65%; 
- 
   }
   .right {
     width: 35%;
-
+  }
+  .topnav{
+    display:none;
   }
 }
 
@@ -107,4 +88,21 @@ body {
   .right {
     width: 100%;
   }
+  h3{
+    display: none;
+  }
+
+  .column2 {
+    display: none;
+  }
+  .left2 {
+    display:none;
+  }
+  .right2 {
+   display:none;
+  }
+  .row2:after {
+    content: "";
+    display: none;
+    clear: both;
 }
