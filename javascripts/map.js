@@ -76,9 +76,61 @@ function highRisk_style(feature) {
     }
 }
 
+function findPostal() {
+    var postalInput = document.getElementById("postal").value;
+    if (postalInput == "") {
+        alert("Plzz");
+        return false;
+    }
+    console.log(postalInput);
+}
+
 function displayMaps() {
-    // 1. Create the layers
-    polygonsLayer = L.layerGroup();
+    // Update dashboard
+    function updateDash(postcode, layer) {
+        let num_potential = 0;
+        let num_high_risk = 0;
+        let total_reports_region = 0;
+
+        if (postcode in form_data_obj['fsa']) {
+            num_potential = form_data_obj['fsa'][postcode]['pot'];
+            num_high_risk = form_data_obj['fsa'][postcode]['risk'];
+            total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
+        }
+
+        // Adjust postcode on dash
+        document.getElementById("postcode_mobile").innerHTML = "<center>" + postcode + " Numbers</center>";
+        document.getElementById("postcode").innerHTML = "<center>" + postcode + " Numbers</center>";
+
+        // Adjust total responses
+        document.getElementById("tot_res_mobile").innerHTML = total_reports_region;
+        document.getElementById("tot_res").innerHTML = total_reports_region;
+
+        // Adjust potential cases
+        document.getElementById("pot_mobile").innerHTML = num_potential;
+        document.getElementById("pot").innerHTML = num_potential;
+
+        // Adjust total confirmed cases (to add)
+
+        // Adjust current confirmed cases (to add)
+
+        // Adjust vulnerable indidivudals
+        document.getElementById("tot_vul_mobile").innerHTML = num_high_risk;
+        document.getElementById("tot_vul").innerHTML = num_high_risk;
+
+        // Adjust recovered individuals
+
+        // Adjust popups
+        let msg = "<h3>" + postcode + "</h3><p>We received " + num_potential +
+            " reports from potential cases.</p><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received "
+            + total_reports_region + " reports in total.</p>";
+        if (total_reports_region === 0) {
+            msg = "<h3>" + postcode + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+        }
+
+        layer.bindPopup(msg);
+        layer.openPopup();
+    }
 
     // Add self-isolation polygons
     polygons = L.geoJSON(post_code_boundaries, {
@@ -86,49 +138,36 @@ function displayMaps() {
 
         // Adding modals to each post code
         onEachFeature: function (feature, layer) {
-            let num_potential = 0;
-            let num_high_risk = 0;
-            let total_reports_region = 0;
-            if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-                num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
-                num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
-                total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-            }
-
             layer.on('click', function (e) {
-                // Adjust postcode on dash
-                document.getElementById("postcode_mobile").innerHTML = "<center>" + feature.properties.CFSAUID + " Numbers</center>";
-                document.getElementById("postcode").innerHTML = "<center>" + feature.properties.CFSAUID + " Numbers</center>";
-
-                // Adjust total responses
-                document.getElementById("tot_res_mobile").innerHTML = total_reports_region;
-                document.getElementById("tot_res").innerHTML = total_reports_region;
-
-                // Adjust potential cases
-                document.getElementById("pot_mobile").innerHTML = num_potential;
-                document.getElementById("pot").innerHTML = num_potential;
-
-                // Adjust total confirmed cases (to add)
-
-                // Adjust current confirmed cases (to add)
-
-                // Adjust vulnerable indidivudals
-                document.getElementById("tot_vul_mobile").innerHTML = num_high_risk;
-                document.getElementById("tot_vul").innerHTML = num_high_risk;
-
-                // Adjust recovered individuals
+                updateDash(feature.properties.CFSAUID, layer);
             });
-            let msg = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_potential +
-                " reports from potential cases.</p><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " 
-                + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-            }
-
-            layer.bindPopup(msg);
         }
 
-    }).addTo(polygonsLayer);
+    });
+
+    map.addLayer(polygons);
+
+    // Add search bar
+    var searchControl = new L.Control.Search({
+        layer: polygons,
+        propertyName: 'CFSAUID',
+        marker: false,
+        textPlaceholder: 'Enter first 3 digits of post code:',
+        moveToLocation: function (latlng, title, map) {
+            var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+            map.setView(latlng, zoom);
+        }
+    });
+
+    searchControl.on('search:locationfound', function (e) {
+        if (e.layer._popup)
+            e.layer.openPopup();
+
+        updateDash(e.text, e.layer);
+
+    });
+
+    map.addControl(searchControl);
 
     // Legend for self-isolated cases.
     selfIso_legend = L.control({ position: 'bottomright' });
