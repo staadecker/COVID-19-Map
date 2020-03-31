@@ -4,3 +4,8 @@
 firebase-debug.log
 .firebaserc
 firebase.json
+.firebase
+.firebasec.txt
+
+cors.json
+

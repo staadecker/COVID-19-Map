@@ -18,17 +18,21 @@ Web-based map showing confirmed cases, potential cases and vulnerable population
 
 ## Setting up
 
-1. Ask Martin to create you a flatten Google account and give you read permissions to the storage.
+1. Ask Martin to create you a flatten Google account and give you read permissions to the storage (so you can load data on the map).
 
-2. If you were already logged in run `firebase logout` then `firebase login`. Use your newly generated Google account.
+2. Copy over the content from `deployment/firebase.staging.json` into a new file in your root directory called `firebase.json`. Do not commit this new file (it should be automatically ignored).
 
-3. Create two new files in the root directory called `firebase.json` and `.firebasec`. They should have the same contents as `deployment/firebase.staging.json` and `deployment/.firebasec.staging`. Do not commit these files (they should be automatically ignored).
+3. Run `firebase login`. Use your flatten credentials. If you're already logged in you might need to run `firebase logout`.
+
+4. Run `firebase use --add flatten-staging-271921`. To set the project.
 
 ## Running the app
 
 - Run `firebase serve` and go to the indicated URL (usually `localhost:5000`).
 
-- If `firebase serve` gives you an authentication error you might need to run `firebase logout` and `firebase login`
+- If `firebase serve` gives you an authentication error you might need to run `firebase logout` and `firebase login`.
+
+- To display the real data run `firebase serve --project flatten-271620`.
 
 ## Internal Notes
 

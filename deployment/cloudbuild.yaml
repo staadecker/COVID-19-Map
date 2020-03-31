@@ -1,7 +1,5 @@
 steps:
   - name: gcr.io/cloud-builders/gsutil
-    args: ["cp", "deployment/.firebaserc.$BRANCH_NAME", ".firebaserc"]
-  - name: gcr.io/cloud-builders/gsutil
     args: ["cp", "deployment/firebase.$BRANCH_NAME.json", "firebase.json"]
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/firebase', '.' ]

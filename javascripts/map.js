@@ -27,19 +27,42 @@ map.on("popupopen", onPopupOpen);
 document.getElementById("postcode_mobile").innerHTML = "<center>Canada Numbers</center>";
 document.getElementById("postcode").innerHTML = "<center>Canada Numbers</center>";
 
+class MapConfig {
+    constructor(layer, legend, polygons, style){
+        this.layer = layer;
+        this.legend = legend;
+        this.polygons = polygons;
+        this.style = style;
+    }
+
+    toggleOff(mainMap, fromCircle){
+        if (this.legend) mainMap.removeControl(this.legend);
+        if (fromCircle)
+            mainMap.removeLayer(this.layer);
+    }
+
+    toggleOn(mainMap) {
+        this.layer.addTo(mainMap);
+        if (this.legend) this.legend.addTo(mainMap);
+        if (this.polygons) this.polygons.setStyle(this.style);
+    }
+}
+
+
+// Map legends/layers for confirmed and potential cases, and the vulnerable.
+let mapConfigs = {};
+
 let polygons, confirmedCircles, polygonsLayer, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
 
-function getColour(cases, colour_scheme, color_thresholds) {
-    if (color_thresholds.length !== colour_scheme.length)
+function getColour(cases, colour_scheme, thresholds) {
+    if (thresholds.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
 
+    for (let i = 1; i < thresholds.length; i++)
+        if (cases <= thresholds[i]) return colour_scheme[i - 1];
 
-    for (let i = 1; i < color_thresholds.length; i++) {
-        if (cases <= color_thresholds[i]) return colour_scheme[i - 1];
-    }
-
-    return colour_scheme[color_thresholds.length - 1];
+    return colour_scheme[thresholds.length - 1];
 }
 
 // Coloring style for self-isolating polygons, feature is the specific polygon
@@ -130,39 +153,41 @@ function displayMaps() {
 
     }).addTo(polygonsLayer);
 
-    // Legend for self-isolated cases.
-    selfIso_legend = L.control({ position: 'bottomright' });
+    mapConfigs["potential"] = new MapConfig(polygonsLayer,
+        L.control({ position: 'bottomright' }),polygons, selfIso_style);
+    mapConfigs["vulnerable"] = new MapConfig(polygonsLayer,
+        L.control({ position: 'bottomright' }), polygons, highRisk_style);
 
-    selfIso_legend.onAdd = function (map) {
+    // Legend for self-isolated cases.
+    // mapConfigs["potential"].legend = L.control({ position: 'bottomright' });
+    mapConfigs["potential"].legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
-        for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++) {
+        for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++)
             div.innerHTML +=
                 '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
                 (POT_SCHEME_THRESHOLDS[i] + 1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
-        }
 
         return div;
     };
 
     // Legend for high risk cases.
-    highRisk_legend = L.control({ position: 'bottomright' });
-
-    highRisk_legend.onAdd = function (map) {
+    // mapConfigs["vulnerable"].legend = L.control({ position: 'bottomright' });
+    mapConfigs["vulnerable"].legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
+
         // Loop through our density intervals and generate a label with a coloured square for each interval.
-        for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
+        for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++)
             div.innerHTML +=
                 '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
                 (HIGH_RISK_SCHEME_THRESHOLDS[i] + 1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
-        }
 
         return div;
     };
 
     // Array of Leaflet API markers for confirmed cases.
-    confirmedCircles = L.layerGroup();
+    mapConfigs["confirmed"] = new MapConfig(L.layerGroup(), null, null, null);
 
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
@@ -170,9 +195,8 @@ function displayMaps() {
 
         // Add the marker.
         let rad = 6;
-        if (confirmed_cases_data[i]['cases'] >= 10) {
+        if (confirmed_cases_data[i]['cases'] >= 10) 
             rad += confirmed_cases_data[i]['cases'] / confirmed_data['max_cases'] * MAX_RAD;
-        }
 
         const circle = new L.circleMarker(confirmed_cases_data[i]['coord'], {
             weight: 0,
@@ -193,7 +217,7 @@ function displayMaps() {
 
         //Bind popup and add circle to circle array.
         circle.bindPopup(popup);
-        circle.addTo(confirmedCircles);
+        circle.addTo(mapConfigs["confirmed"].layer);
     }
 }
 
@@ -206,11 +230,7 @@ function onPopupOpen(event) {
 // Toggle numbers on mobile
 function toggleStats() {
     var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-        x.style.display = "none";
-    } else {
-        x.style.display = "block";
-    }
+    x.style.diplay = x.style.display === "block"? "none": "block";
 }
 
 

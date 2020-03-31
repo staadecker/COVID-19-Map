@@ -1,35 +1,15 @@
 function toggle_clicked(radioValue) {
-    switch (radioValue) {
-        case "confirmed":
-            confirmedCircles.addTo(map);
-            map.removeLayer(polygonsLayer);
-            document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
-            map.removeControl(selfIso_legend);
-            map.removeControl(highRisk_legend);
-            break;
+    if (mapConfigs[radioValue] === null) {
+        console.log("Toggle called with the wrong option. " + radioValue)
+        return
+    }
 
-        case "vulnerable":
-            map.removeLayer(confirmedCircles);
-            polygonsLayer.addTo(map);
-            polygons.setStyle(highRisk_style);
-            highRisk_legend.addTo(map);
-            if (!(map.legend === null)) map.removeControl(selfIso_legend);
-
-            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
-            break;
-
-        case "potential":
-            map.removeLayer(confirmedCircles);
-            polygonsLayer.addTo(map);
-            polygons.setStyle(selfIso_style);
-            selfIso_legend.addTo(map);
-            if (!(map.legend === null)) map.removeControl(highRisk_legend);
-
-            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
-            break;
-
-        default:
-            console.log("Toggle called with the wrong option. " + radioValue)
+    for (var key in mapConfigs) {
+        if (key !== radioValue){
+            mapConfigs[key].toggleOff(map, radioValue == "confirmed");
+            continue;
+        }
+        document.getElementById("update_time").innerHTML = mapConfigs[key].toggleOn(map);
     }
 
     if (current_location) current_location.bringToFront();
