@@ -82,7 +82,7 @@ body {
   clear: both;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 2000px) {
   .left {
     width: 750px;
   }
