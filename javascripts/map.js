@@ -29,8 +29,32 @@ const map = new L.map('map', {
 
 map.on("popupopen", onPopupOpen);
 
-// toggles between polygons and circles
-let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
+
+class MapConfig {
+    constructor(){
+        this.legend = null;
+        this.layer = null;
+    }
+
+    toggleOff(mainMap){
+        if (this.legend !== null) mainMap.removeControl(this.legend);
+        if (this.layer !== null) mainMap.removeLayer(this.layer);
+    }
+
+    toggleOn(mainMap){
+        this.layer.addTo(mainMap);
+
+        if (this.legend === null)  return confirmed_data['last_updated'];
+        
+        this.legend.addTo(mainMap);
+        return "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
+    }
+}
+
+let confirmedMap = new MapConfig();
+let selfIsolatedMap = new MapConfig();
+let highRiskMap = new MapConfig();
+
 // gets data from gcloud
 let form_data_obj, confirmed_data;
 
@@ -55,8 +79,8 @@ function displayMaps() {
 
     // Leaflet layerGroups to help with toggling
     // polygons in each layer group
-    selfIsolatedPolygons = L.layerGroup();
-    highRiskPolygons = L.layerGroup();
+    selfIsolatedMap.layer = L.layerGroup();
+    highRiskMap.layer = L.layerGroup();
 
     // Coloring style for self-isolating polygons, feature is the specific polygon
     function selfIso_style(feature) {
@@ -118,7 +142,7 @@ function displayMaps() {
             layer.bindPopup(msg_selfIso);
         }
 
-    }).addTo(selfIsolatedPolygons);
+    }).addTo(selfIsolatedMap.layer);
 
     // Add high-risk polygons
     L.geoJSON(post_code_boundaries, {
@@ -141,12 +165,12 @@ function displayMaps() {
             layer.bindPopup(msg_highRisk);
         }
     // add to layer group
-    }).addTo(highRiskPolygons);
+    }).addTo(highRiskMap.layer);
 
     // Legend for self-isolated cases.
-    selfIso_legend = L.control({position: 'bottomright'});
+    selfIsolatedMap.legend = L.control({position: 'bottomright'});
 
-    selfIso_legend.onAdd = function (map) {
+    selfIsolatedMap.legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
@@ -160,9 +184,9 @@ function displayMaps() {
     };
 
     // Legend for high risk cases.
-    highRisk_legend = L.control({position: 'bottomright'});
+    highRiskMap.legend = L.control({position: 'bottomright'});
 
-    highRisk_legend.onAdd = function (map) {
+    highRiskMap.legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
@@ -175,7 +199,8 @@ function displayMaps() {
     };
 
     // Array of Leaflet API markers for confirmed cases.
-    confirmedCircles = L.layerGroup();
+    // confirmedCircles = L.layerGroup();
+    confirmedMap.layer = L.layerGroup();
 
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
@@ -206,7 +231,8 @@ function displayMaps() {
 
         //Bind popup and add circle to circle array.
         circle.bindPopup(popup);
-        circle.addTo(confirmedCircles);
+        // circle.addTo(confirmedCircles);
+        circle.addTo(confirmedMap.layer);
     }
 }
 

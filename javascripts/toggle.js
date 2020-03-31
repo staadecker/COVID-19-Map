@@ -1,36 +1,26 @@
 function toggle_clicked(radioValue) {
     switch (radioValue) {
         case "confirmed":
-            map.removeLayer(selfIsolatedPolygons);
-            map.removeLayer(highRiskPolygons);
-            map.removeControl(selfIso_legend);
-            map.removeControl(highRisk_legend);
 
-            confirmedCircles.addTo(map);
+            highRiskMap.toggleOff(map);
+            selfIsolatedMap.toggleOff(map);
 
-            document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
+            document.getElementById("update_time").innerHTML = confirmedMap.toggleOn(map);
             break;
 
         case "vulnerable":
-            map.removeLayer(confirmedCircles);
-            map.removeLayer(selfIsolatedPolygons);
-            if (map.legend !== null) map.removeControl(selfIso_legend);
 
-            highRiskPolygons.addTo(map);
-            highRisk_legend.addTo(map);
+            confirmedMap.toggleOff(map);
+            selfIsolatedMap.toggleOff(map);
 
-            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
+            document.getElementById("update_time").innerHTML = highRiskMap.toggleOn(map);
             break;
 
         case "potential":
-            map.removeLayer(confirmedCircles);
-            map.removeLayer(highRiskPolygons);
-            if (map.legend !== null) map.removeControl(highRisk_legend);
+            highRiskMap.toggleOff(map);
+            confirmedMap.toggleOff(map);
             
-            selfIsolatedPolygons.addTo(map);
-            selfIso_legend.addTo(map);
-
-            document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
+            document.getElementById("update_time").innerHTML = selfIsolatedMap.toggleOn(map);
             break;
         default:
             console.log("Toggle called with the wrong option. " + radioValue)
