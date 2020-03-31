@@ -24,7 +24,10 @@ const map = new L.map('map', {
 
 map.on("popupopen", onPopupOpen);
 
-let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
+document.getElementById("postcode_mobile").innerHTML = "<center>Canada Numbers</center>";
+document.getElementById("postcode").innerHTML = "<center>Canada Numbers</center>";
+
+let polygons, confirmedCircles, polygonsLayer, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
 
 function getColour(cases, colour_scheme, color_thresholds) {
@@ -39,95 +42,96 @@ function getColour(cases, colour_scheme, color_thresholds) {
     return colour_scheme[color_thresholds.length - 1];
 }
 
+// Coloring style for self-isolating polygons, feature is the specific polygon
+function selfIso_style(feature) {
+    let num_potential = 0;
+    let num_total = 0;
+    if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
+        num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+    }
+    return {
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
+        fillOpacity: (num_potential === 0) ? 0 : 0.4,
+    }
+}
+
+// Colouring style for high-risk polygons, feature is the specific polygon
+function highRisk_style(feature) {
+    let num_high_risk = 0;
+    let num_total = 0;
+    if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
+        num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+    }
+    return {
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
+        fillOpacity: (num_high_risk === 0) ? 0 : 0.4,
+    }
+}
+
 function displayMaps() {
     // 1. Create the layers
-
-    // Leaflet layerGroups to help with toggling
-    selfIsolatedPolygons = L.layerGroup();
-    highRiskPolygons = L.layerGroup();
-
-    // Coloring style for self-isolating polygons, feature is the specific polygon
-    function selfIso_style(feature) {
-        let num_potential = 0;
-        let num_total = 0;
-        if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-            num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
-            num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-        }
-        return {
-            weight: 0.9,
-            color: 'gray',
-            dashArray: '3',
-            fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
-            fillOpacity: (num_potential === 0) ? 0 : 0.4,
-        }
-    }
-
-    // Colouring style for high-risk polygons, feature is the specific polygon
-    function highRisk_style(feature) {
-        let num_high_risk = 0;
-        let num_total = 0;
-        if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-            num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
-            num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-        }
-        return {
-            weight: 0.9,
-            color: 'gray',
-            dashArray: '3',
-            fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
-            fillOpacity: (num_high_risk === 0) ? 0 : 0.4,
-        }
-    }
+    polygonsLayer = L.layerGroup();
 
     // Add self-isolation polygons
-    L.geoJSON(post_code_boundaries, {
+    polygons = L.geoJSON(post_code_boundaries, {
         style: selfIso_style,
 
         // Adding modals to each post code
         onEachFeature: function (feature, layer) {
             let num_potential = 0;
-            let total_reports_region = 0;
-            if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-                num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
-                total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-            }
-
-            let msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-            }
-
-            layer.bindPopup(msg_selfIso);
-        }
-
-    }).addTo(selfIsolatedPolygons);
-
-    // Add high-risk polygons
-    L.geoJSON(post_code_boundaries, {
-        style: highRisk_style,
-
-        // Adding modals to each post code
-        onEachFeature: function (feature, layer) {
             let num_high_risk = 0;
             let total_reports_region = 0;
             if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+                num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
                 num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
                 total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
             }
 
-            let msg_highRisk = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " + total_reports_region + " reports in total.</p>";
+            layer.on('click', function (e) {
+                // Adjust postcode on dash
+                document.getElementById("postcode_mobile").innerHTML = "<center>" + feature.properties.CFSAUID + " Numbers</center>";
+                document.getElementById("postcode").innerHTML = "<center>" + feature.properties.CFSAUID + " Numbers</center>";
+
+                // Adjust total responses
+                document.getElementById("tot_res_mobile").innerHTML = total_reports_region;
+                document.getElementById("tot_res").innerHTML = total_reports_region;
+
+                // Adjust potential cases
+                document.getElementById("pot_mobile").innerHTML = num_potential;
+                document.getElementById("pot").innerHTML = num_potential;
+
+                // Adjust total confirmed cases (to add)
+
+                // Adjust current confirmed cases (to add)
+
+                // Adjust vulnerable indidivudals
+                document.getElementById("tot_vul_mobile").innerHTML = num_high_risk;
+                document.getElementById("tot_vul").innerHTML = num_high_risk;
+
+                // Adjust recovered individuals
+            });
+            let msg = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_potential +
+                " reports from potential cases.</p><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " 
+                + total_reports_region + " reports in total.</p>";
             if (total_reports_region === 0) {
-                msg_highRisk = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+                msg = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
             }
 
-            layer.bindPopup(msg_highRisk);
+            layer.bindPopup(msg);
         }
 
-    }).addTo(highRiskPolygons);
+    }).addTo(polygonsLayer);
 
     // Legend for self-isolated cases.
-    selfIso_legend = L.control({position: 'bottomright'});
+    selfIso_legend = L.control({ position: 'bottomright' });
 
     selfIso_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
@@ -136,14 +140,14 @@ function displayMaps() {
         for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
-                (POT_SCHEME_THRESHOLDS[i]+1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                (POT_SCHEME_THRESHOLDS[i] + 1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
     };
 
     // Legend for high risk cases.
-    highRisk_legend = L.control({position: 'bottomright'});
+    highRisk_legend = L.control({ position: 'bottomright' });
 
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
@@ -151,7 +155,7 @@ function displayMaps() {
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
-                (HIGH_RISK_SCHEME_THRESHOLDS[i]+1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                (HIGH_RISK_SCHEME_THRESHOLDS[i] + 1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
@@ -203,9 +207,9 @@ function onPopupOpen(event) {
 function toggleStats() {
     var x = document.getElementById("myLinks");
     if (x.style.display === "block") {
-    x.style.display = "none";
+        x.style.display = "none";
     } else {
-    x.style.display = "block";
+        x.style.display = "block";
     }
 }
 

@@ -2,8 +2,7 @@ function toggle_clicked(radioValue) {
     switch (radioValue) {
         case "confirmed":
             confirmedCircles.addTo(map);
-            map.removeLayer(selfIsolatedPolygons);
-            map.removeLayer(highRiskPolygons);
+            map.removeLayer(polygonsLayer);
             document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
             map.removeControl(selfIso_legend);
             map.removeControl(highRisk_legend);
@@ -11,8 +10,8 @@ function toggle_clicked(radioValue) {
 
         case "vulnerable":
             map.removeLayer(confirmedCircles);
-            map.removeLayer(selfIsolatedPolygons);
-            highRiskPolygons.addTo(map);
+            polygonsLayer.addTo(map);
+            polygons.setStyle(highRisk_style);
             highRisk_legend.addTo(map);
             if (!(map.legend === null)) map.removeControl(selfIso_legend);
 
@@ -21,8 +20,8 @@ function toggle_clicked(radioValue) {
 
         case "potential":
             map.removeLayer(confirmedCircles);
-            selfIsolatedPolygons.addTo(map);
-            map.removeLayer(highRiskPolygons);
+            polygonsLayer.addTo(map);
+            polygons.setStyle(selfIso_style);
             selfIso_legend.addTo(map);
             if (!(map.legend === null)) map.removeControl(highRisk_legend);
 
