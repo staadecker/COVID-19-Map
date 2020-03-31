@@ -82,6 +82,14 @@ body {
   clear: both;
 }
 
+@media (max-width: 1350px) {
+  .left {
+    width: 650px;
+  }
+  .right {
+    width: 350px;
+  }     
+}
 @media (max-width: 1300px) {
   .left {
     width: 750px;
@@ -90,6 +98,8 @@ body {
     width: 450px;
   }     
 }
+
+
 @media (max-width: 1132px) {
   .left {
     width: 100%;
