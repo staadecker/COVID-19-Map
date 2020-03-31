@@ -88,13 +88,14 @@ body {
 }
 
 
-@media (max-width: 2000px) {
+
+@media (min-width: 1132px) {
   .left {
-    width: 750px; 
+    width: 65%; 
  
   }
   .right {
-    width: 450px;
+    width: 35%;
 
   }
 }
