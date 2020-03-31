@@ -76,10 +76,11 @@
 
         <div class="row map-info">
             <div class="column left" style="background-color:white">
-                <button class="button button1" onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
-                <button class="button button2"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
-                <button class="button button3"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
-
+                <div id="layerSelect">
+                    <button class="btn active"onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                    <button class="btn"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+                    <button class="btn"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
+                  </div>
 
                 &nbsp;
                 <!--The div element for the map -->
@@ -245,6 +246,8 @@
         <script type="text/javascript" src="javascripts/toggle.js"></script>
         <script type="text/javascript" src="javascripts/modal.js"></script>
         <script type="text/javascript" src="javascripts/data_loader.js"></script>
+        <script type="text/javascript" src="javascripts/layer-selector.js"></script>
+      
 
     </body>
 </html>
