@@ -10,7 +10,7 @@ const HIGH_RISK_COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#b
 const POT_SCHEME_THRESHOLDS = [0, 10, 50, 250, 500];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
 const POLYGON_OPACITY = 0.4;
-// max size circle can be on map
+// Max size circle can be on map
 const MAX_RAD = 35;
 
 // Create map
@@ -29,51 +29,73 @@ const map = new L.map('map', {
 
 map.on("popupopen", onPopupOpen);
 
-// toggles between polygons and circles
-let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
-// gets data from gcloud
+class MapConfig {
+    constructor(){
+        this.legend = null;
+        this.layer = null;
+    }
+
+    toggleOff(mainMap){
+        if (this.legend !== null) mainMap.removeControl(this.legend);
+        if (this.layer !== null) mainMap.removeLayer(this.layer);
+    }
+
+    toggleOn(mainMap){
+        this.layer.addTo(mainMap);
+
+        if (this.legend === null) return confirmed_data['last_updated'];
+
+        this.legend.addTo(mainMap);
+        return "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
+    }
+}
+
+// Map legends/layers for confirmed and potential cases, and the vulnerable.
+let mapConfigs = {
+    "confirmed": new MapConfig(),
+    "vulnerable": new MapConfig(),
+    "potential": new MapConfig(),
+};
+
+
+// Gets data from gcloud
 let form_data_obj, confirmed_data;
 
-// assigns color based on thresholds
+// Assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
     if (color_thresholds.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
 
-
-    for (let i = 1; i < color_thresholds.length; i++) {
+    for (let i = 1; i < color_thresholds.length; i++)
         if (cases <= color_thresholds[i]) return colour_scheme[i - 1];
-    }
 
     return colour_scheme[color_thresholds.length - 1];
 }
 
 
-
-
 function displayMaps() {
     // 1. Create the layers
 
-    // Leaflet layerGroups to help with toggling
-    // polygons in each layer group
-    selfIsolatedPolygons = L.layerGroup();
-    highRiskPolygons = L.layerGroup();
+    // Leaflet layerGroups to help with toggling polygons in each layer group.
+    mapConfigs["potential"].layer = L.layerGroup();
+    mapConfigs["vulnerable"].layer = L.layerGroup();
 
-    // Coloring style for self-isolating polygons, feature is the specific polygon
+    // Coloring style for self-isolating polygons, feature is the specific polygon.
     function selfIso_style(feature) {
         let num_potential = 0;
         let num_total = 0;
 
-        // only set numbers if it exists in form_data_obj
+        // Only set numbers if it exists in form_data_obj.
         if (feature.properties.CFSAUID in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
             num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
         }
         return {
-            // define the outlines of the map
+            // Define the outlines of the map.
             weight: 0.9,
             color: 'gray',
             dashArray: '3',
-            // define the color and opacity of each polygon
+            // Define the color and opacity of each polygon.
             fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
             fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
         }
@@ -96,12 +118,12 @@ function displayMaps() {
         }
     }
 
-    // Add self-isolation polygons
+    // Add self-isolation polygons.
     L.geoJSON(post_code_boundaries, {
-        //styles each polygons individually based on their features
+        //styles each polygons individually based on their features.
         style: selfIso_style,
 
-        // Adding modals to each post code
+        // Adding modals to each post code.
         onEachFeature: function (feature, layer) {
             let num_potential = 0;
             let total_reports_region = 0;
@@ -118,13 +140,13 @@ function displayMaps() {
             layer.bindPopup(msg_selfIso);
         }
 
-    }).addTo(selfIsolatedPolygons);
+    }).addTo(mapConfigs["potential"].layer);
 
-    // Add high-risk polygons
+    // Add high-risk polygons.
     L.geoJSON(post_code_boundaries, {
         style: highRisk_style,
 
-        // Adding modals to each post code
+        // Adding modals to each post code.
         onEachFeature: function (feature, layer) {
             let num_high_risk = 0;
             let total_reports_region = 0;
@@ -140,13 +162,13 @@ function displayMaps() {
 
             layer.bindPopup(msg_highRisk);
         }
-    // add to layer group
-    }).addTo(highRiskPolygons);
+    // Add to layer group.
+    }).addTo(mapConfigs["vulnerable"].layer);
 
     // Legend for self-isolated cases.
-    selfIso_legend = L.control({position: 'bottomright'});
+    mapConfigs["potential"].legend = L.control({position: 'bottomright'});
 
-    selfIso_legend.onAdd = function (map) {
+    mapConfigs["potential"].legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         /*  Loop through our density intervals and generate a label with a
             coloured square for each interval. */
@@ -160,9 +182,9 @@ function displayMaps() {
     };
 
     // Legend for high risk cases.
-    highRisk_legend = L.control({position: 'bottomright'});
+    mapConfigs["vulnerable"].legend = L.control({position: 'bottomright'});
 
-    highRisk_legend.onAdd = function (map) {
+    mapConfigs["vulnerable"].legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
@@ -175,7 +197,7 @@ function displayMaps() {
     };
 
     // Array of Leaflet API markers for confirmed cases.
-    confirmedCircles = L.layerGroup();
+    mapConfigs["confirmed"].layer = L.layerGroup();
 
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
@@ -183,9 +205,8 @@ function displayMaps() {
 
         // Add the marker.
         let rad = 6;
-        if (confirmed_cases_data[i]['cases'] >= 10) {
+        if (confirmed_cases_data[i]['cases'] >= 10) 
             rad += confirmed_cases_data[i]['cases'] / confirmed_data['max_cases'] * MAX_RAD;
-        }
 
         const circle = new L.circleMarker(confirmed_cases_data[i]['coord'], {
             weight: 0,
@@ -204,9 +225,9 @@ function displayMaps() {
         let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(text);
         popup.popup_idx = i;
 
-        //Bind popup and add circle to circle array.
+        // Bind popup and add circle to circle array.
         circle.bindPopup(popup);
-        circle.addTo(confirmedCircles);
+        circle.addTo(mapConfigs["confirmed"].layer);
     }
 }
 
