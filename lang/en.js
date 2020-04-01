@@ -1,3 +1,3 @@
-text = {
+const text = {
     "key": "value"
 };
