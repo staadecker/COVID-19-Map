@@ -7,7 +7,7 @@
   padding: 2px 24px; 
   margin: 22px 0px; 
   cursor: pointer; /* Pointer/hand icon */
-  width: 32%; 
+  width: 32.2%; 
   font-size: 14px;
   height: 90px;
 }
@@ -16,5 +16,4 @@
 .active, .btn:hover {
   background-color: #cccccc;
   color: #6d6d6d;
-}
-  
+} 
