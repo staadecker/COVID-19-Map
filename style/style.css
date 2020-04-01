@@ -30,7 +30,6 @@ body {
   #map {
       height: calc(100vh - 200px);
   }
-
 }
 
 /* Different button style for desktop */
@@ -74,6 +73,9 @@ body {
   }
   .right {
     width: 35%;
+  }
+  .topnavright {
+    display:none;
   }
   .topnav{
     display:none;

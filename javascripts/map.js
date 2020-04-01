@@ -213,5 +213,15 @@ function toggleStats() {
     }
 }
 
+// Toggle numbers on mobile
+function toggleGraphs() {
+    var x = document.getElementById("myLinksright");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+
 
 

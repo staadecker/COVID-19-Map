@@ -63,3 +63,12 @@
   display: table;
   clear: both;
 }
+
+.demobox {
+  padding: 10px;
+  background-color: blue; /* White background */
+  text-align: center;
+  color: black;
+  font-size: 14px;
+  margin: 2px 2px;
+}

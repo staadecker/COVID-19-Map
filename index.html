@@ -29,14 +29,29 @@
         </h2>
     </header>
     <content>
+    <div class="topnavrow">
         <div class="topnav">
             <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()">
-                Toggle statistics</i>
+                Toggle Statistics</i>
             </button>
             <div id="myLinks">
-                <h3 id="postcode_mobile">
-                    <center>L5H Numbers</center>
-                </h3>
+                <div class="container">
+                    <form action="/action_page.php">
+                        <div class="row">
+                            <div class="description-col">
+                                <label for="postal">Region Specific Data</label>
+                            </div>
+                            <div class="field-col">
+                                <input type="text" id="postal" name="postalcode"
+                                    placeholder="First 3 digits of postal code">
+                            </div>
+                            <div class="submit-col">
+                                <input type="submit" value="Search">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
                 <div class="equalrowmobile">
                     <div class="equalcolumnmobile equalleftmobile"
                         style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
@@ -75,19 +90,19 @@
                         <h1 id="total_rec_num_mobile">45</h1>
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <div class="row map-info">
-            <div class="column left" style="background-color:white">
-                &nbsp;
-                &nbsp;
+ 
+        <div class="topnavright">
+            <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleGraphs()">
+                Toggle Graphs</i>
+            </button>
+            <div id="myLinksright">
                 <div class="container">
                     <form action="/action_page.php">
                         <div class="row">
                             <div class="description-col">
-                                <label for="postal">View a Region </label>
+                                <label for="postal">Region Specific Data</label>
                             </div>
                             <div class="field-col">
                                 <input type="text" id="postal" name="postalcode"
@@ -99,6 +114,17 @@
                         </div>
                     </form>
                 </div>
+                <div class="demobox">
+                        <p id="total_rec_mobile">Graph Stuff</p>
+                        <h1 id="total_rec_num_mobile">Blah Blah</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+        <div class="row map-info">
+            <div class="column left" style="background-color:white">
                 
                 <div id="layerSelect">
                     <button class="btn active"onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
