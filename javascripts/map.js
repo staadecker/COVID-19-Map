@@ -35,22 +35,26 @@ class MapConfig {
         this.style = style;
     }
 
-    toggleOff(mainMap, fromCircle){
+    toggleOff(mainMap, fromCircle, name){
         if (this.legend) mainMap.removeControl(this.legend);
-        if (fromCircle)
-            mainMap.removeLayer(this.layer);
+        if (fromCircle) mainMap.removeLayer(polygons);
+        else mainMap.removeLayer(this.layer);
     }
 
     toggleOn(mainMap) {
         if (this.layer) this.layer.addTo(mainMap);
         if (this.legend) this.legend.addTo(mainMap);
-        if (this.polygons) this.polygons.setStyle(this.style);
+        if (this.polygons){
+            this.polygons.setStyle(this.style);
+            this.polygons.addTo(mainMap);
+        }
     }
 }
 
 
 // Map legends/layers for confirmed and potential cases, and the vulnerable.
 let mapConfigs = {};
+mapConfigs["confirmed"] = new MapConfig(null, null, null, null);
 
 let polygons, confirmedCircles, polygonsLayer, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
@@ -100,6 +104,7 @@ function highRisk_style(feature) {
 }
 
 function displayMaps() {
+    polygonsLayer = L.layerGroup();
     // Update dashboard
     function updateDash(postcode, layer) {
         let num_potential = 0;
@@ -184,7 +189,7 @@ function displayMaps() {
     map.addControl(searchControl);
 
     mapConfigs["potential"] = new MapConfig(polygonsLayer,
-        L.control({ position: 'bottomright' }),polygons, selfIso_style);
+        L.control({ position: 'bottomright' }), polygons, selfIso_style);
     mapConfigs["vulnerable"] = new MapConfig(polygonsLayer,
         L.control({ position: 'bottomright' }), polygons, highRisk_style);
 
@@ -217,8 +222,7 @@ function displayMaps() {
     };
 
     // Array of Leaflet API markers for confirmed cases.
-    mapConfigs["confirmed"] = new MapConfig(L.layerGroup(), null, null, null);
-
+    mapConfigs["confirmed"].layer = L.layerGroup();
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
         if (confirmed_cases_data[i]['coord'][0] === "N/A") continue;
