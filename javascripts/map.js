@@ -2,9 +2,10 @@ const CANADA_BOUNDS = [[38, -150], [87, -45]];
 const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
-const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
-const POT_SCHEME_THRESHOLDS = [0, 10, 50, 250, 500];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
+const POT_COLOUR_SCHEME = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
+const HIGH_RISK_COLOUR_SCHEME = ['#ffc4a7', '#fa9e95', '#f98378', '#f6577d', '#f32074', '#a81c6f', '#620147', '#2e012d'];
+const POT_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 350, 500];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0, 5, 10, 50, 100, 200, 500, 700];
 const MAX_RAD = 35;
 
 // Create map
@@ -34,38 +35,34 @@ class MapConfig {
         this.style = style;
     }
 
-    toggleOff(mainMap, fromCircle, name){
+    toggleOff(mainMap, fromCircle){
         if (this.legend) mainMap.removeControl(this.legend);
-        if (fromCircle) mainMap.removeLayer(polygons);
-        else mainMap.removeLayer(this.layer);
+        if (fromCircle)
+            mainMap.removeLayer(this.layer);
     }
 
     toggleOn(mainMap) {
         if (this.layer) this.layer.addTo(mainMap);
         if (this.legend) this.legend.addTo(mainMap);
-        if (this.polygons){
-            this.polygons.setStyle(this.style);
-            this.polygons.addTo(mainMap);
-        }
+        if (this.polygons) this.polygons.setStyle(this.style);
     }
 }
 
 
 // Map legends/layers for confirmed and potential cases, and the vulnerable.
 let mapConfigs = {};
-mapConfigs["confirmed"] = new MapConfig(null, null, null, null);
 
 let polygons, confirmedCircles, polygonsLayer, selfIso_legend, highRisk_legend;
 let form_data_obj, confirmed_data;
 
-function getColour(cases, thresholds) {
-    if (thresholds.length !== COLOUR_SCHEME.length)
+function getColour(cases, colour_scheme, thresholds) {
+    if (thresholds.length !== colour_scheme.length)
         console.log("WARNING: list lengths don't match in getColour.");
 
     for (let i = 1; i < thresholds.length; i++)
-        if (cases <= thresholds[i]) return COLOUR_SCHEME[i - 1];
+        if (cases <= thresholds[i]) return colour_scheme[i - 1];
 
-    return COLOUR_SCHEME[thresholds.length - 1];
+    return colour_scheme[thresholds.length - 1];
 }
 
 // Coloring style for self-isolating polygons, feature is the specific polygon
@@ -80,7 +77,7 @@ function selfIso_style(feature) {
         weight: 0.9,
         color: 'gray',
         dashArray: '3',
-        fillColor: getColour(num_potential, POT_SCHEME_THRESHOLDS),
+        fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
         fillOpacity: (num_potential === 0) ? 0 : 0.4,
     }
 }
@@ -97,13 +94,12 @@ function highRisk_style(feature) {
         weight: 0.9,
         color: 'gray',
         dashArray: '3',
-        fillColor: getColour(num_high_risk, HIGH_RISK_SCHEME_THRESHOLDS),
+        fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
         fillOpacity: (num_high_risk === 0) ? 0 : 0.4,
     }
 }
 
 function displayMaps() {
-    polygonsLayer = L.layerGroup();
     // Update dashboard
     function updateDash(postcode, layer) {
         let num_potential = 0;
@@ -188,7 +184,7 @@ function displayMaps() {
     map.addControl(searchControl);
 
     mapConfigs["potential"] = new MapConfig(polygonsLayer,
-        L.control({ position: 'bottomright' }), polygons, selfIso_style);
+        L.control({ position: 'bottomright' }),polygons, selfIso_style);
     mapConfigs["vulnerable"] = new MapConfig(polygonsLayer,
         L.control({ position: 'bottomright' }), polygons, highRisk_style);
 
@@ -200,7 +196,7 @@ function displayMaps() {
             coloured square for each interval. */
         for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++)
             div.innerHTML +=
-                '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_SCHEME_THRESHOLDS) + '"></i> ' +
+                '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
                 (POT_SCHEME_THRESHOLDS[i] + 1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
 
         return div;
@@ -214,14 +210,15 @@ function displayMaps() {
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++)
             div.innerHTML +=
-                '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
+                '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
                 (HIGH_RISK_SCHEME_THRESHOLDS[i] + 1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
 
         return div;
     };
 
     // Array of Leaflet API markers for confirmed cases.
-    mapConfigs["confirmed"].layer = L.layerGroup();
+    mapConfigs["confirmed"] = new MapConfig(L.layerGroup(), null, null, null);
+
     let confirmed_cases_data = confirmed_data['confirmed_cases'];
     for (let i = 0; i < confirmed_cases_data.length; i++) {
         if (confirmed_cases_data[i]['coord'][0] === "N/A") continue;

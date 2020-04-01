@@ -6,7 +6,7 @@ function toggle_clicked(radioValue) {
 
     for (var key in mapConfigs) {
         if (key !== radioValue){
-            mapConfigs[key].toggleOff(map, radioValue === "confirmed", key);
+            mapConfigs[key].toggleOff(map, radioValue == "confirmed");
             continue;
         }
         document.getElementById("update_time").innerHTML = mapConfigs[key].toggleOn(map);
