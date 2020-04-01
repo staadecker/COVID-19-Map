@@ -260,7 +260,11 @@ function onPopupOpen(event) {
 // Toggle numbers on mobile
 function toggleStats() {
     var x = document.getElementById("myLinks");
-    x.style.diplay = x.style.display === "block"? "none": "block";
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
 }
 
 // Toggle numbers on mobile
@@ -272,6 +276,4 @@ function toggleGraphs() {
         x.style.display = "block";
     }
 }
-
-
 

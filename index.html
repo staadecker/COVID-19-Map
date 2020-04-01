@@ -7,13 +7,12 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <link rel="stylesheet" type="text/css" href="style/style.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
-    <link rel="stylesheet" type="text/css" href="leaflet-search/dist/leaflet-search.src.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
+
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script src="leaflet-search/dist/leaflet-search.src.js"></script>
     <script type="text/javascript" src="res/converted_boundaries.js"></script>
 
     <title>Font Awesome Icons</title>
@@ -78,36 +77,6 @@
                         <h1 id="curr_conf_num_mobile">1300</h1>
                     </div>
                 </div>
-    <div class="switch-field">
-        <input
-                type="radio"
-                id="in_self_isolation"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="potential"
-                checked
-        />
-        <label class="noselect" for="in_self_isolation">Potential Cases</label>
-
-        <input
-                type="radio"
-                id="high_risk"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="vulnerable"
-        />
-        <label class="noselect" for="high_risk">Vulnerable Individuals</label>
-
-        <input
-                type="radio"
-                id="confirmed"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="confirmed"
-        />
-        <label class="noselect" for="confirmed">Cumulative Confirmed Cases</label>
-    </div>
-</div>
 
                 <div class="equalrow">
                     <div class="equalcolumnmobile equalleftmobile"
@@ -123,7 +92,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
  
         <div class="topnavright">
             <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleGraphs()">
@@ -158,23 +126,14 @@
         <div class="row map-info">
             <div class="column left" style="background-color:white">
                 
-=======
-
-        <div class="row map-info">
-            <div class="column left" style="background-color:white">
-                &nbsp;
-                &nbsp;
->>>>>>> afb254649112ed88149daa7b2684373654b34313
                 <div id="layerSelect">
-                    <button class="btn active" onclick="toggle_clicked(this.value)" value="potential" checked>Potential
-                        Cases</button>
-                    <button class="btn" onclick="toggle_clicked(this.value)" value="vulnerable">Vulnerable
-                        Individuals</button>
-                    <button class="btn" onclick="toggle_clicked(this.value)" value="confirmed">Confirmed Cases</button>
-                </div>
+                    <button class="btn active"onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
+                    <button class="btn"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
+                    <button class="btn"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
+                  </div>
 
 
-
+    
                 <!--The div element for the map -->
                 <div id="map"></div>
 
@@ -184,7 +143,7 @@
             </div>
 
             <div class="column right" style="background-color:white">
-
+                
 
                 &nbsp;
                 &nbsp;
@@ -287,17 +246,9 @@
         <div class="modal-content">
             <span id="close2" class="close">&times;</span>
             <h3>About Us</h3>
-            <p>
-                We're a group of scientists, engineers and clinicians who have
-                created an online form and map to provide information on the
-                COVID-19 pandemic.
-            </p>
-            <p>
-                You can reach us at
-                <a href="mailto:flattenofficial@gmail.com">
-                    flattenofficial@gmail.com
-                </a>.
-            </p>
+            <p>We're a group of scientists, engineers and clinicians who have created an online form and map to provide
+                information on the COVID-19 pandemic.</p>
+            <p>You can reach us at <a href="mailto:flattenofficial@gmail.com">flattenofficial@gmail.com</a>.</p>
         </div>
     </div>
     <div id="instructions_modal" class="modal">
