@@ -30,60 +30,72 @@
         </h2>
     </header>
     <content>
-        <div class="topnav">
-            <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()">
-                Toggle statistics</i>
-            </button>
-            <div id="myLinks">
-                <h3 id="postcode_mobile">
-                    <center>L5H Numbers</center>
-                </h3>
-                <div class="equalrowmobile">
-                    <div class="equalcolumnmobile equalleftmobile"
-                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                        <p>Total Responses</p>
-                        <h1 id="tot_res_mobile">956</h1>
+        <div class="topnavrow">
+            <div class="topnav">
+                <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()">
+                    Toggle statistics</i>
+                </button>
+                <div id="myLinks">
+                    <h3 id="postcode_mobile">
+                        <center>L5H Numbers</center>
+                    </h3>
+                    <div class="equalrowmobile">
+                        <div class="equalcolumnmobile equalleftmobile"
+                            style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                            <p>Total Responses</p>
+                            <h1 id="tot_res_mobile">956</h1>
+                        </div>
+                        <div class="equalcolumnmobile equalrightmobile"
+                            style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                            <p>Potential Cases</p>
+                            <h1 id="pot_mobile">672</h1>
+                        </div>
                     </div>
-                    <div class="equalcolumnmobile equalrightmobile"
-                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
-                        <p>Potential Cases</p>
-                        <h1 id="pot_mobile">672</h1>
+
+                    <div class="equalrow">
+                        <div class="equalcolumnmobile equalleftmobile"
+                            style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                            <p id="tot_conf_mobile"> Total Confirmed Cases </p>
+                            <h1 id="tot_conf_num_mobile">22</h1>
+                        </div>
+                        <div class="equalcolumnmobile equalrightmobile"
+                            style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
+                            <p id="curr_conf_mobile">Current Confirmed Cases</p>
+                            <h1 id="curr_conf_num_mobile">1300</h1>
+                        </div>
+                    </div>
+
+                    <div class="equalrow">
+                        <div class="equalcolumnmobile equalleftmobile"
+                            style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                            <p>Total Vulnerable Individuals</p>
+                            <h1 id="tot_vul_mobile">79</h1>
+                        </div>
+                        <div class="equalcolumnmobile equalrightmobile"
+                            style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
+                            <p id="total_rec_mobile">Total Recovered Individuals</p>
+                            <h1 id="total_rec_num_mobile">45</h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="topnavright">
+                <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleGraphs()">
+                    Toggle Graphs</i>
+                </button>
+                <div id="myLinksright">
+                    <div class="demobox">
+                            <p id="total_rec_mobile">Graph Stuff</p>
+                            <h1 id="total_rec_num_mobile">Blah Blah</h1>
                     </div>
                 </div>
-
-                <div class="equalrow">
-                    <div class="equalcolumnmobile equalleftmobile"
-                        style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                        <p id="tot_conf_mobile"> Total Confirmed Cases </p>
-                        <h1 id="tot_conf_num_mobile">22</h1>
-                    </div>
-                    <div class="equalcolumnmobile equalrightmobile"
-                        style="background-image: linear-gradient(to top right, rgb(230, 122, 118) , rgb(233, 164, 162));">
-                        <p id="curr_conf_mobile">Current Confirmed Cases</p>
-                        <h1 id="curr_conf_num_mobile">1300</h1>
-                    </div>
-                </div>
-
-                <div class="equalrow">
-                    <div class="equalcolumnmobile equalleftmobile"
-                        style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                        <p>Total Vulnerable Individuals</p>
-                        <h1 id="tot_vul_mobile">79</h1>
-                    </div>
-                    <div class="equalcolumnmobile equalrightmobile"
-                        style="background-image: linear-gradient(to top right, #9C4B5D , rgb(177, 121, 133));">
-                        <p id="total_rec_mobile">Total Recovered Individuals</p>
-                        <h1 id="total_rec_num_mobile">45</h1>
-                    </div>
-                </div>
-
             </div>
         </div>
 
+
         <div class="row map-info">
             <div class="column left" style="background-color:white">
-                &nbsp;
-                &nbsp;
                 <div id="layerSelect">
                     <button class="btn active" onclick="toggle_clicked(this.value)" value="potential" checked>Potential
                         Cases</button>
@@ -103,11 +115,6 @@
             </div>
 
             <div class="column right" style="background-color:white">
-
-
-                &nbsp;
-                &nbsp;
-
 
                 <h3 id="postcode">
                     <center>L5H Numbers</center>

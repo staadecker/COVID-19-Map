@@ -4,6 +4,7 @@
 @import url("radio-buttons.css");
 @import url("equalcolumns.css");
 @import url("buttons.css");
+@import url("toggle-buttons.css");
 
 * {
   font-family: Roboto, Tahoma, sans-serif;
@@ -19,7 +20,7 @@ body {
 
 /* Set the size of the div element that contains the map */
 #map {
-  width: 99%; /* The width is the width of the web page */
+  width: 98%; /* The width is the width of the web page */
   color: black;
   z-index: 1;
 }
@@ -106,3 +107,112 @@ body {
     clear: both;
 }
 }
+
+
+  /*mobile top nav bar*/
+  .topnav {
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    width: 98%;
+  }
+  
+  .topnav #myLinks {
+    display: none;
+  }
+  
+  .topnav .mobile-numbers-expand {
+    color: black;
+    text-decoration: none;
+    font-size: 17px;
+    /*display: block;*/
+    padding: 15px 10px 15px 10px;
+    text-align: center;
+    background-color: #dddddd;
+    border: none;
+    border-bottom: 2px solid rgb(207, 207, 207);
+    box-shadow: 0 2px 4px rgba(0,0,0,.04);
+    border-radius: 5px;
+    width: 98%;
+    margin: auto;
+  }
+  
+  .topnav .mobile-numbers-expand:hover {
+    background-color: #999;
+  }
+  
+  .topnav .mobile-numbers-expand.icon {
+    background: white;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 6px;
+    padding: 27px;
+    text-align: center;
+  }
+  
+  
+  .active {
+    background-color: white;
+    color: black;
+    padding: 27px;
+    z-index: 2;
+  }
+  
+  /*mobile top nav bar*/
+  .topnavright {
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    width: 99%;
+  }
+  
+  .topnavright #myLinksright {
+    display: none;
+  }
+  
+  .topnavright .mobile-numbers-expand {
+    color: black;
+    text-decoration: none;
+    font-size: 17px;
+    /*display: block;*/
+    padding: 15px 10px 15px 10px;
+    text-align: center;
+    background-color: #dddddd;
+    border: none;
+    border-bottom: 2px solid rgb(207, 207, 207);
+    box-shadow: 0 2px 4px rgba(0,0,0,.04);
+    border-radius: 5px;
+    width: 97%;
+    float: none;
+    margin: auto;
+  }
+  
+  .topnavright .mobile-numbers-expand:hover {
+    background-color: #999;
+  }
+  
+  .topnavright .mobile-numbers-expand.icon {
+    background: white;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 6px;
+    padding: 27px;
+    text-align: center;
+  }
+  
+  
+  .active {
+    background-color: white;
+    color: black;
+    padding: 27px;
+    z-index: 2;
+  }
+  .topnavrow:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
