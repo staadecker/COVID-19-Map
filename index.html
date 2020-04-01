@@ -7,12 +7,13 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
-    <link rel="stylesheet" type="text/css" href="style/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" href="leaflet-search/dist/leaflet-search.src.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="leaflet-search/dist/leaflet-search.src.js"></script>
     <script type="text/javascript" src="res/converted_boundaries.js"></script>
 
     <title>Font Awesome Icons</title>
@@ -32,26 +33,12 @@
     <div class="topnavrow">
         <div class="topnav">
             <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()">
-                Toggle Statistics</i>
+                Toggle statistics</i>
             </button>
             <div id="myLinks">
-                <div class="container">
-                    <form action="/action_page.php">
-                        <div class="row">
-                            <div class="description-col">
-                                <label for="postal">Region Specific Data</label>
-                            </div>
-                            <div class="field-col">
-                                <input type="text" id="postal" name="postalcode"
-                                    placeholder="First 3 digits of postal code">
-                            </div>
-                            <div class="submit-col">
-                                <input type="submit" value="Search">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
+                <h3 id="postcode_mobile">
+                    <center>L5H Numbers</center>
+                </h3>
                 <div class="equalrowmobile">
                     <div class="equalcolumnmobile equalleftmobile"
                         style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
@@ -90,9 +77,9 @@
                         <h1 id="total_rec_num_mobile">45</h1>
                     </div>
                 </div>
+
             </div>
         </div>
- 
         <div class="topnavright">
             <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleGraphs()">
                 Toggle Graphs</i>
@@ -120,20 +107,23 @@
                 </div>
             </div>
         </div>
-    </div>
     
+    </div>
 
         <div class="row map-info">
             <div class="column left" style="background-color:white">
-                
+                &nbsp;
+                &nbsp;
                 <div id="layerSelect">
-                    <button class="btn active"onclick="toggle_clicked(this.value)"value="potential" checked>Potential Cases</button>
-                    <button class="btn"onclick="toggle_clicked(this.value)"value="vulnerable">Vulnerable Individuals</button>
-                    <button class="btn"onclick="toggle_clicked(this.value)"value="confirmed">Confirmed Cases</button>
-                  </div>
+                    <button class="btn active" onclick="toggle_clicked(this.value)" value="potential" checked>Potential
+                        Cases</button>
+                    <button class="btn" onclick="toggle_clicked(this.value)" value="vulnerable">Vulnerable
+                        Individuals</button>
+                    <button class="btn" onclick="toggle_clicked(this.value)" value="confirmed">Confirmed Cases</button>
+                </div>
 
 
-    
+
                 <!--The div element for the map -->
                 <div id="map"></div>
 
@@ -143,7 +133,7 @@
             </div>
 
             <div class="column right" style="background-color:white">
-                
+
 
                 &nbsp;
                 &nbsp;
