@@ -2,18 +2,20 @@ function toggle_clicked(radioValue) {
     switch (radioValue) {
         case "confirmed":
             confirmedCircles.addTo(map);
-            map.removeLayer(selfIsolatedPolygons);
-            map.removeLayer(highRiskPolygons);
+            map.removeLayer(polygons);
             document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
             map.removeControl(selfIso_legend);
             map.removeControl(highRisk_legend);
+            map.removeControl(searchControl_polygons);
             break;
 
         case "vulnerable":
             map.removeLayer(confirmedCircles);
-            map.removeLayer(selfIsolatedPolygons);
-            highRiskPolygons.addTo(map);
+            polygons.addTo(map);
+            polygons.setStyle(highRisk_style);
+            adjustPopups("highRisk");
             highRisk_legend.addTo(map);
+            map.addControl(searchControl_polygons);
             if (!(map.legend === null)) map.removeControl(selfIso_legend);
 
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
@@ -21,9 +23,12 @@ function toggle_clicked(radioValue) {
 
         case "potential":
             map.removeLayer(confirmedCircles);
-            selfIsolatedPolygons.addTo(map);
-            map.removeLayer(highRiskPolygons);
+            polygons.addTo(map);
+            polygons.setStyle(selfIso_style);
+            adjustPopups("selfIso");
             selfIso_legend.addTo(map);
+
+            map.addControl(searchControl_polygons);
             if (!(map.legend === null)) map.removeControl(highRisk_legend);
 
             document.getElementById("update_time").innerHTML = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
