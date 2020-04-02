@@ -24,7 +24,9 @@ for (let i = 0; i < pageElements.length; i++) {
 }
 
 let potential_popup = text['pot_case_popup'];
+let potential_popup_1 = text['pot_case_popup_1'];
 let vul_popup = text['vul_case_popup'];
+let vul_popup_1 = text['vul_case_popup_1'];
 let cul_popup = text['confirm_pop'];
 let searchtext = text['searchbar'];
 let noEntries_pop = text['msg_noentries'];

@@ -5,8 +5,8 @@ const text_fr = {
     "cul_button": "Cas confirmés cumulés",
     "instructions_btn": "Instructions",
     "about_map_btn": "En savoir plus sur la carte",
-    "about_us_btn": "About Us",
-    "aboutTitle": "About this map",
+    "about_us_btn": "Qui sommes-nous?",
+    "aboutTitle": "À propos de cette carte",
     "aboutText1": "Cette carte illustre a) les cas confirmés de COVID-19 b) les cas considérés" +
         " comme potentiellement atteints de COVID-19 selon leurs réponses c)" +
         " les cas ayant des antécédents médicaux tels un système immunitaire affaibli, et / ou âgés de plus de 60 ans.",
@@ -17,7 +17,7 @@ const text_fr = {
     "aboutText3": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
     "segment_title": "Comment cette carte est-elle répartie?",
     "segment_text": "Nous distinguons les régions à l’aide des trois premiers caractères du code postal." +
-        " Ces trois premiers caractères permettent d’identifier des données importante et granulaires," +
+        " Ces trois premiers caractères permettent d’identifier des données importantes et granulaires," +
         " sans toutefois divulguer des données confidentielles sur les participants. ",
     "data_sources": "Sources des données:",
     "pot_case_link": "Cas potentiels et populations vulnérables: <a href=\"https://www.flatten.ca/\">flatten.ca</a>",
@@ -31,9 +31,9 @@ const text_fr = {
     "mail_text": "Vous pouvez nous joindre au <a href=\"mailto:flattenofficial@gmail.com\">flattenofficial@gmail.com</a>.",
     "instructions_title": "Instructions",
     "welcome_text": "Bienvenue à la carte de densité de Flatten!",
-    "instructionsText1": "Pour voir l’information propre à votre région,cliquez sur votre municipalité ou région liée au code postal!" +
+    "instructionsText1": "Pour voir l’information propre à votre région, cliquez sur votre municipalité ou région liée au code postal." +
         " Pour vous y retrouver plus facilement, permettez à Flatten de vous localiser.",
-    "instructionsText2": "<b>Cas confirmés: </b>Cet onglet illustres tous les cas confirmés de COVID-19 au Canada." +
+    "instructionsText2": "<b>Cas confirmés: </b>Cet onglet illustre tous les cas confirmés de COVID-19 au Canada." +
         " Si la municipalité d’un cas particulier n’est pas indiquée, ce cas figurera au centre" +
         " de la province. Données provenant du  COVID-19 Canada Open Data Working Group (voir En savoir plus sur la carte).",
     "instructionsText3": "<b>Cas potentiels: </b>Cet onglet illustre tous les cas potentiels de COVID-19 au Canada," +
@@ -42,7 +42,9 @@ const text_fr = {
         " vulnérables à la  COVID-19 au Canada, selon les données enregistrées dans le formulaire de Flatten.",
     "instructionsText5": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
     "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "pot_case_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport de cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports d’individus vulnérables</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "vul_case_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'un individu vulnérable</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
     "searchbar": "Entrez les 3 premiers caractères de votre code postal",
@@ -92,7 +94,9 @@ const text_en = {
         " that are especially vulnerable to COVID-19 in Canada, based on data inputted into Flatten's form.",
     "instructionsText5": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
     "pot_case_popup": "<h3>FSA</h3><p>We received XXX reports from potential cases.</p><p>We received YYY reports in total.</p>",
+    "pot_case_popup_1": "<h3>FSA</h3><p>We received 1 report from a potential case.</p><p>We received YYY reports in total.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals.</p><p>We received YYY reports in total.</p>",
+    "vul_case_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual.</p><p>We received YYY reports in total.</p>",
     "msg_noentries": "<h3>FSA</h3><p>We haven't had enough form responses in this region yet.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
     "searchbar": "Enter first 3 digits of post code:",
