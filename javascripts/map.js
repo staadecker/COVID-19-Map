@@ -119,6 +119,11 @@ function adjustPopups(toggleType) {
         let popuptxt_noEntires = noEntries_pop;
         let popuptxt_notSup = notSup_pop;
 
+        if (num_potential === 1) {
+            popuptxt_iso = potential_popup_1;
+            popuptxt_vul = vul_popup_1;
+        }
+
         popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
         popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
         popuptxt_iso = popuptxt_iso.replace("YYY", total_reports_region);
@@ -175,6 +180,10 @@ function displayMaps() {
             let popuptxt_iso = potential_popup;
             let popuptxt_noEntires = noEntries_pop;
             let popuptxt_notSup = notSup_pop;
+
+            if (num_potential === 1) {
+                popuptxt_iso = potential_popup_1;
+            }
 
             popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
             popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
