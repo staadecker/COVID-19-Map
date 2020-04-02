@@ -10,11 +10,16 @@ switch (lang) {
         text = text_en;
 }
 
-console.log(text);
-
 // 2. Load language file
+const pageElements = document.getElementsByClassName("lang");
 
 // 3. For each key (ex. "about-us-paragraph-3")
     // 4. Get id by prefixing lan- (ex. "lan-about-us-paragraph")
     // 5. Get element with that id
     // 6. Set element text to the value in the dictionary
+for (let i = 0; i < pageElements.length; i++) {
+    if (pageElements[i].id in text) {
+        pageElements[i].innerHTML = text[pageElements[i].id];
+    }
+}
+
