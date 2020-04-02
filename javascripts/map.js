@@ -53,12 +53,19 @@ function getColour(cases, colour_scheme, color_thresholds) {
 function selfIso_style(feature) {
     let num_potential = 0;
     let num_total = 0;
+    let excluded = false;
 
     // only set numbers if it exists in form_data_obj
     if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
         num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
     }
+
+    if (excluded === true) {
+        num_potential = 0;
+    }
+
     return {
         // define the outlines of the map
         weight: 0.9,
@@ -74,10 +81,18 @@ function selfIso_style(feature) {
 function highRisk_style(feature) {
     let num_high_risk = 0;
     let num_total = 0;
+    let excluded = false;
+
     if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
         num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
     }
+
+    if (excluded === true) {
+        num_high_risk = 0;
+    }
+
     return {
         weight: 0.9,
         color: 'gray',
@@ -106,6 +121,7 @@ function adjustPopups(toggleType) {
         let popuptxt_iso = potential_popup;
         let popuptxt_vul = vul_popup;
         let popuptxt_noEntires = noEntries_pop;
+        let popuptxt_notSup = notSup_pop;
 
         popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
         popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
@@ -117,9 +133,11 @@ function adjustPopups(toggleType) {
 
         popuptxt_noEntires = popuptxt_noEntires.replace("FSA", postcode);
 
+        popuptxt_notSup = popuptxt_notSup.replace("FSA", postcode);
+
         if (toggleType === "selfIso") {
             if (excluded === true) {
-                layer.setPopupContent(notSup_pop);
+                layer.setPopupContent(popuptxt_notSup);
             } else if (total_reports_region === 0) {
                 layer.setPopupContent(popuptxt_noEntires);
             } else {
@@ -127,7 +145,7 @@ function adjustPopups(toggleType) {
             }
         } else {
             if (excluded === true) {
-                layer.setPopupContent(notSup_pop);
+                layer.setPopupContent(popuptxt_notSup);
             } else if (total_reports_region === 0) {
                 layer.setPopupContent(popuptxt_noEntires);
             } else {
@@ -160,6 +178,7 @@ function displayMaps() {
 
             let popuptxt_iso = potential_popup;
             let popuptxt_noEntires = noEntries_pop;
+            let popuptxt_notSup = notSup_pop;
 
             popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
             popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
@@ -167,8 +186,11 @@ function displayMaps() {
 
             popuptxt_noEntires = popuptxt_noEntires.replace("FSA", feature.properties.CFSAUID);
 
+            popuptxt_notSup = popuptxt_notSup.replace("FSA", feature.properties.CFSAUID);
+
+
             if (excluded === true) {
-                layer.bindPopup(notSup_pop);
+                layer.bindPopup(popuptxt_notSup);
             } else if (total_reports_region === 0) {
                 layer.bindPopup(popuptxt_noEntires);
             } else {
@@ -183,6 +205,7 @@ function displayMaps() {
         propertyName: 'CFSAUID',
         marker: false,
         textPlaceholder: searchtext,
+        autoCollapse: true,
         moveToLocation: function (latlng, title, map) {
             var zoom = map.getBoundsZoom(latlng.layer.getBounds());
             map.setView(latlng, zoom);
