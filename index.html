@@ -9,16 +9,20 @@
 
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/leaflet-search/dist/leaflet-search.src.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <script src="lib/leaflet-search/dist/leaflet-search.src.js"></script>
     <script type="text/javascript" src="res/converted_boundaries.js"></script>
+    <script type="text/javascript" src="res/text.js"></script>
 </head>
 
 <body>
 <div id="header">
     <div class="name_div">
-        <h3>Canadian Coronavirus Map</h3>
+        <h3 id="map_title" class="lang">Canadian Coronavirus Map</h3>
     </div>
 
     <div class="switch-field">
@@ -30,7 +34,7 @@
                 value="potential"
                 checked
         />
-        <label class="noselect" for="in_self_isolation">Potential Cases</label>
+        <label id="pot_button" class="noselect lang" for="in_self_isolation">Potential Cases</label>
 
         <input
                 type="radio"
@@ -39,7 +43,7 @@
                 onclick="toggle_clicked(this.value)"
                 value="vulnerable"
         />
-        <label class="noselect" for="high_risk">Vulnerable Individuals</label>
+        <label id="vul_button" class="noselect lang" for="high_risk">Vulnerable Individuals</label>
 
         <input
                 type="radio"
@@ -48,7 +52,7 @@
                 onclick="toggle_clicked(this.value)"
                 value="confirmed"
         />
-        <label class="noselect" for="confirmed">Cumulative Confirmed Cases</label>
+        <label id="cul_button" class="noselect lang" for="confirmed">Cumulative Confirmed Cases</label>
     </div>
 </div>
 
@@ -61,9 +65,9 @@
     </div>
 
     <div class="footer">
-        <div id="instructions_btn" class="footer_element">Instructions</div>
-        <div id="about_map_btn" class="footer_element">About this map</div>
-        <div id="about_us_btn" class="footer_element">About Us</div>
+        <div id="instructions_btn" class="footer_element lang">Instructions</div>
+        <div id="about_map_btn" class="footer_element lang">About this map</div>
+        <div id="about_us_btn" class="footer_element lang">About Us</div>
     </div>
 
     <!-- The Modals (pop ups) -->
@@ -71,45 +75,45 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close1" class="close">&times;</span>
-            <h3>About this map</h3>
-            <p>
+            <h3 id="aboutTitle" class="lang">About this map</h3>
+            <p id="aboutText1" class="lang">
                 This map displays a) confirmed COVID-19 cases b) individuals who are
                 believed to be potential cases based on their form responses c)
                 individuals who reported having previous medical conditions (ie.
                 immunocompromised) and/or being over the age of 60.
             </p>
-            <p>
+            <p id="aboutText2" class="lang">
                 The purpose of this map is to inform government agencies and
                 healthcare services. We hope that the data displayed on this map
                 helps healthcare services optimize the use of their resources and
                 protect the vulnerable individuals mentioned above.
             </p>
-            <p>
+            <p id="aboutText3" class="lang">
                 In order to ensure non-trolling we use cookies, recaptcha and track
                 suspicious IP addresses.
             </p>
 
-            <h3>How is this map segmented?</h3>
-            <p>
+            <h3 id="segment_title" class="lang">How is this map segmented?</h3>
+            <p id="segment_text" class="lang">
                 We differentiate regions by the first three digits of the postal
                 code. With the first three digits we ensure not to invade Canadians
                 privacy, but still segment data to be granular and valuable.
             </p>
 
-            <h3>Data Sources:</h3>
+            <h3 id="data_sources" class="lang">Data Sources:</h3>
             <ul>
-                <li>
+                <li id="pot_case_link" class="lang">
                     Potential cases and vulnerable populations:
                     <a href="https://www.flatten.ca/">flatten.ca</a>
                 </li>
-                <li>
+                <li id="conf_case_link" class="lang">
                     Confirmed cases: COVID-19 Canada Open Data Working Group.
                     Epidemiological Data from the COVID-19 Outbreak in Canada.
                     <a href="https://github.com/ishaberry/Covid19Canada">
                         https://github.com/ishaberry/Covid19Canada
                     </a>
                 </li>
-                <li>Confirmed cases in Ontario: Regional Public Health Units.</li>
+                <li id="conf_case_ont" class="lang">Confirmed cases in Ontario: Regional Public Health Units.</li>
             </ul>
         </div>
     </div>
@@ -117,13 +121,13 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close2" class="close">&times;</span>
-            <h3>About Us</h3>
-            <p>
+            <h3 id="aboutus" class="lang">About Us</h3>
+            <p id="aboutus_text" class="lang">
                 We're a group of scientists, engineers and clinicians who have
                 created an online form and map to provide information on the
                 COVID-19 pandemic.
             </p>
-            <p>
+            <p id="mail_text" class="lang">
                 You can reach us at
                 <a href="mailto:flattenofficial@gmail.com">
                     flattenofficial@gmail.com
@@ -135,35 +139,37 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span id="close3" class="close">&times;</span>
-            <h3>Instructions</h3>
-            <p>Welcome to Flatten's Heatmap!</p>
-            <p>
+            <h3 id="instructions_title" class="lang">Instructions</h3>
+            <p id="welcome_text" class="lang">Welcome to Flatten's Heatmap!</p>
+            <p id="instructionsText1" class="lang">
                 To view information about your region, click on your municipality or
                 postal code region! To easily locate yourself, let Flatten access
                 your location.
             </p>
-            <p>
+            <p id="instructionsText2" class="lang">
                 <b>Confirmed Cases: </b>This tab displays all of the confirmed cases
                 of COVID-19 in Canada. If a case's municipality is not reported,
                 it's displayed at the center of the province. Data from COVID-19
                 Canada Open Data Working Group (see About this Map).
             </p>
-            <p>
+            <p id="instructionsText3" class="lang">
                 <b>Potential Cases: </b>This tab displays all of the potential cases
                 of COVID-19 in Canada, based on data inputted into Flatten's form.
             </p>
-            <p>
+            <p id="instructionsText4" class="lang">
                 <b>Vulnerable Individuals: </b>This tab displays all individuals
                 that are especially vulnerable to COVID-19 in Canada, based on data
                 inputted into Flatten's form.
             </p>
-            <p>
+            <p id="instructionsText5" class="lang">
                 In order to ensure non-trolling we use cookies, recaptcha and track
                 suspicious IP addresses.
             </p>
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="javascripts/text_loader.js"></script>
 
 <!-- Firebase JS SDK -->
 <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>

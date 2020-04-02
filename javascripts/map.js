@@ -30,9 +30,11 @@ const map = new L.map('map', {
 map.on("popupopen", onPopupOpen);
 
 // toggles between polygons and circles
-let confirmedCircles, selfIsolatedPolygons, highRiskPolygons, selfIso_legend, highRisk_legend;
+let confirmedCircles, selfIso_legend, highRisk_legend, layertest, polygons, searchControl_polygons, searchControl_circles;
 // gets data from gcloud
 let form_data_obj, confirmed_data;
+
+// Text for popups and searchbar
 
 // assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
@@ -47,57 +49,100 @@ function getColour(cases, colour_scheme, color_thresholds) {
     return colour_scheme[color_thresholds.length - 1];
 }
 
+// Coloring style for self-isolating polygons, feature is the specific polygon
+function selfIso_style(feature) {
+    let num_potential = 0;
+    let num_total = 0;
 
+    // only set numbers if it exists in form_data_obj
+    if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
+        num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+    }
+    return {
+        // define the outlines of the map
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        // define the color and opacity of each polygon
+        fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
+        fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
+    }
+}
+
+// Colouring style for high-risk polygons, feature is the specific polygon
+function highRisk_style(feature) {
+    let num_high_risk = 0;
+    let num_total = 0;
+    if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
+        num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+    }
+    return {
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
+        fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
+    }
+}
+
+// Adjusts popups on toggle
+function adjustPopups(toggleType) {
+    polygons.eachLayer(function (layer) {
+        let num_potential = 0;
+        let num_high_risk = 0;
+        let total_reports_region = 0;
+        let postcode = layer.feature.properties.CFSAUID;
+        let excluded = false;
+
+        if (postcode in form_data_obj['fsa']) {
+            num_potential = form_data_obj['fsa'][postcode]['pot'];
+            num_high_risk = form_data_obj['fsa'][postcode]['risk'];
+            total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
+            excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
+        }
+
+        let popuptxt_iso = potential_popup;
+        let popuptxt_vul = vul_popup;
+        let popuptxt_noEntires = noEntries_pop;
+
+        popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
+        popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
+        popuptxt_iso = popuptxt_iso.replace("YYY", total_reports_region);
+
+        popuptxt_vul = popuptxt_vul.replace("FSA", postcode);
+        popuptxt_vul = popuptxt_vul.replace("XXX", num_high_risk);
+        popuptxt_vul = popuptxt_vul.replace("YYY", total_reports_region);
+
+        popuptxt_noEntires = popuptxt_noEntires.replace("FSA", postcode);
+
+        if (toggleType === "selfIso") {
+            if (excluded === true) {
+                layer.setPopupContent(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.setPopupContent(popuptxt_noEntires);
+            } else {
+                layer.setPopupContent(popuptxt_iso);
+            }
+        } else {
+            if (excluded === true) {
+                layer.setPopupContent(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.setPopupContent(popuptxt_noEntires);
+            } else {
+                layer.setPopupContent(popuptxt_vul);
+            }
+        }
+    });
+}
 
 
 function displayMaps() {
     // 1. Create the layers
 
-    // Leaflet layerGroups to help with toggling
-    // polygons in each layer group
-    selfIsolatedPolygons = L.layerGroup();
-    highRiskPolygons = L.layerGroup();
-
-    // Coloring style for self-isolating polygons, feature is the specific polygon
-    function selfIso_style(feature) {
-        let num_potential = 0;
-        let num_total = 0;
-
-        // only set numbers if it exists in form_data_obj
-        if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-            num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
-            num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-        }
-        return {
-            // define the outlines of the map
-            weight: 0.9,
-            color: 'gray',
-            dashArray: '3',
-            // define the color and opacity of each polygon
-            fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
-            fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
-        }
-    }
-
-    // Colouring style for high-risk polygons, feature is the specific polygon
-    function highRisk_style(feature) {
-        let num_high_risk = 0;
-        let num_total = 0;
-        if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-            num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
-            num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-        }
-        return {
-            weight: 0.9,
-            color: 'gray',
-            dashArray: '3',
-            fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
-            fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
-        }
-    }
-
     // Add self-isolation polygons
-    L.geoJSON(post_code_boundaries, {
+    polygons = L.geoJSON(post_code_boundaries, {
         //styles each polygons individually based on their features
         style: selfIso_style,
 
@@ -105,46 +150,54 @@ function displayMaps() {
         onEachFeature: function (feature, layer) {
             let num_potential = 0;
             let total_reports_region = 0;
+            let excluded = false; 
+
             if (feature.properties.CFSAUID in form_data_obj['fsa']) {
                 num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
                 total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+                excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
             }
 
-            let msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-            }
+            let popuptxt_iso = potential_popup;
+            let popuptxt_noEntires = noEntries_pop;
 
-            layer.bindPopup(msg_selfIso);
+            popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
+            popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
+            popuptxt_iso = popuptxt_iso.replace("YYY", total_reports_region);
+
+            popuptxt_noEntires = popuptxt_noEntires.replace("FSA", feature.properties.CFSAUID);
+
+            if (excluded === true) {
+                layer.bindPopup(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.bindPopup(popuptxt_noEntires);
+            } else {
+                layer.bindPopup(popuptxt_iso);
+            }
         }
+    });
 
-    }).addTo(selfIsolatedPolygons);
-
-    // Add high-risk polygons
-    L.geoJSON(post_code_boundaries, {
-        style: highRisk_style,
-
-        // Adding modals to each post code
-        onEachFeature: function (feature, layer) {
-            let num_high_risk = 0;
-            let total_reports_region = 0;
-            if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-                num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
-                total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-            }
-
-            let msg_highRisk = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_highRisk = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-            }
-
-            layer.bindPopup(msg_highRisk);
+    // Add search bar for polygons
+    searchControl_polygons = new L.Control.Search({
+        layer: polygons,
+        propertyName: 'CFSAUID',
+        marker: false,
+        textPlaceholder: searchtext,
+        moveToLocation: function (latlng, title, map) {
+            var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+            map.setView(latlng, zoom);
         }
-    // add to layer group
-    }).addTo(highRiskPolygons);
+    });
+
+    searchControl_polygons.on('search:locationfound', function (e) {
+        if (e.layer._popup)
+            e.layer.openPopup();
+    });
+
+    map.addControl(searchControl_polygons);
 
     // Legend for self-isolated cases.
-    selfIso_legend = L.control({position: 'bottomright'});
+    selfIso_legend = L.control({ position: 'bottomright' });
 
     selfIso_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
@@ -153,14 +206,14 @@ function displayMaps() {
         for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
-                (POT_SCHEME_THRESHOLDS[i]+1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                (POT_SCHEME_THRESHOLDS[i] + 1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
     };
 
     // Legend for high risk cases.
-    highRisk_legend = L.control({position: 'bottomright'});
+    highRisk_legend = L.control({ position: 'bottomright' });
 
     highRisk_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
@@ -168,7 +221,7 @@ function displayMaps() {
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
-                (HIGH_RISK_SCHEME_THRESHOLDS[i]+1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                (HIGH_RISK_SCHEME_THRESHOLDS[i] + 1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
         }
 
         return div;
@@ -195,13 +248,17 @@ function displayMaps() {
             radius: rad
         });
 
+        circle._leaflet_id = confirmed_cases_data[i].name;
+
         /*  Create the popup text and bind to the correct circle. Store popup
             index as a member of the popup so that we can set the popup to be
             in the centre of the circle on callback when clicked. */
-        let text = "<h3>" + confirmed_cases_data[i].name + "</h3><p>" +
-            confirmed_cases_data[i]['cases'] + " confirmed cases in this area</p>";
 
-        let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(text);
+        let cul_popuptxt = cul_popup;
+        cul_popuptxt = cul_popuptxt.replace("PLACE", confirmed_cases_data[i].name);
+        cul_popuptxt = cul_popuptxt.replace("CASES", confirmed_cases_data[i]['cases']);
+
+        let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(cul_popuptxt);
         popup.popup_idx = i;
 
         //Bind popup and add circle to circle array.
