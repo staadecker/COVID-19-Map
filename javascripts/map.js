@@ -58,12 +58,10 @@ function selfIso_style(feature) {
     // only set numbers if it exists in form_data_obj
     if (feature.properties.CFSAUID in form_data_obj['fsa']) {
         excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
-        num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
+        if ('pot' in form_data_obj['fsa'][feature.properties.CFSAUID]) {
+            num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
+        }
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-    }
-
-    if (excluded === true) {
-        num_potential = 0;
     }
 
     return {
@@ -85,12 +83,10 @@ function highRisk_style(feature) {
 
     if (feature.properties.CFSAUID in form_data_obj['fsa']) {
         excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
-        num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
+        if ('risk' in form_data_obj['fsa'][feature.properties.CFSAUID]) {
+            num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
+        }
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
-    }
-
-    if (excluded === true) {
-        num_high_risk = 0;
     }
 
     return {
@@ -168,7 +164,7 @@ function displayMaps() {
         onEachFeature: function (feature, layer) {
             let num_potential = 0;
             let total_reports_region = 0;
-            let excluded = false; 
+            let excluded = false;
 
             if (feature.properties.CFSAUID in form_data_obj['fsa']) {
                 num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
