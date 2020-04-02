@@ -46,7 +46,7 @@ const text_fr = {
     "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
     "searchbar": "Entrez les 3 premiers caractères de votre code postal",
-    "notSupported_pop": "Nous ne pouvons pas fournir des données pour ce code postal."
+    "notSupported_pop": "<h3>FSA</h3>Nous ne pouvons pas fournir des données pour ce code postal."
 };
 
 const text_en = {
@@ -96,5 +96,5 @@ const text_en = {
     "msg_noentries": "<h3>FSA</h3><p>We haven't had enough form responses in this region yet.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
     "searchbar": "Enter first 3 digits of post code:",
-    "notSupported_pop": "We’re unable to provide data for your postcode."
+    "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode."
 };
