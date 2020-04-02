@@ -41,9 +41,12 @@ const text_fr = {
     "instructionsText4": "<b>Personnes vulnérables: </b>Cet onglet illustre toutes les personnes qui sont particulièrement" +
         " vulnérables à la  COVID-19 au Canada, selon les données enregistrées dans le formulaire de Flatten.",
     "instructionsText5": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
-    "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu X rapports de cas potentiels.</p><p>Nous avons reçus Y rapports en tout.</p>",
-    "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu X rapports d’individus vulnérables</p><p>Nous avons reçus Y rapports en tout.</p>",
-    "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>"
+    "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports d’individus vulnérables</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>",
+    "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
+    "searchbar": "Entrez les 3 premiers caractères de votre code postal",
+    "notSupported_pop": "Nous ne pouvons pas fournir des données pour ce code postal."
 };
 
 const text_en = {
@@ -88,8 +91,10 @@ const text_en = {
     "instructionsText4": "<b>Vulnerable Individuals: </b>This tab displays all individuals" +
         " that are especially vulnerable to COVID-19 in Canada, based on data inputted into Flatten's form.",
     "instructionsText5": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
-    "pot_case_popup": "<h3>FSA</h3><p>We received X reports from potential cases.</p><p>We received Y reports in total.</p>",
-    "vul_case_popup": "<h3>FSA</h3><p>We received X reports from vulnerable individuals.</p><p>We received Y reports in total.</p>",
+    "pot_case_popup": "<h3>FSA</h3><p>We received XXX reports from potential cases.</p><p>We received YYY reports in total.</p>",
+    "vul_case_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals.</p><p>We received YYY reports in total.</p>",
     "msg_noentries": "<h3>FSA</h3><p>We haven't had enough form responses in this region yet.</p>",
-
+    "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
+    "searchbar": "Enter first 3 digits of post code:",
+    "notSupported_pop": "We’re unable to provide data for your postcode."
 };

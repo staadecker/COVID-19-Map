@@ -34,6 +34,8 @@ let confirmedCircles, selfIso_legend, highRisk_legend, layertest, polygons, sear
 // gets data from gcloud
 let form_data_obj, confirmed_data;
 
+// Text for popups and searchbar
+
 // assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
     if (color_thresholds.length !== colour_scheme.length)
@@ -92,25 +94,45 @@ function adjustPopups(toggleType) {
         let num_high_risk = 0;
         let total_reports_region = 0;
         let postcode = layer.feature.properties.CFSAUID;
+        let excluded = false;
 
         if (postcode in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][postcode]['pot'];
             num_high_risk = form_data_obj['fsa'][postcode]['risk'];
             total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
+            excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
 
+        let popuptxt_iso = potential_popup;
+        let popuptxt_vul = vul_popup;
+        let popuptxt_noEntires = noEntries_pop;
+
+        popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
+        popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
+        popuptxt_iso = popuptxt_iso.replace("YYY", total_reports_region);
+
+        popuptxt_vul = popuptxt_vul.replace("FSA", postcode);
+        popuptxt_vul = popuptxt_vul.replace("XXX", num_high_risk);
+        popuptxt_vul = popuptxt_vul.replace("YYY", total_reports_region);
+
+        popuptxt_noEntires = popuptxt_noEntires.replace("FSA", postcode);
+
         if (toggleType === "selfIso") {
-            let msg_selfIso = "<h3>" + postcode + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_selfIso = "<h3>" + postcode + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+            if (excluded === true) {
+                layer.setPopupContent(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.setPopupContent(popuptxt_noEntires);
+            } else {
+                layer.setPopupContent(popuptxt_iso);
             }
-            layer.setPopupContent(msg_selfIso);
         } else {
-            let msg_highRisk = "<h3>" + postcode + "</h3><p>We received " + num_high_risk + " reports from vulnerable individuals.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_highRisk = "<h3>" + postcode + "</h3><p>We haven't had enough form responses in this region yet.</p>";
+            if (excluded === true) {
+                layer.setPopupContent(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.setPopupContent(popuptxt_noEntires);
+            } else {
+                layer.setPopupContent(popuptxt_vul);
             }
-            layer.setPopupContent(msg_highRisk);
         }
     });
 }
@@ -128,17 +150,30 @@ function displayMaps() {
         onEachFeature: function (feature, layer) {
             let num_potential = 0;
             let total_reports_region = 0;
+            let excluded = false; 
+
             if (feature.properties.CFSAUID in form_data_obj['fsa']) {
                 num_potential = form_data_obj['fsa'][feature.properties.CFSAUID]['pot'];
                 total_reports_region = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+                excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
             }
 
-            let msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We received " + num_potential + " reports from potential cases.</p><p>We received " + total_reports_region + " reports in total.</p>";
-            if (total_reports_region === 0) {
-                msg_selfIso = "<h3>" + feature.properties.CFSAUID + "</h3><p>We haven't had enough form responses in this region yet.</p>";
-            }
+            let popuptxt_iso = potential_popup;
+            let popuptxt_noEntires = noEntries_pop;
 
-            layer.bindPopup(msg_selfIso);
+            popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
+            popuptxt_iso = popuptxt_iso.replace("XXX", num_potential);
+            popuptxt_iso = popuptxt_iso.replace("YYY", total_reports_region);
+
+            popuptxt_noEntires = popuptxt_noEntires.replace("FSA", feature.properties.CFSAUID);
+
+            if (excluded === true) {
+                layer.bindPopup(notSup_pop);
+            } else if (total_reports_region === 0) {
+                layer.bindPopup(popuptxt_noEntires);
+            } else {
+                layer.bindPopup(popuptxt_iso);
+            }
         }
     });
 
@@ -147,7 +182,7 @@ function displayMaps() {
         layer: polygons,
         propertyName: 'CFSAUID',
         marker: false,
-        textPlaceholder: 'Enter first 3 digits of post code:',
+        textPlaceholder: searchtext,
         moveToLocation: function (latlng, title, map) {
             var zoom = map.getBoundsZoom(latlng.layer.getBounds());
             map.setView(latlng, zoom);
@@ -160,9 +195,9 @@ function displayMaps() {
     });
 
     map.addControl(searchControl_polygons);
-    
+
     // Legend for self-isolated cases.
-    selfIso_legend = L.control({ position: 'bottomright'});
+    selfIso_legend = L.control({ position: 'bottomright' });
 
     selfIso_legend.onAdd = function (map) {
         const div = L.DomUtil.create('div', 'info legend');
@@ -212,16 +247,18 @@ function displayMaps() {
             fillOpacity: 0.5,
             radius: rad
         });
-        
+
         circle._leaflet_id = confirmed_cases_data[i].name;
 
         /*  Create the popup text and bind to the correct circle. Store popup
             index as a member of the popup so that we can set the popup to be
             in the centre of the circle on callback when clicked. */
-        let text = "<h3>" + confirmed_cases_data[i].name + "</h3><p>" +
-            confirmed_cases_data[i]['cases'] + " confirmed cases in this area</p>";
 
-        let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(text);
+        let cul_popuptxt = cul_popup;
+        cul_popuptxt = cul_popuptxt.replace("PLACE", confirmed_cases_data[i].name);
+        cul_popuptxt = cul_popuptxt.replace("CASES", confirmed_cases_data[i]['cases']);
+
+        let popup = L.popup().setLatLng(confirmed_cases_data[i]['coord']).setContent(cul_popuptxt);
         popup.popup_idx = i;
 
         //Bind popup and add circle to circle array.
