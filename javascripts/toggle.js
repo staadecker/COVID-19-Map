@@ -6,6 +6,8 @@ function toggle_clicked(radioValue) {
             document.getElementById("update_time").innerHTML = confirmed_data['last_updated'];
             map.removeControl(selfIso_legend);
             map.removeControl(highRisk_legend);
+            searchControl_polygons.collapse();
+            searchControl_polygons.cancel();
             map.removeControl(searchControl_polygons);
             break;
 
@@ -27,7 +29,6 @@ function toggle_clicked(radioValue) {
             polygons.setStyle(selfIso_style);
             adjustPopups("selfIso");
             selfIso_legend.addTo(map);
-
             map.addControl(searchControl_polygons);
             if (!(map.legend === null)) map.removeControl(highRisk_legend);
 
