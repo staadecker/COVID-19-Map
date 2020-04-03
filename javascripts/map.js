@@ -5,10 +5,10 @@ const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
 // white, yellow, orange, brown, red, black
-const POT_COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
-const HIGH_RISK_COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
-const POT_SCHEME_THRESHOLDS = [0, 10, 50, 250, 500];
+const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
+const POT_SCHEME_THRESHOLDS = [0, 2, 5, 10, 25];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
+const BOTH_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
 const POLYGON_OPACITY = 0.4;
 // max size circle can be on map
 const MAX_RAD = 35;
@@ -30,7 +30,8 @@ const map = new L.map('map', {
 map.on("popupopen", onPopupOpen);
 
 // toggles between polygons and circles
-let confirmedCircles, selfIso_legend, highRisk_legend, layertest, polygons, searchControl_polygons, searchControl_circles;
+let confirmedCircles, current_legend, potVul_legend,
+    selfIso_legend, highRisk_legend, layertest, polygons, searchControl_polygons, searchControl_circles;
 // gets data from gcloud
 let form_data_obj, confirmed_data;
 
@@ -64,13 +65,15 @@ function selfIso_style(feature) {
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
     }
 
+    let percent_cases = (num_potential / num_total) * 100;
+
     return {
         // define the outlines of the map
         weight: 0.9,
         color: 'gray',
         dashArray: '3',
         // define the color and opacity of each polygon
-        fillColor: getColour(num_potential, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
+        fillColor: getColour(percent_cases, COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
         fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
     }
 }
@@ -79,10 +82,8 @@ function selfIso_style(feature) {
 function highRisk_style(feature) {
     let num_high_risk = 0;
     let num_total = 0;
-    let excluded = false;
 
     if (feature.properties.CFSAUID in form_data_obj['fsa']) {
-        excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
         if ('risk' in form_data_obj['fsa'][feature.properties.CFSAUID]) {
             num_high_risk = form_data_obj['fsa'][feature.properties.CFSAUID]['risk'];
         }
@@ -93,7 +94,29 @@ function highRisk_style(feature) {
         weight: 0.9,
         color: 'gray',
         dashArray: '3',
-        fillColor: getColour(num_high_risk, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
+        fillColor: getColour(num_high_risk, COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
+        fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
+    }
+}
+
+function potVul_style(feature) {
+    let num_both = 0;
+    let num_total = 0;
+
+    if (feature.properties.CFSAUID in form_data_obj['fsa']) {
+        if ('both' in form_data_obj['fsa'][feature.properties.CFSAUID]) {
+            num_both = form_data_obj['fsa'][feature.properties.CFSAUID]['both'];
+        }
+        num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
+    }
+
+    let percent_cases = (num_both / num_total) * 100;
+
+    return {
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        fillColor: getColour(percent_cases, COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
         fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
     }
 }
@@ -103,6 +126,7 @@ function adjustPopups(toggleType) {
     polygons.eachLayer(function (layer) {
         let num_potential = 0;
         let num_high_risk = 0;
+        let num_both;
         let total_reports_region = 0;
         let postcode = layer.feature.properties.CFSAUID;
         let excluded = false;
@@ -110,18 +134,27 @@ function adjustPopups(toggleType) {
         if (postcode in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][postcode]['pot'];
             num_high_risk = form_data_obj['fsa'][postcode]['risk'];
+            num_both = form_data_obj['fsa'][feature.properties.CFSAUID]['both'];
             total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
 
         let popuptxt_iso = potential_popup;
         let popuptxt_vul = vul_popup;
+        let popuptxt_both = both_popup;
         let popuptxt_noEntires = noEntries_pop;
         let popuptxt_notSup = notSup_pop;
 
         if (num_potential === 1) {
             popuptxt_iso = potential_popup_1;
+        }
+
+        if (num_high_risk === 1) {
             popuptxt_vul = vul_popup_1;
+        }
+
+        if (num_both === 1) {
+            popuptxt_both = both_popup_1;
         }
 
         popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
@@ -131,6 +164,10 @@ function adjustPopups(toggleType) {
         popuptxt_vul = popuptxt_vul.replace("FSA", postcode);
         popuptxt_vul = popuptxt_vul.replace("XXX", num_high_risk);
         popuptxt_vul = popuptxt_vul.replace("YYY", total_reports_region);
+
+        popuptxt_both = popuptxt_both.replace("FSA", postcode);
+        popuptxt_both = popuptxt_both.replace("XXX", num_high_risk);
+        popuptxt_both = popuptxt_both.replace("YYY", total_reports_region);
 
         popuptxt_noEntires = popuptxt_noEntires.replace("FSA", postcode);
 
@@ -144,13 +181,21 @@ function adjustPopups(toggleType) {
             } else {
                 layer.setPopupContent(popuptxt_iso);
             }
-        } else {
+        } else if (toggleType === "highRisk") {
             if (excluded === true) {
                 layer.setPopupContent(popuptxt_notSup);
             } else if (total_reports_region === 0) {
                 layer.setPopupContent(popuptxt_noEntires);
             } else {
                 layer.setPopupContent(popuptxt_vul);
+            }
+        } else {
+            if (excluded === true) {
+                layer.setPopupContent(popuptxt_notSup);
+            } else if (total_reports_region === 0) {
+                layer.setPopupContent(popuptxt_noEntires);
+            } else {
+                layer.setPopupContent(popuptxt_both);
             }
         }
     });
@@ -233,12 +278,13 @@ function displayMaps() {
             coloured square for each interval. */
         for (let i = 0; i < POT_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, POT_COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> ' +
-                (POT_SCHEME_THRESHOLDS[i] + 1) + (POT_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + POT_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColour(POT_SCHEME_THRESHOLDS[i] + 1, COLOUR_SCHEME, POT_SCHEME_THRESHOLDS) + '"></i> > ' + (POT_SCHEME_THRESHOLDS[i]) + '%<br>';
         }
 
         return div;
     };
+
+    current_legend = selfIso_legend;
 
     // Legend for high risk cases.
     highRisk_legend = L.control({ position: 'bottomright' });
@@ -248,8 +294,21 @@ function displayMaps() {
         // Loop through our density intervals and generate a label with a coloured square for each interval.
         for (let i = 0; i < HIGH_RISK_SCHEME_THRESHOLDS.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, HIGH_RISK_COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
+                '<i style="background:' + getColour(HIGH_RISK_SCHEME_THRESHOLDS[i] + 1, COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS) + '"></i> ' +
                 (HIGH_RISK_SCHEME_THRESHOLDS[i] + 1) + (HIGH_RISK_SCHEME_THRESHOLDS[i + 1] ? '&ndash;' + HIGH_RISK_SCHEME_THRESHOLDS[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    potVul_legend = L.control({ position: 'bottomright' });
+    potVul_legend.onAdd = function (map) {
+        const div = L.DomUtil.create('div', 'info legend');
+        /*  Loop through our density intervals and generate a label with a
+            coloured square for each interval. */
+        for (let i = 0; i < BOTH_SCHEME_THRESHOLDS.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + getColour(BOTH_SCHEME_THRESHOLDS[i] + 1, COLOUR_SCHEME, BOTH_SCHEME_THRESHOLDS) + '"></i> > ' + (BOTH_SCHEME_THRESHOLDS[i]) + '%<br>';
         }
 
         return div;
