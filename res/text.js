@@ -49,7 +49,7 @@ const text_fr = {
     "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
     "searchbar": "Entrez les 3 premiers caractères de votre code postal",
     "notSupported_pop": "<h3>FSA</h3>Nous ne pouvons pas fournir des données pour ce code postal.",
-    "pot_vul_button": "Individus vulnérables symptomatiques",
+    "pot_vul_button": "Individus vulnérables manifestant les symptomes",
     "pot_vul_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de individus vulnérables qui sont également des cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'une personne vulnérable qui est également un cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>"
 };

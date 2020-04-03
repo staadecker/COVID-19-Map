@@ -65,7 +65,10 @@ function selfIso_style(feature) {
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
     }
 
-    let percent_cases = (num_potential / num_total) * 100;
+    let percent_cases = 0;
+    if (num_total !== 0) {
+        percent_cases = (num_potential / num_total) * 100;
+    }
 
     return {
         // define the outlines of the map
@@ -110,14 +113,17 @@ function potVul_style(feature) {
         num_total = form_data_obj['fsa'][feature.properties.CFSAUID]['number_reports'];
     }
 
-    let percent_cases = (num_both / num_total) * 100;
-
+    let percent_cases = 0;
+    if (num_total !== 0) {
+        percent_cases = (num_both / num_total) * 100;
+    }
+    
     return {
         weight: 0.9,
         color: 'gray',
         dashArray: '3',
-        fillColor: getColour(percent_cases, COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
-        fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
+        fillColor: getColour(percent_cases, COLOUR_SCHEME, BOTH_SCHEME_THRESHOLDS),
+        fillOpacity: (percent_cases === 0) ? 0 : POLYGON_OPACITY,
     }
 }
 
@@ -134,11 +140,11 @@ function adjustPopups(toggleType) {
         if (postcode in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][postcode]['pot'];
             num_high_risk = form_data_obj['fsa'][postcode]['risk'];
-            num_both = form_data_obj['fsa'][feature.properties.CFSAUID]['both'];
+            num_both = form_data_obj['fsa'][postcode]['both'];
             total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
-
+        
         let popuptxt_iso = potential_popup;
         let popuptxt_vul = vul_popup;
         let popuptxt_both = both_popup;
@@ -166,7 +172,7 @@ function adjustPopups(toggleType) {
         popuptxt_vul = popuptxt_vul.replace("YYY", total_reports_region);
 
         popuptxt_both = popuptxt_both.replace("FSA", postcode);
-        popuptxt_both = popuptxt_both.replace("XXX", num_high_risk);
+        popuptxt_both = popuptxt_both.replace("XXX", num_both);
         popuptxt_both = popuptxt_both.replace("YYY", total_reports_region);
 
         popuptxt_noEntires = popuptxt_noEntires.replace("FSA", postcode);
