@@ -33,12 +33,12 @@ const text_fr = {
     "welcome_text": "Bienvenue à la carte de densité de Flatten!",
     "instructionsText1": "Pour voir l’information propre à votre région, cliquez sur votre municipalité ou région liée au code postal." +
         " Pour vous y retrouver plus facilement, permettez à Flatten de vous localiser.",
-    "instructionsText2": "<b>Cas confirmés: </b>Cet onglet illustre tous les cas confirmés de COVID-19 au Canada." +
+    "instructionsText2": "<b>Cas confirmés : </b>cet onglet illustre tous les cas confirmés de COVID-19 au Canada." +
         " Si la municipalité d’un cas particulier n’est pas indiquée, ce cas figurera au centre" +
         " de la province. Données provenant du  COVID-19 Canada Open Data Working Group (voir En savoir plus sur la carte).",
-    "instructionsText3": "<b>Cas potentiels: </b>Cet onglet illustre tous les cas potentiels de COVID-19 au Canada," +
+    "instructionsText3": "<b>Cas potentiels : </b>cet onglet illustre tous les cas potentiels de COVID-19 au Canada," +
         " selon les données enregistrées dans le formulaire de Flatten.",
-    "instructionsText4": "<b>Personnes vulnérables: </b>Cet onglet illustre toutes les personnes qui sont particulièrement" +
+    "instructionsText4": "<b>Personnes vulnérables : </b>cet onglet illustre toutes les personnes qui sont particulièrement" +
         " vulnérables à la  COVID-19 au Canada, selon les données enregistrées dans le formulaire de Flatten.",
     "instructionsText5": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
     "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
