@@ -144,22 +144,22 @@ function adjustPopups(toggleType) {
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
 
-        let popuptxt_iso = potential_popup;
-        let popuptxt_vul = vul_popup;
-        let popuptxt_both = both_popup;
-        let popuptxt_noEntires = noEntries_pop;
-        let popuptxt_notSup = notSup_pop;
+        let popuptxt_iso = text['pot_case_popup'];
+        let popuptxt_vul = text['vul_case_popup'];
+        let popuptxt_both = text['pot_vul_popup'];
+        let popuptxt_noEntires = text['msg_noentries'];
+        let popuptxt_notSup = text['notSupported_pop'];
 
         if (num_potential === 1) {
-            popuptxt_iso = potential_popup_1;
+            popuptxt_iso = text['pot_case_popup_1'];
         }
 
         if (num_high_risk === 1) {
-            popuptxt_vul = vul_popup_1;
+            popuptxt_vul = text['vul_case_popup_1'];
         }
 
         if (num_both === 1) {
-            popuptxt_both = both_popup_1;
+            popuptxt_both = text['pot_vul_popup_1'];
         }
 
         popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
