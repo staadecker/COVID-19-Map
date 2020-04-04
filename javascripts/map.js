@@ -114,14 +114,14 @@ function adjustPopups(toggleType) {
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
 
-        let popuptxt_iso = potential_popup;
-        let popuptxt_vul = vul_popup;
-        let popuptxt_noEntires = noEntries_pop;
-        let popuptxt_notSup = notSup_pop;
+        let popuptxt_iso = text['pot_case_popup'];
+        let popuptxt_vul = text['vul_case_popup'];
+        let popuptxt_noEntires = text['msg_noentries'];
+        let popuptxt_notSup = text['notSupported_pop'];
 
         if (num_potential === 1) {
-            popuptxt_iso = potential_popup_1;
-            popuptxt_vul = vul_popup_1;
+            popuptxt_iso = text['pot_case_popup_1'];
+            popuptxt_vul = text['vul_case_popup_1'];
         }
 
         popuptxt_iso = popuptxt_iso.replace("FSA", postcode);
@@ -177,12 +177,12 @@ function displayMaps() {
                 excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
             }
 
-            let popuptxt_iso = potential_popup;
-            let popuptxt_noEntires = noEntries_pop;
-            let popuptxt_notSup = notSup_pop;
+            let popuptxt_iso = text['pot_case_popup'];
+            let popuptxt_noEntires = text['msg_noentries'];
+            let popuptxt_notSup = text['notSupported_pop'];
 
             if (num_potential === 1) {
-                popuptxt_iso = potential_popup_1;
+                popuptxt_iso = text['pot_case_popup_1'];
             }
 
             popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
@@ -209,7 +209,7 @@ function displayMaps() {
         layer: polygons,
         propertyName: 'CFSAUID',
         marker: false,
-        textPlaceholder: searchtext,
+        textPlaceholder: text['searchbar'],
         autoCollapse: true,
         moveToLocation: function (latlng, title, map) {
             var zoom = map.getBoundsZoom(latlng.layer.getBounds());
@@ -282,7 +282,7 @@ function displayMaps() {
             index as a member of the popup so that we can set the popup to be
             in the centre of the circle on callback when clicked. */
 
-        let cul_popuptxt = cul_popup;
+        let cul_popuptxt = text['confirm_pop'];
         cul_popuptxt = cul_popuptxt.replace("PLACE", confirmed_cases_data[i].name);
         cul_popuptxt = cul_popuptxt.replace("CASES", confirmed_cases_data[i]['cases']);
 
