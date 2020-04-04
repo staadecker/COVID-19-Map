@@ -118,7 +118,7 @@ function potVul_style(feature) {
     if (num_total !== 0) {
         percent_cases = (num_both / num_total) * 100;
     }
-    
+
     return {
         weight: 0.9,
         color: 'gray',
@@ -133,7 +133,6 @@ function adjustPopups(toggleType) {
     polygons.eachLayer(function (layer) {
         let num_potential = 0;
         let num_high_risk = 0;
-        let num_both;
         let total_reports_region = 0;
         let postcode = layer.feature.properties.CFSAUID;
         let excluded = false;
@@ -141,11 +140,10 @@ function adjustPopups(toggleType) {
         if (postcode in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][postcode]['pot'];
             num_high_risk = form_data_obj['fsa'][postcode]['risk'];
-            num_both = form_data_obj['fsa'][postcode]['both'];
             total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
-        
+
         let popuptxt_iso = potential_popup;
         let popuptxt_vul = vul_popup;
         let popuptxt_both = both_popup;
@@ -229,12 +227,12 @@ function displayMaps() {
                 excluded = form_data_obj['fsa'][feature.properties.CFSAUID]['fsa_excluded'];
             }
 
-            let popuptxt_iso = potential_popup;
-            let popuptxt_noEntires = noEntries_pop;
-            let popuptxt_notSup = notSup_pop;
+            let popuptxt_iso = text['pot_case_popup'];
+            let popuptxt_noEntires = text['msg_noentries'];
+            let popuptxt_notSup = text['notSupported_pop'];
 
             if (num_potential === 1) {
-                popuptxt_iso = potential_popup_1;
+                popuptxt_iso = text['pot_case_popup_1'];
             }
 
             popuptxt_iso = popuptxt_iso.replace("FSA", feature.properties.CFSAUID);
@@ -261,7 +259,7 @@ function displayMaps() {
         layer: polygons,
         propertyName: 'CFSAUID',
         marker: false,
-        textPlaceholder: searchtext,
+        textPlaceholder: text['searchbar'],
         autoCollapse: true,
         moveToLocation: function (latlng, title, map) {
             var zoom = map.getBoundsZoom(latlng.layer.getBounds());
@@ -348,7 +346,7 @@ function displayMaps() {
             index as a member of the popup so that we can set the popup to be
             in the centre of the circle on callback when clicked. */
 
-        let cul_popuptxt = cul_popup;
+        let cul_popuptxt = text['confirm_pop'];
         cul_popuptxt = cul_popuptxt.replace("PLACE", confirmed_cases_data[i].name);
         cul_popuptxt = cul_popuptxt.replace("CASES", confirmed_cases_data[i]['cases']);
 
