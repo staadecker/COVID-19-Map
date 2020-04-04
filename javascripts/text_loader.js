@@ -9,6 +9,10 @@ function read_lang_param() {
     } else {
         text = text_en;
     }
+
+    if (Object.keys(text_en).length !== Object.keys(text_fr).length) {
+        console.log("Warning: Languages have different number of elements. Fix text.js.")
+    }
 }
 
 function update_text() {
@@ -20,7 +24,6 @@ function update_text() {
             pageElement.innerHTML = text[pageElement.id];
         }
     }
-
 }
 
 read_lang_param();
