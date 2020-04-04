@@ -40,7 +40,9 @@ const text_fr = {
         " selon les données enregistrées dans le formulaire de Flatten.",
     "instructionsText4": "<b>Personnes vulnérables: </b>Cet onglet illustre toutes les personnes qui sont particulièrement" +
         " vulnérables à la  COVID-19 au Canada, selon les données enregistrées dans le formulaire de Flatten.",
-    "instructionsText5": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
+    "instructionsText5": "<b>Individus vulnérables manifestant les symptomes: </b>Cet onglet affiche les cas potentiels de COVID-19 des individus particulièrement vulnérables au Canada, basé sur les données de Flatten.",
+    "instructionsText6": "Les codes postales avec moins de 25 rapports sont à 50% d’opacité, et celles avec plus de 25 rapports à 100%",
+    "instructionsText7": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
     "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_case_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport de cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports d’individus vulnérables</p><p>Nous avons reçus YYY rapports en tout.</p>",
@@ -95,7 +97,10 @@ const text_en = {
         " of COVID-19 in Canada, based on data inputted into Flatten's form.",
     "instructionsText4": "<b>Vulnerable Individuals: </b>This tab displays all individuals" +
         " that are especially vulnerable to COVID-19 in Canada, based on data inputted into Flatten's form.",
-    "instructionsText5": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
+    "instructionsText5": "<b>Potential and Vulnerable Individuals: </b>This tab displays all individuals" +
+    " that are especially vulnerable to COVID-19 in Canada that are also deemed potential cases, based on data inputted into Flatten's form.",
+    "instructionsText6": "Postcodes are kept at half-opacity when under 25 total reports, and full opacity above 25 reports.",
+    "instructionsText7": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
     "pot_case_popup": "<h3>FSA</h3><p>We received XXX reports from potential cases.</p><p>We received YYY reports in total.</p>",
     "pot_case_popup_1": "<h3>FSA</h3><p>We received 1 report from a potential case.</p><p>We received YYY reports in total.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals.</p><p>We received YYY reports in total.</p>",

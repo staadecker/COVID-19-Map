@@ -10,6 +10,7 @@ const POT_SCHEME_THRESHOLDS = [0, 2, 5, 10, 25];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
 const BOTH_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
 const POLYGON_OPACITY = 0.4;
+const POLYGON_OPACITY_HALF = 0.2;
 // max size circle can be on map
 const MAX_RAD = 35;
 
@@ -77,7 +78,7 @@ function selfIso_style(feature) {
         dashArray: '3',
         // define the color and opacity of each polygon
         fillColor: getColour(percent_cases, COLOUR_SCHEME, POT_SCHEME_THRESHOLDS),
-        fillOpacity: (num_potential === 0) ? 0 : POLYGON_OPACITY,
+        fillOpacity: (num_potential === 0) ? 0 : (num_total < 25) ? POLYGON_OPACITY_HALF : POLYGON_OPACITY,
     }
 }
 
@@ -98,7 +99,7 @@ function highRisk_style(feature) {
         color: 'gray',
         dashArray: '3',
         fillColor: getColour(num_high_risk, COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS),
-        fillOpacity: (num_high_risk === 0) ? 0 : POLYGON_OPACITY,
+        fillOpacity: (num_high_risk === 0) ? 0 : (num_total < 25) ? POLYGON_OPACITY_HALF : POLYGON_OPACITY,
     }
 }
 
@@ -123,7 +124,7 @@ function potVul_style(feature) {
         color: 'gray',
         dashArray: '3',
         fillColor: getColour(percent_cases, COLOUR_SCHEME, BOTH_SCHEME_THRESHOLDS),
-        fillOpacity: (percent_cases === 0) ? 0 : POLYGON_OPACITY,
+        fillOpacity: (num_both === 0) ? 0 : (num_total < 25) ? POLYGON_OPACITY_HALF : POLYGON_OPACITY,
     }
 }
 
