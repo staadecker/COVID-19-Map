@@ -51,7 +51,7 @@ searchControl.on('search:locationfound', (e) => {
 
 
 function create_legend(colorThrsholds, colourScheme) {
-    let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> > ' + text.not_enough_data_legend + '<br>';
+    let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
     for (let i = 0; i < colourScheme.length; i++) {
