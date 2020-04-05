@@ -1,34 +1,30 @@
-// 1. Get language from parameter in URL
-const param = new URLSearchParams(window.location.search);
-const lang = param.get('lang');
+let text;
 
-switch (lang) {
-    case "fr":
+function read_lang_param() {
+    // To set text to french use ?lang=fr in URL
+    const param = new URLSearchParams(window.location.search);
+
+    if (param.get('lang') === "fr") {
         text = text_fr;
-        break;
-    default:
+    } else {
         text = text_en;
-}
+    }
 
-// 2. Load language file
-const pageElements = document.getElementsByClassName("lang");
-
-// 3. For each key (ex. "about-us-paragraph-3")
-    // 4. Get id by prefixing lan- (ex. "lan-about-us-paragraph")
-    // 5. Get element with that id
-    // 6. Set element text to the value in the dictionary
-for (let i = 0; i < pageElements.length; i++) {
-    if (pageElements[i].id in text) {
-        pageElements[i].innerHTML = text[pageElements[i].id];
+    if (Object.keys(text_en).length !== Object.keys(text_fr).length) {
+        console.log("Warning: Languages have different number of elements. Fix text.js.")
     }
 }
 
-let potential_popup = text['pot_case_popup'];
-let potential_popup_1 = text['pot_case_popup_1'];
-let vul_popup = text['vul_case_popup'];
-let vul_popup_1 = text['vul_case_popup_1'];
-let cul_popup = text['confirm_pop'];
-let searchtext = text['searchbar'];
-let noEntries_pop = text['msg_noentries'];
-let notSup_pop = text['notSupported_pop'];
+function update_text() {
+    // Loop through all page elements
+    const pageElements = document.getElementsByClassName("lang");
 
+    for (let pageElement of pageElements) {
+        if (pageElement.id in text) {
+            pageElement.innerHTML = text[pageElement.id];
+        }
+    }
+}
+
+read_lang_param();
+update_text();

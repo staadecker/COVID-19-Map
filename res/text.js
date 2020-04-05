@@ -33,14 +33,15 @@ const text_fr = {
     "welcome_text": "Bienvenue à la carte de densité de Flatten!",
     "instructionsText1": "Pour voir l’information propre à votre région, cliquez sur votre municipalité ou région liée au code postal." +
         " Pour vous y retrouver plus facilement, permettez à Flatten de vous localiser.",
-    "instructionsText2": "<b>Cas confirmés: </b>Cet onglet illustre tous les cas confirmés de COVID-19 au Canada." +
+    "instructionsText2": "<b>Cas confirmés : </b>cet onglet illustre tous les cas confirmés de COVID-19 au Canada." +
         " Si la municipalité d’un cas particulier n’est pas indiquée, ce cas figurera au centre" +
         " de la province. Données provenant du  COVID-19 Canada Open Data Working Group (voir En savoir plus sur la carte).",
-    "instructionsText3": "<b>Cas potentiels: </b>Cet onglet illustre tous les cas potentiels de COVID-19 au Canada," +
+    "instructionsText3": "<b>Cas potentiels : </b>cet onglet illustre tous les cas potentiels de COVID-19 au Canada," +
         " selon les données enregistrées dans le formulaire de Flatten.",
-    "instructionsText4": "<b>Personnes vulnérables: </b>Cet onglet illustre toutes les personnes qui sont particulièrement" +
+    "instructionsText4": "<b>Personnes vulnérables : </b>cet onglet illustre toutes les personnes qui sont particulièrement" +
         " vulnérables à la  COVID-19 au Canada, selon les données enregistrées dans le formulaire de Flatten.",
-    "instructionsText5": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
+    "instructionsText5": "<b>Individus vulnérables manifestant les symptomes: </b>Cet onglet affiche les cas potentiels de COVID-19 des individus particulièrement vulnérables au Canada, basé sur les données de Flatten.",
+    "instructionsText6": "Afin d’éviter les trolls, nous utilisons des cookies, recaptcha et nous retraçons les adresses IP suspectes.",
     "pot_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_case_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport de cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports d’individus vulnérables</p><p>Nous avons reçus YYY rapports en tout.</p>",
@@ -48,7 +49,11 @@ const text_fr = {
     "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
     "searchbar": "Entrez les 3 premiers caractères de votre code postal",
-    "notSupported_pop": "<h3>FSA</h3>Nous ne pouvons pas fournir des données pour ce code postal."
+    "notSupported_pop": "<h3>FSA</h3>Nous ne pouvons pas fournir des données pour ce code postal.",
+    "pot_vul_button": "Individus vulnérables symptomatiques",
+    "pot_vul_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de individus vulnérables qui sont également des cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "pot_vul_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'une personne vulnérable qui est également un cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
+    "not_enough_data_legend": "Pas assez de données"
 };
 
 const text_en = {
@@ -92,7 +97,9 @@ const text_en = {
         " of COVID-19 in Canada, based on data inputted into Flatten's form.",
     "instructionsText4": "<b>Vulnerable Individuals: </b>This tab displays all individuals" +
         " that are especially vulnerable to COVID-19 in Canada, based on data inputted into Flatten's form.",
-    "instructionsText5": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
+    "instructionsText5": "<b>Potential and Vulnerable Individuals: </b>This tab displays all individuals" +
+    " that are especially vulnerable to COVID-19 in Canada that are also deemed potential cases, based on data inputted into Flatten's form.",
+    "instructionsText6": "In order to ensure non-trolling we use cookies, recaptcha and track suspicious IP addresses.",
     "pot_case_popup": "<h3>FSA</h3><p>We received XXX reports from potential cases.</p><p>We received YYY reports in total.</p>",
     "pot_case_popup_1": "<h3>FSA</h3><p>We received 1 report from a potential case.</p><p>We received YYY reports in total.</p>",
     "vul_case_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals.</p><p>We received YYY reports in total.</p>",
@@ -100,5 +107,11 @@ const text_en = {
     "msg_noentries": "<h3>FSA</h3><p>We haven't had enough form responses in this region yet.</p>",
     "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
     "searchbar": "Enter first 3 digits of post code:",
-    "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode."
+    "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode.",
+    "pot_vul_button": "Potential Case and Vulnerable",
+    "pot_vul_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals who are also potential cases." +
+        "</p><p>We received YYY reports in total.</p>",
+    "pot_vul_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual who is also a potential case." +
+        "</p><p>We received YYY reports in total.</p>",
+    "not_enough_data_legend": "Not Enough Data"
 };
