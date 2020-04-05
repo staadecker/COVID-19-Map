@@ -238,3 +238,8 @@ function displayMaps() {
     tabs.vulnerable.time_message = tabs.potential.time_message;
     tabs.pot_vul.time_message = tabs.potential.time_message;
 }
+
+function toggle_clicked(radioValue){
+    if (current_tab) current_tab.remove_from_map(map);
+    tabs[radioValue].add_to_map(map);
+}

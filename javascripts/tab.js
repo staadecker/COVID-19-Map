@@ -1,3 +1,5 @@
+let current_tab = null;
+
 class Tab {
     constructor(legend, search_control, layer_style, popup_type) {
         this.map_layer = null;
@@ -36,6 +38,8 @@ class Tab {
         }
 
         if (this.legend) map.addControl(this.legend);
-        if (this.search_control) map.addControl(this.search_control)
+        if (this.search_control) map.addControl(this.search_control);
+
+        current_tab = this;
     }
 }
