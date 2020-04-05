@@ -7,7 +7,7 @@ const INITIAL_ZOOM = 5;
 // white, yellow, orange, brown, red, black
 const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
 const POT_SCHEME_THRESHOLDS = [0, 2, 5, 10, 25];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0, 50, 100, 300, 700];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
 const BOTH_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
 const POLYGON_OPACITY = 0.4;
 // max size circle can be on map
@@ -52,20 +52,12 @@ function create_legend(colorThrsholds, colourScheme) {
     let legend_content = "";
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
-    if (colorThrsholds === HIGH_RISK_SCHEME_THRESHOLDS) {
-        for (let i = 0; i < colorThrsholds.length; i++) {
-            legend_content +=
-                '<i style="background:' + getColour(colorThrsholds[i] + 1, colourScheme, colorThrsholds) + '"></i> ' +
-                (colorThrsholds[i] + 1) + (colorThrsholds[i + 1] ? '&ndash;' + colorThrsholds[i + 1] + '<br>' : '+');
-        }
-    } else {
-        for (let i = 0; i < colorThrsholds.length; i++) {
-            legend_content +=
-                '<i style="background:' + getColour(colorThrsholds[i] + 1, colourScheme, colorThrsholds) + '"></i> > ' + (colorThrsholds[i]) + '%<br>';
-        }
+    for (let i = 0; i < colorThrsholds.length; i++) {
+        legend_content +=
+            '<i style="background:' + getColour(colorThrsholds[i] + 1, colourScheme, colorThrsholds) + '"></i> > ' + (colorThrsholds[i]) + '%<br>';
     }
 
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({position: 'bottomright'});
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
