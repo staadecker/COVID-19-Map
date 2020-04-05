@@ -6,9 +6,9 @@ const INITIAL_ZOOM = 5;
 
 // white, yellow, orange, brown, red, black
 const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
-const POT_SCHEME_THRESHOLDS = [0, 2, 5, 10, 25];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
-const BOTH_SCHEME_THRESHOLDS = [0, 1, 2, 5, 10];
+const POT_SCHEME_THRESHOLDS = [0.02, 0.05, 0.1, 0.25];
+const HIGH_RISK_SCHEME_THRESHOLDS = [0.15, 0.25, 0.35, 0.50];
+const BOTH_SCHEME_THRESHOLDS = [0.01, 0.02, 0.05, 0.1];
 const POLYGON_OPACITY = 0.4;
 // max size circle can be on map
 const MAX_CIRCLE_RAD = 35;
@@ -53,8 +53,9 @@ function create_legend(colorThrsholds, colourScheme) {
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
     for (let i = 0; i < colorThrsholds.length; i++) {
+        const colour = getColour(colorThrsholds[i], colourScheme, colorThrsholds);
         legend_content +=
-            '<i style="background:' + getColour(colorThrsholds[i] + 1, colourScheme, colorThrsholds) + '"></i> > ' + (colorThrsholds[i]) + '%<br>';
+            '<i style="background:' + colour + '"></i> > ' + (colorThrsholds[i] * 100) + '%<br>';
     }
 
     const legend = L.control({position: 'bottomright'});
@@ -70,7 +71,7 @@ function create_legend(colorThrsholds, colourScheme) {
 }
 
 const tabs = {
-    "confirmed": new Tab(null, null, null),
+    "confirmed": new Tab(null, null, null, null),
     "vulnerable": new Tab(
         create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
         searchControl,
@@ -97,35 +98,30 @@ let form_data_obj, confirmed_data;
 
 // assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
-    if (color_thresholds.length !== colour_scheme.length)
+    if (color_thresholds.length !== colour_scheme.length - 1)  // Minus one since one more color then threshold
         console.log("WARNING: list lengths don't match in getColour.");
 
 
-    for (let i = 1; i < color_thresholds.length; i++) {
-        if (cases <= color_thresholds[i]) return colour_scheme[i - 1];
+    for (let i = 0; i < color_thresholds.length; i++) {
+        if (cases < color_thresholds[i]) return colour_scheme[i];
     }
 
-    return colour_scheme[color_thresholds.length - 1];
+    return colour_scheme[colour_scheme.length - 1];
 }
 
 function create_style_function(colour_scheme, thresholds, data_tag) {
     return (feature) => {
-        const post_code = feature.properties.CFSAUID;
-        let levelGrade = 0;
-        let num_total = 0;
+        let opacity = 0; // If no data, is transparent
+        let colour = colour_scheme[0]; // Default colour is the lightest
+        const post_code_data = form_data_obj['fsa'][feature.properties.CFSAUID];
 
         // only set numbers if it exists in form_data_obj
-        if (post_code in form_data_obj['fsa']) {
-            num_total = form_data_obj['fsa'][post_code]['number_reports'];
-            if (data_tag in form_data_obj['fsa'][post_code]) {
-                levelGrade = form_data_obj['fsa'][post_code][data_tag];
-            }
-        }
+        if (post_code_data && post_code_data[data_tag]) {
+            const num_cases = post_code_data[data_tag];
+            const num_total = post_code_data['number_reports'];
 
-        if (thresholds === BOTH_SCHEME_THRESHOLDS || thresholds === POT_SCHEME_THRESHOLDS) {
-            if (num_total !== 0)
-                levelGrade /= num_total;
-            levelGrade *= 100;
+            if (num_cases > 0) opacity = POLYGON_OPACITY;
+            if (num_total > 25) colour = getColour(num_cases / num_total, colour_scheme, thresholds);
         }
 
         return {
@@ -134,8 +130,8 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
             color: 'gray',
             dashArray: '3',
             // define the color and opacity of each polygon
-            fillColor: getColour(levelGrade, colour_scheme, thresholds),
-            fillOpacity: (levelGrade === 0) ? 0 : (num_total < 25) ? POLYGON_OPACITY / 2 : POLYGON_OPACITY,
+            fillColor: colour,
+            fillOpacity: opacity
         }
     }
 }
