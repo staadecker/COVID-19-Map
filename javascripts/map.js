@@ -118,13 +118,15 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
         const post_code_data = form_data_obj['fsa'][feature.properties.CFSAUID];
 
         // only set numbers if it exists in form_data_obj
-        if (post_code_data && post_code_data[data_tag]) {
-            const num_cases = post_code_data[data_tag];
+        if (post_code_data && data_tag in post_code_data) {
             const num_total = post_code_data['number_reports'];
 
             if (num_total > 25) {
-                if (num_cases === 0) opacity = 0;
-                else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
+                const num_cases = post_code_data[data_tag];
+
+                if (num_cases === 0) {
+                    opacity = 0;
+                } else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
             }
         }
 
