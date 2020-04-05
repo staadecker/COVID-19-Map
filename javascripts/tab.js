@@ -42,4 +42,9 @@ class Tab {
 
         current_tab = this;
     }
+
+    switch_to_tab(map) {
+        if (current_tab) current_tab.remove_from_map(map);
+        this.add_to_map(map);
+    }
 }

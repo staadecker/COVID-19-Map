@@ -242,6 +242,5 @@ function displayMaps() {
 }
 
 function toggle_clicked(radioValue) {
-    if (current_tab) current_tab.remove_from_map(map);
-    tabs[radioValue].add_to_map(map);
+    tabs[radioValue].switch_to_tab(map);
 }
