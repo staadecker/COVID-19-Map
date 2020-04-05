@@ -133,6 +133,7 @@ function adjustPopups(toggleType) {
     polygons.eachLayer(function (layer) {
         let num_potential = 0;
         let num_high_risk = 0;
+        let num_both = 0;
         let total_reports_region = 0;
         let postcode = layer.feature.properties.CFSAUID;
         let excluded = false;
@@ -140,6 +141,7 @@ function adjustPopups(toggleType) {
         if (postcode in form_data_obj['fsa']) {
             num_potential = form_data_obj['fsa'][postcode]['pot'];
             num_high_risk = form_data_obj['fsa'][postcode]['risk'];
+            num_both = form_data_obj['fsa'][postcode]['both'];
             total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
             excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
         }
