@@ -6,7 +6,7 @@
     border: 2px solid #cccccc; /* Black border */
     color: #6d6d6d; /* White text */
     padding: 24px 24px; /* Some padding */
-    margin: 2px 0px;
+    
     cursor: pointer; /* Pointer/hand icon */
     width: 100%; /* Set a width if needed */
     font-size: 14px;
@@ -14,11 +14,10 @@
   }   
 }
 .button {
-  background-color: ffffff; /* White background */
-  border: 2px solid #cccccc; /* Light Grey border */
+  background-image: linear-gradient(to top right, #e8e8e8 , #f6f6f6);
+  
   color: #6d6d6d; /* Dark Grey text */
   padding: 2px 24px; 
-  margin: 22px 0px; 
   cursor: pointer; /* Pointer/hand icon */
   width: 32%; 
   font-size: 14px;
@@ -28,7 +27,7 @@
   .button1 {
     background-color: #ffffff; 
     color: #F0B666; 
-    border: 2px solid 	#8c8c8c;
+    
   }
   
   .button1:focus {

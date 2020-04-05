@@ -5,6 +5,7 @@
 @import url("equalcolumns.css");
 @import url("buttons.css");
 @import url("postalcodefield.css");
+@import url("tabs.css");
 
 * {
   font-family: Roboto, Tahoma, sans-serif;
@@ -20,7 +21,7 @@ body {
 
 /* Set the size of the div element that contains the map */
 #map {
-  width: 99%; /* The width is the width of the web page */
+  width: 100%; /* The width is the width of the web page */
   color: black;
   z-index: 1;
 }
@@ -52,10 +53,10 @@ body {
   padding: 10px;
 }
 .left {
-  width: 875px;
+  width: 1000px;
 }
 .right {
-  width: 475px;
+  width: 300px;
 
 }
 .map-info {
@@ -70,10 +71,10 @@ body {
 
 @media (min-width: 1132px) {
   .left {
-    width: 65%; 
+    width: 80%; 
   }
   .right {
-    width: 35%;
+    width: 20%;
   }
   .topnav{
     display:none;
