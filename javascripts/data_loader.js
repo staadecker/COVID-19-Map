@@ -36,7 +36,7 @@ async function obtainAndDisplayMaps() {
     confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
 
     displayMaps();
-    tabs.potential.add_to_map(map);
+    tabs.potential.switch_to_tab(map);
 }
 
 // Calls the function.

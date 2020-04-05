@@ -48,12 +48,21 @@
 
         <input
                 type="radio"
+                id="pot_vul"
+                name="layers"
+                onclick="toggle_clicked(this.value)"
+                value="pot_vul"
+        />
+        <label id="pot_vul_button" class="noselect lang" for="pot_vul"></label>
+
+        <input
+                type="radio"
                 id="confirmed"
                 name="layers"
                 onclick="toggle_clicked(this.value)"
                 value="confirmed"
         />
-        <label id="cul_button" class="noselect lang" for="confirmed"</label>
+        <label id="cul_button" class="noselect lang" for="confirmed"></label>
     </div>
 </div>
 
@@ -102,6 +111,7 @@
             <p id="instructionsText3" class="lang"></p>
             <p id="instructionsText4" class="lang"></p>
             <p id="instructionsText5" class="lang"></p>
+            <p id="instructionsText6" class="lang"></p>
         </div>
     </div>
 </div>
@@ -116,7 +126,6 @@
 
 <script type="text/javascript" src="javascripts/map.js"></script>
 <script type="text/javascript" src="javascripts/location.js"></script>
-<script type="text/javascript" src="javascripts/toggle.js"></script>
 <script type="text/javascript" src="javascripts/modal.js"></script>
 <script type="text/javascript" src="javascripts/data_loader.js"></script>
 </body>
