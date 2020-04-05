@@ -54,10 +54,10 @@ function create_legend(colorThrsholds, colourScheme) {
     let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> > ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
-    for (let i = 0; i < colorThrsholds.length; i++) {
-        const colour = getColour(colorThrsholds[i], colourScheme, colorThrsholds);
+    for (let i = 0; i < colourScheme.length; i++) {
+        const threshold = i === 0 ? 0 : colorThrsholds[i - 1] * 100;
         legend_content +=
-            '<i style="background:' + colour + '"></i> > ' + (colorThrsholds[i] * 100) + '%<br>';
+            '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
     }
 
     const legend = L.control({position: 'bottomright'});
@@ -113,7 +113,7 @@ function getColour(cases, colour_scheme, color_thresholds) {
 
 function create_style_function(colour_scheme, thresholds, data_tag) {
     return (feature) => {
-        let opacity = 0; // If no data, is transparent
+        let opacity = POLYGON_OPACITY; // If no data, is transparent
         let colour = NOT_ENOUGH_GRAY; // Default color if not enough data
         const post_code_data = form_data_obj['fsa'][feature.properties.CFSAUID];
 
@@ -122,8 +122,10 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
             const num_cases = post_code_data[data_tag];
             const num_total = post_code_data['number_reports'];
 
-            if (num_cases > 0) opacity = POLYGON_OPACITY;
-            if (num_total > 25) colour = getColour(num_cases / num_total, colour_scheme, thresholds);
+            if (num_total > 25) {
+                if (num_cases === 0) opacity = 0;
+                else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
+            }
         }
 
         return {
