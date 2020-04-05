@@ -141,49 +141,47 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
 // Adjusts popups on toggle
 function adjustPopups(tab) {
     tab.map_layer.eachLayer(function (layer) {
-        let postcode = layer.feature.properties.CFSAUID;
-        let num_potential = 0;
-        let num_high_risk = 0;
-        let num_both = 0;
-        let total_reports_region = 0;
-        let excluded = false;
-
-        if (postcode in form_data_obj['fsa']) {
-            num_potential = form_data_obj['fsa'][postcode]['pot'];
-            num_high_risk = form_data_obj['fsa'][postcode]['risk'];
-            num_both = form_data_obj['fsa'][postcode]['both'];
-            total_reports_region = form_data_obj['fsa'][postcode]['number_reports'];
-            excluded = form_data_obj['fsa'][postcode]['fsa_excluded'];
-        }
-
         let message;
 
-        if (excluded) message = text['notSupported_pop'].replace("FSA", postcode);
-        else if (total_reports_region === 0) message = text['msg_noentries'].replace("FSA", postcode);
-        else if (tab.popup_type === "pot") {
-            message = (num_potential === 1 ? text.pot_case_popup_1 : text.pot_case_popup)
-                .replace("FSA", postcode)
-                .replace("XXX", num_potential)
-                .replace("YYY", total_reports_region);
+        const post_code = layer.feature.properties.CFSAUID;
+        const post_code_data = form_data_obj['fsa'][(post_code)];
 
-        } else if (tab.popup_type === "vuln") {
-            message = (num_potential === 1 ? text.vul_case_popup_1 : text.vul_case_popup)
-                .replace("FSA", postcode)
-                .replace("XXX", num_high_risk)
-                .replace("YYY", total_reports_region);
+        const total_reports_region = post_code_data && post_code_data['number_reports'] ? post_code_data['number_reports'] : 0;
+        const excluded = post_code_data && post_code_data['fsa_excluded'] ? post_code_data['fsa_excluded'] : false;
 
-        } else if (tab.popup_type === "pot_vul") {
-            message = (num_both === 1 ? text.pot_vul_popup_1 : text.pot_vul_popup)
-                .replace("FSA", postcode)
-                .replace("XXX", num_both)
-                .replace("YYY", total_reports_region);
+        if (excluded) message = text['notSupported_pop'].replace("FSA", post_code);
+        else if (total_reports_region === 0) message = text['msg_noentries'].replace("FSA", post_code);
+        else {
+            switch (tab.popup_type) {
+                case "pot":
+                    const num_potential = post_code_data && post_code_data['pot'] ? post_code_data['pot'] : 0;
+                    message = (num_potential === 1 ? text.pot_case_popup_1 : text.pot_case_popup)
+                        .replace("FSA", post_code)
+                        .replace("XXX", num_potential)
+                        .replace("YYY", total_reports_region);
+                    break;
+
+                case "vuln":
+                    const num_vulnerable = post_code_data && post_code_data['risk'] ? post_code_data['risk'] : 0;
+                    message = (num_vulnerable === 1 ? text.vul_case_popup_1 : text.vul_case_popup)
+                        .replace("FSA", post_code)
+                        .replace("XXX", num_vulnerable)
+                        .replace("YYY", total_reports_region);
+                    break;
+
+                case "pot_vul":
+                    const num_both = post_code_data && post_code_data['both'] ? post_code_data['both'] : 0;
+                    message = (num_both === 1 ? text.pot_vul_popup_1 : text.pot_vul_popup)
+                        .replace("FSA", post_code)
+                        .replace("XXX", num_both)
+                        .replace("YYY", total_reports_region);
+                    break;
+            }
         }
 
         layer.setPopupContent(message);
     });
 }
-
-
 
 
 function displayMaps() {
@@ -239,7 +237,7 @@ function displayMaps() {
     tabs.pot_vul.time_message = tabs.potential.time_message;
 }
 
-function toggle_clicked(radioValue){
+function toggle_clicked(radioValue) {
     if (current_tab) current_tab.remove_from_map(map);
     tabs[radioValue].add_to_map(map);
 }
