@@ -10,8 +10,10 @@ const POT_SCHEME_THRESHOLDS = [0.02, 0.05, 0.1, 0.25];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0.15, 0.25, 0.35, 0.50];
 const BOTH_SCHEME_THRESHOLDS = [0.01, 0.02, 0.05, 0.1];
 const POLYGON_OPACITY = 0.4;
+const NOT_ENOUGH_GRAY = '#909090';
 // max size circle can be on map
 const MAX_CIRCLE_RAD = 35;
+const MIN_CIRCLE_RADIUS = 6;
 
 // Create map
 const MAP_BASE_LAYER = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -49,7 +51,7 @@ searchControl.on('search:locationfound', (e) => {
 
 
 function create_legend(colorThrsholds, colourScheme) {
-    let legend_content = "";
+    let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> > ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
     for (let i = 0; i < colorThrsholds.length; i++) {
@@ -112,7 +114,7 @@ function getColour(cases, colour_scheme, color_thresholds) {
 function create_style_function(colour_scheme, thresholds, data_tag) {
     return (feature) => {
         let opacity = 0; // If no data, is transparent
-        let colour = colour_scheme[0]; // Default colour is the lightest
+        let colour = NOT_ENOUGH_GRAY; // Default color if not enough data
         const post_code_data = form_data_obj['fsa'][feature.properties.CFSAUID];
 
         // only set numbers if it exists in form_data_obj
@@ -182,7 +184,7 @@ function adjustPopups(tab) {
 }
 
 
-const MIN_CIRCLE_RADIUS = 6;
+
 
 function displayMaps() {
     // 1. Create the layers
