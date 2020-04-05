@@ -106,3 +106,61 @@ body {
     clear: both;
   }
 }
+
+/*FSA specific ranking style*/
+p.caption_specific{
+  text-align: center;
+}
+
+li.searchedpostal{	
+background-color: white;
+font-size: 25px;
+}
+
+.goback {
+  background-color: #8c8c8c; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  width: 100%;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.goback:hover {
+  background-color: #D3D3D3;
+  color: black;
+}
+
+/*Canada wide ranking style*/
+ol.powerrankings {
+  list-style-type: number;
+  width = 100%;
+  text-align: center;
+}
+p.caption{
+  text-align: center;
+}
+li{
+  background-color: #D3D3D3;
+}
+.viewmore {
+  background-color: #8c8c8c; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  width: 100%;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.viewmore:hover {
+  background-color: #D3D3D3;
+  color: black;
+}
