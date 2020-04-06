@@ -8,3 +8,4 @@
 - Added potential + vulnerable case tab
 - Changed all scales to a percent scale
 - Added "not enough data" section to map
+- Fixed bug in search bar
