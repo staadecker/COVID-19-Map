@@ -249,6 +249,7 @@ function displayMaps() {
     tabs.vulnerable.time_message = time;
     tabs.pot_vul.time_message = time;
 
+    // ESRI Data (Confirmed cases)
     tabs.confirmed.map_layer = L.geoJSON(confirmed_data, {
         style: styleConfirmedPolygons,
         onEachFeature: createConfirmedPopups
