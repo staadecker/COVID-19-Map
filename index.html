@@ -29,11 +29,20 @@
     <div class="switch-field">
         <input
                 type="radio"
+                id="pot_vul"
+                name="layers"
+                onclick="toggle_clicked(this.value)"
+                value="pot_vul"
+                checked
+        />
+        <label id="pot_vul_button" class="noselect lang" for="pot_vul"></label>
+        
+        <input
+                type="radio"
                 id="in_self_isolation"
                 name="layers"
                 onclick="toggle_clicked(this.value)"
                 value="potential"
-                checked
         />
         <label id="pot_button" class="noselect lang" for="in_self_isolation"></label>
 
@@ -45,15 +54,6 @@
                 value="vulnerable"
         />
         <label id="vul_button" class="noselect lang" for="high_risk"></label>
-
-        <input
-                type="radio"
-                id="pot_vul"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="pot_vul"
-        />
-        <label id="pot_vul_button" class="noselect lang" for="pot_vul"></label>
 
         <input
                 type="radio"

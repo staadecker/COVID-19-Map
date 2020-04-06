@@ -108,7 +108,7 @@ const text_en = {
     "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
     "searchbar": "Enter first 3 digits of post code:",
     "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode.",
-    "pot_vul_button": "Potential Case and Vulnerable",
+    "pot_vul_button": "Potential and Vulnerable Cases",
     "pot_vul_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals who are also potential cases." +
         "</p><p>We received YYY reports in total.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual who is also a potential case." +
