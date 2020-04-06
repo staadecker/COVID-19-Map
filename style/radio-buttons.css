@@ -31,13 +31,13 @@
 
 .switch-field label {
   background-color: #ffffff;
-  color: #4da6ff;
+  color: #00267A;
   font-size: 14px;
   line-height: 1;
   text-align: center;
   padding: 8px 16px;
   margin-right: -2px;
-  border: 2px solid #4da6ff; /* sky blue*/
+  border: 2px solid #00267A; /* sky blue*/
   /* border-left: 0px; */
   transition: all 0.1s ease-in-out;
 }
@@ -47,7 +47,7 @@
 }
 
 .switch-field input:checked + label {
-  background-color: #4da6ff;
+  background-color: #00267A;
   /*color: #001f3f; /* navy */
   color: white;
   /* font-weight: bold;*/
