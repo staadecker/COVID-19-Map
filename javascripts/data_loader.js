@@ -21,8 +21,8 @@ function bucketRequest(url) {
 async function obtainAndDisplayMaps() {
     const remoteConfig = firebase.remoteConfig();
 
-    remoteConfig.settings = {minimumFetchIntervalMillis: 3600000};
-    remoteConfig.defaultConfig = ({'bucket': 'gs://flatten-271620.appspot.com'});
+    remoteConfig.settings = { minimumFetchIntervalMillis: 3600000 };
+    remoteConfig.defaultConfig = ({ 'bucket': 'gs://flatten-271620.appspot.com' });
 
     try {
         await remoteConfig.fetchAndActivate();
@@ -33,7 +33,8 @@ async function obtainAndDisplayMaps() {
     const bucket = remoteConfig.getValue('bucket').asString();
     const bucket_reference = getGSBucketReference(bucket);
     form_data_obj = bucketRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
-    confirmed_data = bucketRequest(await getGSDownloadURL(bucket_reference, 'confirmed_data.json'));
+    // Query confirmed case data from ESRI
+    confirmed_data = bucketRequest('https://opendata.arcgis.com/datasets/e5403793c5654affac0942432783365a_0.geojson');
 
     displayMaps();
     tabs.pot_vul.switch_to_tab(map);

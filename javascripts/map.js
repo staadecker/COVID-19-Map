@@ -9,6 +9,7 @@ const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
 const POT_SCHEME_THRESHOLDS = [0.02, 0.05, 0.1, 0.25];
 const HIGH_RISK_SCHEME_THRESHOLDS = [0.15, 0.25, 0.35, 0.50];
 const BOTH_SCHEME_THRESHOLDS = [0.01, 0.02, 0.05, 0.1];
+const CON_SCHEME_THRESHOLDS = [5, 25, 100, 250];
 const POLYGON_OPACITY = 0.4;
 const NOT_ENOUGH_GRAY = '#909090';
 // max size circle can be on map
@@ -33,15 +34,22 @@ map.on("popupopen", function (event) {
     if (event.popup.coord) event.popup.setLatLng(event.popup.coord);
 });
 
-
 function create_legend(colorThrsholds, colourScheme) {
     let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
-    for (let i = 0; i < colourScheme.length; i++) {
-        const threshold = i === 0 ? 0 : colorThrsholds[i - 1] * 100;
-        legend_content +=
-            '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
+    if (colorThrsholds === CON_SCHEME_THRESHOLDS) {
+        for (let i = 0; i < colourScheme.length; i++) {
+            const threshold = i === 0 ? 0 : colorThrsholds[i - 1];
+            legend_content +=
+                '<i style="background:' + colourScheme[i] + '"></i>' + threshold + '+<br>';
+        }
+    } else {
+        for (let i = 0; i < colourScheme.length; i++) {
+            const threshold = i === 0 ? 0 : colorThrsholds[i - 1] * 100;
+            legend_content +=
+                '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
+        }
     }
 
     const legend = L.control({ position: 'bottomright' });
@@ -57,7 +65,7 @@ function create_legend(colorThrsholds, colourScheme) {
 }
 
 const tabs = {
-    "confirmed": new Tab(null, null, null, null),
+    "confirmed": new Tab(create_legend(CON_SCHEME_THRESHOLDS, COLOUR_SCHEME), null, null, null),
     "vulnerable": new Tab(
         create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
         null,
@@ -199,46 +207,68 @@ function displayMaps() {
     tabs.potential.search_control = searchControl;
     tabs.pot_vul.search_control = searchControl;
 
-    // Array of Leaflet API markers for confirmed cases.
-    const confirmed_layer = L.layerGroup();
+    const confirmed_layer = L.geoJSON(confirmed_data, {
+        style: function (feature) {
+            return {
+                // define the outlines of the map
+                weight: 0.9,
+                color: 'gray',
+                dashArray: '3',
+                // define the color and opacity of each polygon
+                fillColor: getColour(feature.properties.CaseCount, COLOUR_SCHEME, CON_SCHEME_THRESHOLDS),
+                fillOpacity: POLYGON_OPACITY
+            }
+        },
+        onEachFeature: function (feature, layer) {
+            let popText = text['confirm_pop'];
+            if (popText.includes("PLACEFR")) {
+                popText = popText
+                    .replace("PLACEFR", feature.properties.FRENAME)
+                    .replace("CASES", feature.properties.CaseCount)
+                    .replace("AAA", feature.properties.Last_Updated.replace("T", " ").replace(".000Z", ""));
+                if (feature.properties.Deaths === null) {
+                    popText = popText.replace("<br/>XXX décès", "");
+                }
+                if (feature.properties.Recovered === null) {
+                    popText = popText.replace("<br/>YYY guérisons", "");
+                }
+                if (feature.properties.Tests === null) {
+                    popText = popText.replace("<br/>ZZZ tests réalisés", "");
+                }
 
-    const confirmed_cases_data = confirmed_data['confirmed_cases'];
-    for (let confirmed_case of confirmed_cases_data) {
-        if (confirmed_case['coord'][0] === "N/A") continue;
+                popText = popText.replace("XXX", feature.properties.Deaths)
+                popText = popText.replace("YYY", feature.properties.Recovered)
+                popText = popText.replace("ZZZ", feature.properties.Tests);
+            } else {
+                popText = popText
+                    .replace("PLACE", feature.properties.ENGNAME)
+                    .replace("CASES", feature.properties.CaseCount)
+                    .replace("AAA", feature.properties.Last_Updated.replace("T", " ").replace(".000Z", ""));
+                if (feature.properties.Deaths === null) {
+                    popText = popText.replace("<br/>XXX deaths", "");
+                }
+                if (feature.properties.Recovered === null) {
+                    popText = popText.replace("<br/>YYY recovered", "");
+                }
+                if (feature.properties.Tests === null) {
+                    popText = popText.replace("<br/>ZZZ tests administered", "");
+                }
 
-        // Add the marker.
-        const circle = new L.circleMarker(confirmed_case['coord'], {
-            weight: 0,
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: MIN_CIRCLE_RADIUS + confirmed_case['cases'] / confirmed_data['max_cases'] * MAX_CIRCLE_RAD
-        });
+                popText = popText.replace("XXX", feature.properties.Deaths)
+                popText = popText.replace("YYY", feature.properties.Recovered)
+                popText = popText.replace("ZZZ", feature.properties.Tests);
+            }
 
-        circle._leaflet_id = confirmed_case.name;
-
-        /*  Create the popup text and bind to the correct circle. Store popup
-            index as a member of the popup so that we can set the popup to be
-            in the centre of the circle on callback when clicked. */
-
-        const message = text['confirm_pop']
-            .replace("PLACE", confirmed_case.name)
-            .replace("CASES", confirmed_case['cases']);
-
-        const popup = L.popup().setLatLng(confirmed_case['coord']).setContent(message);
-        popup.coord = confirmed_case['coord'];
-
-        //Bind popup and add circle to circle array.
-        circle.bindPopup(popup);
-        circle.addTo(confirmed_layer);
-    }
+            layer.bindPopup(popText);
+        }
+    });
 
     tabs.confirmed.map_layer = confirmed_layer;
     tabs.vulnerable.map_layer = polygon_layer;
     tabs.potential.map_layer = polygon_layer;
     tabs.pot_vul.map_layer = polygon_layer;
 
-    tabs.confirmed.time_message = confirmed_data['last_updated'];
+    tabs.confirmed.time_message = "";
     tabs.potential.time_message = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
     tabs.vulnerable.time_message = tabs.potential.time_message;
     tabs.pot_vul.time_message = tabs.potential.time_message;
