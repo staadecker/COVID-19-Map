@@ -8,29 +8,29 @@
 }
 
 body {
-  background-color: #001f3f;
-  color: white;
+  background-color: white;
+  color: #001f3f;
   z-index: 0;
 }
 
 /* Set the size of the div element that contains the map */
 #map {
   width: 100%; /* The width is the width of the web page */
-  color: black;
+  color: #00267A;
   z-index: 1;
 }
 
 /* Different button style for mobile devices */
 @media (min-width: 700px) {
   #map {
-    height: calc(100vh - 200px);
+    height: calc(110vh - 200px);
   }
 }
 
 /* Different button style for desktop */
 @media (max-width: 700px) {
   #map {
-    height: calc(100vh - 300px);
+    height: calc(110vh - 300px);
   }
 }
 
