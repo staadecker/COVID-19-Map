@@ -34,17 +34,20 @@ map.on("popupopen", function (event) {
     if (event.popup.coord) event.popup.setLatLng(event.popup.coord);
 });
 
-function create_legend(colorThresholds, colourScheme, percent = true) {
-    let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
+function create_legend(colorThresholds, colourScheme, percent = true, not_enough_data = true) {
+    let legend_content = "";
+    if (not_enough_data)
+        legend_content += '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
     for (let i = 0; i < colourScheme.length; i++) {
+        // Place square
         legend_content += '<i style="background:' + colourScheme[i] + '"></i>';
 
         const threshold = i === 0 ? 0 : colorThresholds[i - 1];
 
-        if (percent) legend_content += '> ' + threshold*100 + '%<br>';
-        else legend_content += threshold + '+<br>';
+        if (percent) legend_content += '> ' + threshold * 100 + '%<br>';
+        else legend_content += '> ' + threshold + '<br>';
     }
 
     const legend = L.control({position: 'bottomright'});
@@ -60,7 +63,12 @@ function create_legend(colorThresholds, colourScheme, percent = true) {
 }
 
 const tabs = {
-    "confirmed": new Tab(create_legend(CON_SCHEME_THRESHOLDS, COLOUR_SCHEME, percent=false), null, null, null),
+    "confirmed": new Tab(
+        create_legend(CON_SCHEME_THRESHOLDS, COLOUR_SCHEME, percent = false, not_enough_data = false),
+        null,
+        null,
+        null
+    ),
     "vulnerable": new Tab(
         create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
         null,
@@ -111,9 +119,8 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
             if (num_total > 25) {
                 const num_cases = post_code_data[data_tag];
 
-                if (num_cases === 0) {
-                    opacity = 0;
-                } else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
+                if (num_cases === 0) opacity = 0;
+                else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
             }
         }
 
@@ -175,17 +182,47 @@ function adjustPopups(tab) {
 }
 
 
+function styleConfirmedPolygons(feature) {
+    const case_num = feature.properties['CaseCount'];
+
+    return {
+        // define the outlines of the map
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        // define the color and opacity of each polygon
+        fillColor: getColour(case_num, COLOUR_SCHEME, CON_SCHEME_THRESHOLDS),
+        fillOpacity: case_num === 0 ? 0 : POLYGON_OPACITY
+    }
+}
+
+function createConfirmedPopups(feature, layer) {
+    const prop = feature.properties;
+    let popText = text.confirm_pop
+        .replace("PLACE", lang === FRENCH ? prop['FRENAME'] : prop['ENGNAME'])
+        .replace("CASES", prop['CaseCount']);
+
+    if (prop['Deaths'] !== null) popText += text.confirm_pop_deaths.replace("XXX", prop['Deaths']);
+    if (prop['Recovered'] !== null) popText += text.confirm_pop_recov.replace("XXX", prop['Recovered']);
+    if (prop['Tests'] !== null) popText += text.confirm_pop_tests.replace("XXX", prop['Tests']);
+
+    popText += text.confirm_pop_end
+        .replace("XXX", prop['Last_Updated'])
+        .replace("T", " ")
+        .replace(".000Z", "");
+
+    layer.bindPopup(popText);
+}
+
 function displayMaps() {
-    // 1. Create the layers
+    // FORM DATA
 
     // Create a popup, color and text are initialized when the tab is create
-    const polygon_layer = L.geoJSON(post_code_boundaries, {
-        onEachFeature: (feature, layer) => layer.bindPopup()
-    });
+    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
 
     // Add search bar for polygons
     const searchControl = new L.Control.Search({
-        layer: polygon_layer,
+        layer: form_layer,
         propertyName: 'CFSAUID',
         marker: false,
         textPlaceholder: text['searchbar'],
@@ -202,71 +239,20 @@ function displayMaps() {
     tabs.potential.search_control = searchControl;
     tabs.pot_vul.search_control = searchControl;
 
-    const confirmed_layer = L.geoJSON(confirmed_data, {
-        style: function (feature) {
-            return {
-                // define the outlines of the map
-                weight: 0.9,
-                color: 'gray',
-                dashArray: '3',
-                // define the color and opacity of each polygon
-                fillColor: getColour(feature.properties.CaseCount, COLOUR_SCHEME, CON_SCHEME_THRESHOLDS),
-                fillOpacity: POLYGON_OPACITY
-            }
-        },
-        onEachFeature: function (feature, layer) {
-            let popText = text['confirm_pop'];
-            if (popText.includes("PLACEFR")) {
-                popText = popText
-                    .replace("PLACEFR", feature.properties.FRENAME)
-                    .replace("CASES", feature.properties.CaseCount)
-                    .replace("AAA", feature.properties.Last_Updated.replace("T", " ").replace(".000Z", ""));
-                if (feature.properties.Deaths === null) {
-                    popText = popText.replace("<br/>XXX décès", "");
-                }
-                if (feature.properties.Recovered === null) {
-                    popText = popText.replace("<br/>YYY guérisons", "");
-                }
-                if (feature.properties.Tests === null) {
-                    popText = popText.replace("<br/>ZZZ tests réalisés", "");
-                }
+    tabs.vulnerable.map_layer = form_layer;
+    tabs.potential.map_layer = form_layer;
+    tabs.pot_vul.map_layer = form_layer;
 
-                popText = popText.replace("XXX", feature.properties.Deaths)
-                popText = popText.replace("YYY", feature.properties.Recovered)
-                popText = popText.replace("ZZZ", feature.properties.Tests);
-            } else {
-                popText = popText
-                    .replace("PLACE", feature.properties.ENGNAME)
-                    .replace("CASES", feature.properties.CaseCount)
-                    .replace("AAA", feature.properties.Last_Updated.replace("T", " ").replace(".000Z", ""));
-                if (feature.properties.Deaths === null) {
-                    popText = popText.replace("<br/>XXX deaths", "");
-                }
-                if (feature.properties.Recovered === null) {
-                    popText = popText.replace("<br/>YYY recovered", "");
-                }
-                if (feature.properties.Tests === null) {
-                    popText = popText.replace("<br/>ZZZ tests administered", "");
-                }
+    const time = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
 
-                popText = popText.replace("XXX", feature.properties.Deaths)
-                popText = popText.replace("YYY", feature.properties.Recovered)
-                popText = popText.replace("ZZZ", feature.properties.Tests);
-            }
+    tabs.potential.time_message = time;
+    tabs.vulnerable.time_message = time;
+    tabs.pot_vul.time_message = time;
 
-            layer.bindPopup(popText);
-        }
+    tabs.confirmed.map_layer = L.geoJSON(confirmed_data, {
+        style: styleConfirmedPolygons,
+        onEachFeature: createConfirmedPopups
     });
-
-    tabs.confirmed.map_layer = confirmed_layer;
-    tabs.vulnerable.map_layer = polygon_layer;
-    tabs.potential.map_layer = polygon_layer;
-    tabs.pot_vul.map_layer = polygon_layer;
-
-    tabs.confirmed.time_message = "";
-    tabs.potential.time_message = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
-    tabs.vulnerable.time_message = tabs.potential.time_message;
-    tabs.pot_vul.time_message = tabs.potential.time_message;
 }
 
 function toggle_clicked(radioValue) {
