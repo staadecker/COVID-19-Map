@@ -19,11 +19,12 @@ class Tab {
             map.removeControl(this.search_control)
         }
 
-        if (this.legend) map.removeControl(this.legend)
+        if (this.legend) map.removeControl(this.legend);
+        document.getElementById("update_time").innerHTML = "";
     }
 
     add_to_map(map) {
-        document.getElementById("update_time").innerHTML = this.time_message;
+        if (this.time_message) document.getElementById("update_time").innerHTML = this.time_message;
 
         if (this.map_layer) {
             this.map_layer.addTo(map);
@@ -44,7 +45,9 @@ class Tab {
     }
 
     switch_to_tab(map) {
-        if (current_tab) current_tab.remove_from_map(map);
-        this.add_to_map(map);
+        if (this !== current_tab) {
+            if (current_tab) current_tab.remove_from_map(map);
+            this.add_to_map(map);
+        }
     }
 }
