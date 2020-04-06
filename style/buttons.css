@@ -1,0 +1,59 @@
+/* Set of Three Buttons for the Map Toggle */
+@media (max-width: 600px) {
+  .button {
+    background-color: ffffff; /* Gray background */
+    /* background-image: linear-gradient(to top right, #cccccc , #ffffff); */
+    border: 2px solid #cccccc; /* Black border */
+    color: #6d6d6d; /* White text */
+    padding: 24px 24px; /* Some padding */
+    
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
+    font-size: 14px;
+    height: 20px;
+  }   
+}
+.button {
+  background-image: linear-gradient(to top right, #e8e8e8 , #f6f6f6);
+  
+  color: #6d6d6d; /* Dark Grey text */
+  padding: 2px 24px; 
+  cursor: pointer; /* Pointer/hand icon */
+  width: 32%; 
+  font-size: 14px;
+  height: 100px;
+  }
+  
+  .button1 {
+    background-color: #ffffff; 
+    color: #F0B666; 
+    
+  }
+  
+  .button1:focus {
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #F0B666;
+  }
+  
+  .button2 {
+    background-color: #ffffff; 
+    color: #E6807C;
+    border: 2px solid 	#8c8c8c;
+  }
+  
+  .button2:focus {
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #E6807C;
+  }
+  
+  .button3 {
+    background-color: #ffffff; 
+    color: #ab6b79; 
+    border: 2px solid 	#8c8c8c;
+  }
+  
+  .button3:focus {
+    background-image: linear-gradient(to top right, #cccccc , #ffffff);
+    color: #ab6b79;
+  }
+  

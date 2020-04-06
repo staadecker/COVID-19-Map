@@ -1,0 +1,65 @@
+@media (max-width: 1132px){
+  .equalcolumn {
+    display: none; 
+  }
+  .equalleft {
+    display: none;
+  }
+  .equalright {
+    display:none;
+  }
+  
+  .equalrow:after {
+    display: table;
+  }
+}
+
+/* Dividing Page into Two Equal Columns */
+.equalcolumn {
+  float: left;
+  padding: 10px;
+  background-color: white; /* White background */
+  background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin: 2px 2px;
+  height: 130px; 
+}
+.equalleft {
+  width: 90%;
+}
+.equalright {
+  width: 90%;
+}
+
+/* Clear floats after the columns */
+.equalrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Dividing Page into Two Equal Columns (Mobile Version) */
+.equalcolumnmobile {
+  float: left;
+  padding: 10px;
+  background-color: white; /* White background */
+  background-image: linear-gradient(to top right, rgb(247, 244, 224) , #FDFBED);
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin: 2px 2px;
+  height: 130px; 
+}
+.equalleftmobile {
+  width: 48.75%;
+}
+.equalrightmobile {
+  width: 48.75%;
+}
+.equalrowmobile:after {
+  content: "";
+  display: table;
+  clear: both;
+}

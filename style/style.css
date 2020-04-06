@@ -2,15 +2,21 @@
 @import url("legend.css");
 @import url("popup-elements.css");
 @import url("radio-buttons.css");
+@import url("equalcolumns.css");
+@import url("buttons.css");
+@import url("postalcodefield.css");
+@import url("tabs.css");
 
 * {
-  font-family: Roboto, Tahoma, sans-serif !important;
+  font-family: Roboto, Tahoma, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: #001f3f;
-  color: white;
+  background-color: white;
+  color: black;
   z-index: 0;
+  max-width: 100%;
 }
 
 /* Set the size of the div element that contains the map */
@@ -21,19 +27,143 @@ body {
 }
 
 /* Different button style for mobile devices */
-@media (min-width: 700px) {
+@media (min-width: 600px) {
   #map {
-    height: calc(100vh - 200px);
+      height: calc(100vh - 200px);
   }
+
 }
 
 /* Different button style for desktop */
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   #map {
-    height: calc(100vh - 300px);
+      height: calc(100vh - 300px);
   }
 }
 
-.name_div {
+.content {
   float: left;
 }
+
+
+/* Diving the Page into Two Unequal Columns */
+/* (for map and dasboard) */
+.column {
+  float: left;
+  padding: 10px;
+}
+.left {
+  width: 1000px;
+}
+.right {
+  width: 300px;
+
+}
+.map-info {
+  margin-bottom: 50px;
+}
+.row:after { /* Clearing floats after the columns */
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+@media (min-width: 1132px) {
+  .left {
+    width: 80%; 
+  }
+  .right {
+    width: 20%;
+  }
+  .topnav{
+    display:none;
+  }
+  
+}
+
+@media (max-width: 1132px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+  h3{
+    display: none;
+  }
+  .column2 {
+    display: none;
+  }
+  .left2 {
+    display:none;
+  }
+  .right2 {
+   display:none;
+  }
+  .row2:after {
+    content: "";
+    display: none;
+    clear: both;
+  }
+}
+
+  /*FSA specific ranking style*/
+p.caption_specific{
+  text-align: center;
+}
+
+li.searchedpostal{	
+background-color: white;
+font-size: 25px;
+}
+
+.goback {
+  background-color: #8c8c8c; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  width: 100%;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.goback:hover {
+  background-color: #D3D3D3;
+  color: black;
+}
+
+/*Canada wide ranking style*/
+ol.powerrankings {
+  list-style-type: number;
+  width : 100%;
+  text-align: center;
+}
+p.caption{
+  text-align: center;
+}
+li{
+  background-color: #D3D3D3;
+}
+.viewmore {
+  background-color: #8c8c8c; /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  width: 100%;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.viewmore:hover {
+  background-color: #D3D3D3;
+  color: black;
+}
+
+

@@ -5,10 +5,10 @@
   bottom: 0;
   width: 100%;
   /*background-color: #034f84; */
-  color: white;
+  color: black;
   text-align: center;
   z-index: 2;
-  background-color: #001f3f;
+  background-color: white;
   font-size: large;
 }
 

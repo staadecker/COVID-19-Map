@@ -1,4 +1,5 @@
 const text_fr = {
+    "welcome_message": "Welcome to FLATTEN's Interactive Heat Map!",
     "map_title": "Carte du coronavirus au Canada",
     "pot_button": "Cas potentiels",
     "vul_button": "Individus vulnérables",
@@ -53,14 +54,20 @@ const text_fr = {
     "pot_vul_button": "Individus vulnérables symptomatiques",
     "pot_vul_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de individus vulnérables qui sont également des cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'une personne vulnérable qui est également un cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
-    "not_enough_data_legend": "Pas assez de données"
+    "not_enough_data_legend": "Pas assez de données",
+    "toggle_statistics" : "voir les statistiques",
+    "pot_cas_vul_statistic" : "Cas Potentiels Parmi Les Populations Vulnerables",
+    "pot_cas_non_vul_statistic" : "Cas Potentiels Parmi Les Populations Non-Vulnerables",
+    "highest_percentage_ranking" : "Pourcentage le plus élevé de la population répertorieée comme cas potentiel"
+
 };
 
 const text_en = {
+    "welcome_message": "Welcome to FLATTEN's Interactive Heat Map!",
     "map_title": "Canadian Coronavirus Map",
     "pot_button": "Potential Cases",
     "vul_button": "Vulnerable Individuals",
-    "cul_button": "Cumulative Confirmed Cases",
+    "cul_button": "Confirmed Cases",
     "instructions_btn": "Instructions",
     "about_map_btn": "About this map",
     "about_us_btn": "About Us",
@@ -108,10 +115,14 @@ const text_en = {
     "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
     "searchbar": "Enter first 3 digits of post code:",
     "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode.",
-    "pot_vul_button": "Potential Case and Vulnerable",
+    "pot_vul_button": "Potential Cases & Vulnerable",
     "pot_vul_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals who are also potential cases." +
         "</p><p>We received YYY reports in total.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual who is also a potential case." +
         "</p><p>We received YYY reports in total.</p>",
-    "not_enough_data_legend": "Not Enough Data"
+    "not_enough_data_legend": "Not Enough Data", 
+    "toggle_statistics" : "Toggle Statistics",
+    "pot_cas_vul_statistic" : "Potential Cases Among Vulnerable People",
+    "pot_cas_non_vul_statistic" : "Potential Cases Among Non-Vulnerable People", 
+    "highest_percentage_ranking" : "Higest percentage of population listed as potential cases"
 };

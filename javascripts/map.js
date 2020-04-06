@@ -244,3 +244,11 @@ function displayMaps() {
 function toggle_clicked(radioValue) {
     tabs[radioValue].switch_to_tab(map);
 }
+function toggleStats() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+    } else {
+    x.style.display = "block";
+    }
+}

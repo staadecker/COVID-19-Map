@@ -23,56 +23,134 @@
 <body>
 <div id="header">
     <div class="name_div">
-        <h3 id="map_title" class="lang"></h3>
+        <center><h3 id="welcome_message" class="lang"></h3></center>
     </div>
 
-    <div class="switch-field">
-        <input
-                type="radio"
-                id="in_self_isolation"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="potential"
-                checked
-        />
-        <label id="pot_button" class="noselect lang" for="in_self_isolation"></label>
 
-        <input
-                type="radio"
-                id="high_risk"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="vulnerable"
-        />
-        <label id="vul_button" class="noselect lang" for="high_risk"></label>
+<div class="topnav">
+   <button href="javascript:void(0);" class="mobile-numbers-expand" onclick="toggleStats()" >
+            <p id="toggle_statistics" class="lang"></p></button>
+     <div id="myLinks">
+        <div class="equalrowmobile">
+                <div class="equalcolumnmobile equalleftmobile"
+                    style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                    <p id="pot_cas_vul_statistic" class="lang"></p>
+                    <h1>956</h1>
+                    </div>
+                    <div class="equalcolumnmobile equalrightmobile"
+                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                    <p id="pot_cas_non_vul_statistic" class="lang"></p>
+                    <h1>672</h1>
+                    </div>
+                </div>
+                    
+                <div class="equalrowmobile">
+                    <p id= "highest_percentage_ranking" class="lang"></p>
+                    <ol class="powerrankings">
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                    </ol>
+                    <button class="viewmore"onclick="viewMore()">5 of TOTAL # &nbsp; View More</button>
 
-        <input
-                type="radio"
-                id="pot_vul"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="pot_vul"
-        />
-        <label id="pot_vul_button" class="noselect lang" for="pot_vul"></label>
+                    <!-- THIS IS FOR THE CASE OF A LEAFLET SEARCH OF A SPECIFIC PLACE: I will leave it commented out:
+                        the goback button should take it to above version
 
-        <input
-                type="radio"
-                id="confirmed"
-                name="layers"
-                onclick="toggle_clicked(this.value)"
-                value="confirmed"
-        />
-        <label id="cul_button" class="noselect lang" for="confirmed"></label>
-    </div>
+                    <p class = "caption_specific">L5H Ranking Among all Postal Codes:</p>
+                    <ol class="powerrankings_specific">
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        &nbsp;
+                        <li class= "searchedpostal">M5J:  &nbsp;&nbsp;  34.79%</li>
+                        &nbsp;
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                    </ol>
+                    <button class="goback"onclick="goBack()">Go Back to Canada Ranking</button>
+                    -->
+                    </div>
+                
+
+        </div>
+        </div>
+
+        <div class="row map-info">
+
+            <div class="column left" style="background-color:white">
+                <div class="tab">
+                <button class="tablinks"onclick="toggle_clicked(this.value)"value="potential" checked>
+                <p id="pot_button" class="lang"></p></button>
+                <button class="tablinks"onclick="toggle_clicked(this.value)"value="vulnerable">
+                    <p id="vul_button" class="lang"></p></button></button>
+                <button class="tablinks"onclick="toggle_clicked(this.value)"value="confirmed">
+                    <p id="cul_button" class="lang"></p></button>
+                <button class="tablinks"onclick="toggle_clicked(this.value)"value="pot_vul">
+                    <p id="pot_vul_button" class="lang"></p></button>
+                </div>
+          
+
+                <!--The div element for the map -->
+                <div id="map"></div>
+
+                <div id="update_time">
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="column right" style="background-color:white">
+            &nbsp;
+            &nbsp;
+            
+                <div class="equalrow">
+                    <div class="equalcolumn equalleft"
+                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                        <p id="pot_cas_vul_statistic" class="lang"></p>
+                    <h1>956</h1>
+                    </div>
+                </div>
+                <div class="equalrow">
+                    <div class="equalcolumn equalright"
+                        style="background-image: linear-gradient(to top right, rgb(240, 177, 89) , #F1BF7B);">
+                    <p id="pot_cas_non_vul_statistic" class="lang"></p>
+                    <h1>672</h1>
+                    </div>
+                </div>
+
+                <div class="equalrow">
+                    <p id= "highest_percentage_ranking" class="lang"></p>
+                    <ol class="powerrankings">
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                    </ol>
+                    <button class="viewmore"onclick="viewMore()">5 of TOTAL # &nbsp; View More</button>
+
+                    <!-- THIS IS FOR THE CASE OF A LEAFLET SEARCH OF A SPECIFIC PLACE: I will leave it commented out:
+                        the goback button should take it to above version
+
+                    <p class = "caption_specific">L5H Ranking Among all Postal Codes:</p>
+                    <ol class="powerrankings_specific">
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        &nbsp;
+                        <li class= "searchedpostal">M5J:  &nbsp;&nbsp;  34.79%</li>
+                        &nbsp;
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                        <li>M5J:  &nbsp;&nbsp;  34.79%</li>
+                    </ol>
+                    <button class="goback"onclick="goBack()">Go Back to Canada Ranking</button>
+                    -->
+                </div>
+            
+            </div>
+            </div>
 </div>
 
-<!--The div element for the map -->
-<div id="body">
-    <div id="map"></div>
 
-    <div id="update_time">
-        <p></p>
-    </div>
 
     <div class="footer">
         <div id="instructions_btn" class="footer_element lang"></div>
