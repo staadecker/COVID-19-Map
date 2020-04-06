@@ -34,25 +34,20 @@ map.on("popupopen", function (event) {
     if (event.popup.coord) event.popup.setLatLng(event.popup.coord);
 });
 
-function create_legend(colorThrsholds, colourScheme) {
+function create_legend(colorThresholds, colourScheme, percent = true) {
     let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
-    if (colorThrsholds === CON_SCHEME_THRESHOLDS) {
-        for (let i = 0; i < colourScheme.length; i++) {
-            const threshold = i === 0 ? 0 : colorThrsholds[i - 1];
-            legend_content +=
-                '<i style="background:' + colourScheme[i] + '"></i>' + threshold + '+<br>';
-        }
-    } else {
-        for (let i = 0; i < colourScheme.length; i++) {
-            const threshold = i === 0 ? 0 : colorThrsholds[i - 1] * 100;
-            legend_content +=
-                '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
-        }
+    for (let i = 0; i < colourScheme.length; i++) {
+        legend_content += '<i style="background:' + colourScheme[i] + '"></i>';
+
+        const threshold = i === 0 ? 0 : colorThresholds[i - 1];
+
+        if (percent) legend_content += '> ' + threshold*100 + '%<br>';
+        else legend_content += threshold + '+<br>';
     }
 
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({position: 'bottomright'});
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
@@ -65,7 +60,7 @@ function create_legend(colorThrsholds, colourScheme) {
 }
 
 const tabs = {
-    "confirmed": new Tab(create_legend(CON_SCHEME_THRESHOLDS, COLOUR_SCHEME), null, null, null),
+    "confirmed": new Tab(create_legend(CON_SCHEME_THRESHOLDS, COLOUR_SCHEME, percent=false), null, null, null),
     "vulnerable": new Tab(
         create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
         null,
