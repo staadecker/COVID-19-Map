@@ -181,7 +181,6 @@ function displayMaps() {
     });
 
     // Add search bar for polygons
-    console.log("adding searchbar");
     const searchControl = new L.Control.Search({
         layer: polygon_layer,
         propertyName: 'CFSAUID',
