@@ -34,22 +34,6 @@ map.on("popupopen", function (event) {
 });
 
 
-// Add search bar for polygons
-const searchControl = new L.Control.Search({
-    propertyName: 'CFSAUID',
-    marker: false,
-    textPlaceholder: text['searchbar'],
-    autoCollapse: true,
-    moveToLocation: (latlng, title, map) => {
-        map.setView(latlng, map.getBoundsZoom(latlng.layer.getBounds()));
-    }
-});
-
-searchControl.on('search:locationfound', (e) => {
-    if (e.layer._popup) e.layer.openPopup()
-});
-
-
 function create_legend(colorThrsholds, colourScheme) {
     let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
@@ -60,7 +44,7 @@ function create_legend(colorThrsholds, colourScheme) {
             '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
     }
 
-    const legend = L.control({position: 'bottomright'});
+    const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
@@ -76,19 +60,19 @@ const tabs = {
     "confirmed": new Tab(null, null, null, null),
     "vulnerable": new Tab(
         create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        searchControl,
+        null,
         create_style_function(COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS, 'risk'),
         "vuln"
     ),
     "potential": new Tab(
         create_legend(POT_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        searchControl,
+        null,
         create_style_function(COLOUR_SCHEME, POT_SCHEME_THRESHOLDS, 'pot'),
         "pot"
     ),
     "pot_vul": new Tab(
         create_legend(BOTH_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        searchControl,
+        null,
         create_style_function(COLOUR_SCHEME, BOTH_SCHEME_THRESHOLDS, 'both'),
         "pot_vul"
     )
@@ -195,6 +179,25 @@ function displayMaps() {
     const polygon_layer = L.geoJSON(post_code_boundaries, {
         onEachFeature: (feature, layer) => layer.bindPopup()
     });
+
+    // Add search bar for polygons
+    const searchControl = new L.Control.Search({
+        layer: polygon_layer,
+        propertyName: 'CFSAUID',
+        marker: false,
+        textPlaceholder: text['searchbar'],
+        autoCollapse: true,
+        moveToLocation: (latlng, title, map) => {
+            map.setView(latlng, map.getBoundsZoom(latlng.layer.getBounds()));
+        }
+    });
+    searchControl.on('search:locationfound', (e) => {
+        if (e.layer._popup) e.layer.openPopup()
+    });
+
+    tabs.vulnerable.search_control = searchControl;
+    tabs.potential.search_control = searchControl;
+    tabs.pot_vul.search_control = searchControl;
 
     // Array of Leaflet API markers for confirmed cases.
     const confirmed_layer = L.layerGroup();
