@@ -30,7 +30,7 @@ body {
 /* Different button style for desktop */
 @media (max-width: 700px) {
   #map {
-    height: calc(10vh - 300px);
+    height: calc(110vh - 300px);
   }
 }
 
