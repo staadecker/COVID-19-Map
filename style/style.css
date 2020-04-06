@@ -23,14 +23,14 @@ body {
 /* Different button style for mobile devices */
 @media (min-width: 700px) {
   #map {
-    height: calc(100vh - 200px);
+    height: calc(110vh - 200px);
   }
 }
 
 /* Different button style for desktop */
 @media (max-width: 700px) {
   #map {
-    height: calc(100vh - 300px);
+    height: calc(110vh - 300px);
   }
 }
 
