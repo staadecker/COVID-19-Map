@@ -4,20 +4,20 @@ const CANADA_BOUNDS = [[38, -150], [87, -45]];
 const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
-// white, yellow, orange, brown, red, black
-const COLOUR_SCHEME = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
-const POT_SCHEME_THRESHOLDS = [0.02, 0.05, 0.1, 0.25];
-const HIGH_RISK_SCHEME_THRESHOLDS = [0.15, 0.25, 0.35, 0.50];
-const BOTH_SCHEME_THRESHOLDS = [0.01, 0.02, 0.05, 0.1];
-const POLYGON_OPACITY = 0.4;
-const NOT_ENOUGH_GRAY = '#909090';
-// max size circle can be on map
-const MAX_CIRCLE_RAD = 35;
-const MIN_CIRCLE_RADIUS = 6;
+const HOSPITAL_MARKER_STYLE = {
+    radius: 5,
+    fillColor: "#3c88e6",
+    color: "#000",
+    weight: 0.5,
+    opacity: 1,
+    fillOpacity: 0.8
+};
 
 // Create map
 const MAP_BASE_LAYER = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' +
+        ' &copy;<a href="https://carto.com/attributions">CARTO</a> | ' +
+        'Confirmed cases data from <a href="https://resources-covid19canada.hub.arcgis.com">ESRI</a>',
     subdomains: 'abcd',
     minZoom: 4
 });
@@ -33,18 +33,27 @@ map.on("popupopen", function (event) {
     if (event.popup.coord) event.popup.setLatLng(event.popup.coord);
 });
 
+function create_legend(colourScheme, percent = true, not_enough_data = true) {
+    let legend_content = "";
 
-function create_legend(colorThrsholds, colourScheme) {
-    let legend_content = '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
+    if (percent) legend_content += text['percent_legend_title'];
+    else legend_content += text['conf_legend_title'];
+
+    if (not_enough_data)
+        legend_content += '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
     // Loop through our density intervals and generate a label with a coloured square for each interval.
-    for (let i = 0; i < colourScheme.length; i++) {
-        const threshold = i === 0 ? 0 : colorThrsholds[i - 1] * 100;
-        legend_content +=
-            '<i style="background:' + colourScheme[i] + '"></i> > ' + threshold + '%<br>';
+    for (let i = 0; i < colourScheme.colours.length; i++) {
+        // Place square
+        legend_content += '<i style="background:' + colourScheme.colours[i] + '"></i>';
+
+        const threshold = i === 0 ? 0 : colourScheme.thresholds[i - 1];
+
+        if (percent) legend_content += '> ' + threshold * 100 + '%<br>';
+        else legend_content += '> ' + threshold + '<br>';
     }
 
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({position: 'bottomright'});
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
@@ -57,45 +66,31 @@ function create_legend(colorThrsholds, colourScheme) {
 }
 
 const tabs = {
-    "confirmed": new Tab(null, null, null, null),
-    "vulnerable": new Tab(
-        create_legend(HIGH_RISK_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        null,
-        create_style_function(COLOUR_SCHEME, HIGH_RISK_SCHEME_THRESHOLDS, 'risk'),
-        "vuln"
-    ),
-    "potential": new Tab(
-        create_legend(POT_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        null,
-        create_style_function(COLOUR_SCHEME, POT_SCHEME_THRESHOLDS, 'pot'),
-        "pot"
-    ),
-    "pot_vul": new Tab(
-        create_legend(BOTH_SCHEME_THRESHOLDS, COLOUR_SCHEME),
-        null,
-        create_style_function(COLOUR_SCHEME, BOTH_SCHEME_THRESHOLDS, 'both'),
-        "pot_vul"
-    )
+    "confirmed": new Tab({
+        legend: create_legend(CONFIRMED_COLOUR_SCHEME, percent = false, not_enough_data = false)
+    }),
+    "vulnerable": new Tab({
+        legend: create_legend(VULN_COLOUR_SCHEME),
+        layer_style: create_style_function(VULN_COLOUR_SCHEME, 'risk'),
+        popup_type: "risk"
+    }),
+    "potential": new Tab({
+        legend: create_legend(POT_COLOUR_SCHEME),
+        layer_style: create_style_function(POT_COLOUR_SCHEME, 'pot'),
+        popup_type: "pot"
+    }),
+    "pot_vul": new Tab({
+        legend: create_legend(BOTH_COLOUR_SCHEME),
+        layer_style: create_style_function(BOTH_COLOUR_SCHEME, 'both'),
+        popup_type: "both"
+    })
 };
 
 
 // gets data from gcloud
-let form_data_obj, confirmed_data;
+let form_data_obj, confirmed_data, hospital_data;
 
-// assigns color based on thresholds
-function getColour(cases, colour_scheme, color_thresholds) {
-    if (color_thresholds.length !== colour_scheme.length - 1)  // Minus one since one more color then threshold
-        console.log("WARNING: list lengths don't match in getColour.");
-
-
-    for (let i = 0; i < color_thresholds.length; i++) {
-        if (cases < color_thresholds[i]) return colour_scheme[i];
-    }
-
-    return colour_scheme[colour_scheme.length - 1];
-}
-
-function create_style_function(colour_scheme, thresholds, data_tag) {
+function create_style_function(colourScheme, data_tag) {
     return (feature) => {
         let opacity = POLYGON_OPACITY; // If no data, is transparent
         let colour = NOT_ENOUGH_GRAY; // Default color if not enough data
@@ -108,9 +103,8 @@ function create_style_function(colour_scheme, thresholds, data_tag) {
             if (num_total > 25) {
                 const num_cases = post_code_data[data_tag];
 
-                if (num_cases === 0) {
-                    opacity = 0;
-                } else colour = getColour(num_cases / num_total, colour_scheme, thresholds);
+                if (num_cases === 0) opacity = 0;
+                else colour = colourScheme.getColour(num_cases / num_total);
             }
         }
 
@@ -140,31 +134,24 @@ function adjustPopups(tab) {
         if (excluded) message = text['notSupported_pop'].replace("FSA", post_code);
         else if (total_reports_region === 0) message = text['msg_noentries'].replace("FSA", post_code);
         else {
-            switch (tab.popup_type) {
+            const num_cases = post_code_data && post_code_data[tab.data_tag] ? post_code_data[tab.data_tag] : 0;
+
+            switch (tab.data_tag) {
                 case "pot":
-                    const num_potential = post_code_data && post_code_data['pot'] ? post_code_data['pot'] : 0;
-                    message = (num_potential === 1 ? text.pot_case_popup_1 : text.pot_case_popup)
-                        .replace("FSA", post_code)
-                        .replace("XXX", num_potential)
-                        .replace("YYY", total_reports_region);
+                    message = (num_cases === 1 ? text.pot_case_popup_1 : text.pot_case_popup);
                     break;
-
-                case "vuln":
-                    const num_vulnerable = post_code_data && post_code_data['risk'] ? post_code_data['risk'] : 0;
-                    message = (num_vulnerable === 1 ? text.vul_case_popup_1 : text.vul_case_popup)
-                        .replace("FSA", post_code)
-                        .replace("XXX", num_vulnerable)
-                        .replace("YYY", total_reports_region);
+                case "risk":
+                    message = (num_cases === 1 ? text.vul_case_popup_1 : text.vul_case_popup);
                     break;
-
-                case "pot_vul":
-                    const num_both = post_code_data && post_code_data['both'] ? post_code_data['both'] : 0;
-                    message = (num_both === 1 ? text.pot_vul_popup_1 : text.pot_vul_popup)
-                        .replace("FSA", post_code)
-                        .replace("XXX", num_both)
-                        .replace("YYY", total_reports_region);
+                case "both":
+                    message = (num_cases === 1 ? text.pot_vul_popup_1 : text.pot_vul_popup);
                     break;
             }
+
+            message = message
+                .replace("FSA", post_code)
+                .replace("XXX", num_cases)
+                .replace("YYY", total_reports_region);
         }
 
         layer.setPopupContent(message);
@@ -172,17 +159,62 @@ function adjustPopups(tab) {
 }
 
 
-function displayMaps() {
-    // 1. Create the layers
+function styleConfirmedPolygons(feature) {
+    const case_num = feature.properties['CaseCount'];
 
-    // Create a popup, color and text are initialized when the tab is create
-    const polygon_layer = L.geoJSON(post_code_boundaries, {
-        onEachFeature: (feature, layer) => layer.bindPopup()
+    return {
+        // define the outlines of the map
+        weight: 0.9,
+        color: 'gray',
+        dashArray: '3',
+        // define the color and opacity of each polygon
+        fillColor: CONFIRMED_COLOUR_SCHEME.getColour(case_num),
+        fillOpacity: case_num === 0 ? 0 : POLYGON_OPACITY
+    }
+}
+
+function createConfirmedPopups(feature, layer) {
+    const prop = feature.properties;
+    let popText = text.confirm_pop
+        .replace("PLACE", lang === FRENCH ? prop['FRENAME'] : prop['ENGNAME'])
+        .replace("CASES", prop['CaseCount']);
+
+    if (prop['Deaths'] !== null) popText += text.confirm_pop_deaths.replace("XXX", prop['Deaths']);
+    if (prop['Recovered'] !== null) popText += text.confirm_pop_recov.replace("XXX", prop['Recovered']);
+    if (prop['Tests'] !== null) popText += text.confirm_pop_tests.replace("XXX", prop['Tests']);
+
+    popText += text.confirm_pop_end
+        .replace("XXX", prop['Last_Updated'])
+        .replace("T", " ")
+        .replace(".000Z", "");
+
+    layer.bindPopup(popText);
+}
+
+function displayMaps() {
+    // Add hospital layer
+    const hospital_layer = L.geoJSON(hospital_data, {
+        pointToLayer: function (feature, latlng) {
+            const prop = feature['properties'];
+            return L.circleMarker(latlng, HOSPITAL_MARKER_STYLE)
+                .bindPopup(
+                    "<b>" + prop['Name'] + "</b><p>"
+                    + prop['Street'] + "<br/>"
+                    + prop['City'] + ", " + prop['Prov'] + ", " + prop['Postal']
+                );
+        }
     });
+
+    // Toggle for hospitals layer
+    L.control.layers(null, {"Hospitals": hospital_layer}).addTo(map);
+
+    // FORM DATA
+    // Create a popup, color and text are initialized when the tab is create
+    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
 
     // Add search bar for polygons
     const searchControl = new L.Control.Search({
-        layer: polygon_layer,
+        layer: form_layer,
         propertyName: 'CFSAUID',
         marker: false,
         textPlaceholder: text['searchbar'],
@@ -199,49 +231,21 @@ function displayMaps() {
     tabs.potential.search_control = searchControl;
     tabs.pot_vul.search_control = searchControl;
 
-    // Array of Leaflet API markers for confirmed cases.
-    const confirmed_layer = L.layerGroup();
+    tabs.vulnerable.map_layer = form_layer;
+    tabs.potential.map_layer = form_layer;
+    tabs.pot_vul.map_layer = form_layer;
 
-    const confirmed_cases_data = confirmed_data['confirmed_cases'];
-    for (let confirmed_case of confirmed_cases_data) {
-        if (confirmed_case['coord'][0] === "N/A") continue;
+    const time = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
 
-        // Add the marker.
-        const circle = new L.circleMarker(confirmed_case['coord'], {
-            weight: 0,
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: MIN_CIRCLE_RADIUS + confirmed_case['cases'] / confirmed_data['max_cases'] * MAX_CIRCLE_RAD
-        });
+    tabs.potential.time_message = time;
+    tabs.vulnerable.time_message = time;
+    tabs.pot_vul.time_message = time;
 
-        circle._leaflet_id = confirmed_case.name;
-
-        /*  Create the popup text and bind to the correct circle. Store popup
-            index as a member of the popup so that we can set the popup to be
-            in the centre of the circle on callback when clicked. */
-
-        const message = text['confirm_pop']
-            .replace("PLACE", confirmed_case.name)
-            .replace("CASES", confirmed_case['cases']);
-
-        const popup = L.popup().setLatLng(confirmed_case['coord']).setContent(message);
-        popup.coord = confirmed_case['coord'];
-
-        //Bind popup and add circle to circle array.
-        circle.bindPopup(popup);
-        circle.addTo(confirmed_layer);
-    }
-
-    tabs.confirmed.map_layer = confirmed_layer;
-    tabs.vulnerable.map_layer = polygon_layer;
-    tabs.potential.map_layer = polygon_layer;
-    tabs.pot_vul.map_layer = polygon_layer;
-
-    tabs.confirmed.time_message = confirmed_data['last_updated'];
-    tabs.potential.time_message = "Total Responses: " + form_data_obj['total_responses'] + " | Last update: " + new Date(1000 * form_data_obj["time"]);
-    tabs.vulnerable.time_message = tabs.potential.time_message;
-    tabs.pot_vul.time_message = tabs.potential.time_message;
+    // ESRI Data (Confirmed cases)
+    tabs.confirmed.map_layer = L.geoJSON(confirmed_data, {
+        style: styleConfirmedPolygons,
+        onEachFeature: createConfirmedPopups
+    });
 }
 
 function toggle_clicked(radioValue) {

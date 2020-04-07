@@ -1,13 +1,23 @@
 let text;
+const FRENCH = "fr";
+const ENGLISH = "en";
+let lang;
 
 function read_lang_param() {
     // To set text to french use ?lang=fr in URL
-    const param = new URLSearchParams(window.location.search);
+    lang = new URLSearchParams(window.location.search).get('lang');
 
-    if (param.get('lang') === "fr") {
-        text = text_fr;
-    } else {
-        text = text_en;
+    if (!lang) lang = ENGLISH;
+
+    switch (lang) {
+        case FRENCH:
+            text = text_fr;
+            break;
+        case ENGLISH:
+            text = text_en;
+            break;
+        default:
+            console.log("Unknown language passed in")
     }
 
     if (Object.keys(text_en).length !== Object.keys(text_fr).length) {

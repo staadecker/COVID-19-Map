@@ -47,13 +47,19 @@ const text_fr = {
     "vul_case_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports d’individus vulnérables</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "vul_case_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'un individu vulnérable</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "msg_noentries": "<h3>FSA</h3><p>Nous n’avons pas encore reçu suffisamment de rapports dans cette région.</p>",
-    "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés dans cette région</p>",
+    "confirm_pop": "<h3>PLACE</h3><p>CASES cas confirmés<br/>",
+    "confirm_pop_deaths": "XXX décès<br/>",
+    "confirm_pop_recov": "XXX guérisons<br/>",
+    "confirm_pop_tests": "XXX tests réalisés<br/>",
+    "confirm_pop_end": "Dernière mise à jour: XXX</p>",
     "searchbar": "Entrez les 3 premiers caractères de votre code postal",
     "notSupported_pop": "<h3>FSA</h3>Nous ne pouvons pas fournir des données pour ce code postal.",
     "pot_vul_button": "Individus vulnérables symptomatiques",
     "pot_vul_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de individus vulnérables qui sont également des cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'une personne vulnérable qui est également un cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
-    "not_enough_data_legend": "Pas assez de données"
+    "not_enough_data_legend": "Pas assez de données",
+    "percent_legend_title": "<h3>% de réponses</h3>",
+    "conf_legend_title": "<h3>Nombre de cas</h3>"
 };
 
 const text_en = {
@@ -105,7 +111,11 @@ const text_en = {
     "vul_case_popup": "<h3>FSA</h3><p>We received XXX reports from vulnerable individuals.</p><p>We received YYY reports in total.</p>",
     "vul_case_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual.</p><p>We received YYY reports in total.</p>",
     "msg_noentries": "<h3>FSA</h3><p>We haven't had enough form responses in this region yet.</p>",
-    "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases in this area</p>",
+    "confirm_pop": "<h3>PLACE</h3><p>CASES confirmed cases<br/>",
+    "confirm_pop_deaths": "XXX deaths<br/>",
+    "confirm_pop_recov": "XXX recovered<br/>",
+    "confirm_pop_tests": "XXX tests administered<br/>",
+    "confirm_pop_end": "Last updated: XXX</p>",
     "searchbar": "Enter first 3 digits of post code:",
     "notSupported_pop": "<h3>FSA</h3>We’re unable to provide data for your postcode.",
     "pot_vul_button": "Potential and Vulnerable Cases",
@@ -113,5 +123,7 @@ const text_en = {
         "</p><p>We received YYY reports in total.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual who is also a potential case." +
         "</p><p>We received YYY reports in total.</p>",
-    "not_enough_data_legend": "Not Enough Data"
+    "not_enough_data_legend": "Not Enough Data",
+    "percent_legend_title": "<h3>% of Responses</h3>",
+    "conf_legend_title": "<h3>Number of Cases</h3>"
 };
