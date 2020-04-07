@@ -6,8 +6,9 @@ const INITIAL_ZOOM = 5;
 
 // Create map
 const MAP_BASE_LAYER = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy;' +
-        '<a href="https://carto.com/attributions">CARTO</a> | Confirmed cases data from <a href="https://resources-covid19canada.hub.arcgis.com">ESRI</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' +
+        ' &copy;<a href="https://carto.com/attributions">CARTO</a> | ' +
+        'Confirmed cases data from <a href="https://resources-covid19canada.hub.arcgis.com">ESRI</a>',
     subdomains: 'abcd',
     minZoom: 4
 });
@@ -39,7 +40,7 @@ function create_legend(colourScheme, percent = true, not_enough_data = true) {
         else legend_content += '> ' + threshold + '<br>';
     }
 
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({position: 'bottomright'});
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
@@ -181,7 +182,7 @@ function displayMaps() {
     // FORM DATA
 
     // Create a popup, color and text are initialized when the tab is create
-    const form_layer = L.geoJSON(post_code_boundaries, { onEachFeature: (feature, layer) => layer.bindPopup() });
+    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
 
     // Add hospital layer
     var hospitalLayerOptions = {
@@ -203,7 +204,7 @@ function displayMaps() {
     });
 
     // Toggle for hospitals layer
-    L.control.layers(null, { "Hospitals": hospital_layer }).addTo(map);
+    L.control.layers(null, {"Hospitals": hospital_layer}).addTo(map);
 
     // Add search bar for polygons
     const searchControl = new L.Control.Search({
