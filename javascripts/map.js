@@ -4,6 +4,15 @@ const CANADA_BOUNDS = [[38, -150], [87, -45]];
 const ONTARIO = [51.2538, -85.3232];
 const INITIAL_ZOOM = 5;
 
+const HOSPITAL_MARKER_STYLE = {
+    radius: 5,
+    fillColor: "#3c88e6",
+    color: "#000",
+    weight: 0.5,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
 // Create map
 const MAP_BASE_LAYER = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' +
@@ -179,32 +188,25 @@ function createConfirmedPopups(feature, layer) {
 }
 
 function displayMaps() {
-    // FORM DATA
-
-    // Create a popup, color and text are initialized when the tab is create
-    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
-
     // Add hospital layer
-    var hospitalLayerOptions = {
-        radius: 5,
-        fillColor: "#3c88e6",
-        color: "#000",
-        weight: 0.5,
-        opacity: 1,
-        fillOpacity: 0.8
-    };
-
     const hospital_layer = L.geoJSON(hospital_data, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, hospitalLayerOptions)
-                .bindPopup("<b>" + feature['properties']['Name'] + "</b><p>" + feature['properties']['Street'] +
-                    "<br/>" + feature['properties']['City'] + ", " + feature['properties']['Prov'] + ", " +
-                    feature['properties']['Postal']);
+            const prop = feature['properties'];
+            return L.circleMarker(latlng, HOSPITAL_MARKER_STYLE)
+                .bindPopup(
+                    "<b>" + prop['Name'] + "</b><p>"
+                    + prop['Street'] + "<br/>"
+                    + prop['City'] + ", " + prop['Prov'] + ", " + prop['Postal']
+                );
         }
     });
 
     // Toggle for hospitals layer
     L.control.layers(null, {"Hospitals": hospital_layer}).addTo(map);
+
+    // FORM DATA
+    // Create a popup, color and text are initialized when the tab is create
+    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
 
     // Add search bar for polygons
     const searchControl = new L.Control.Search({
