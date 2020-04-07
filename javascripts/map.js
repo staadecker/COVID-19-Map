@@ -50,7 +50,7 @@ function create_legend(colorThresholds, colourScheme, percent = true, not_enough
         else legend_content += '> ' + threshold + '<br>';
     }
 
-    const legend = L.control({position: 'bottomright'});
+    const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = (map) => {
         const div = L.DomUtil.create('div', 'info legend');
@@ -91,7 +91,7 @@ const tabs = {
 
 
 // gets data from gcloud
-let form_data_obj, confirmed_data;
+let form_data_obj, confirmed_data, hospital_data;
 
 // assigns color based on thresholds
 function getColour(cases, colour_scheme, color_thresholds) {
@@ -218,7 +218,29 @@ function displayMaps() {
     // FORM DATA
 
     // Create a popup, color and text are initialized when the tab is create
-    const form_layer = L.geoJSON(post_code_boundaries, {onEachFeature: (feature, layer) => layer.bindPopup()});
+    const form_layer = L.geoJSON(post_code_boundaries, { onEachFeature: (feature, layer) => layer.bindPopup() });
+
+    // Add hospital layer
+    var hospitalLayerOptions = {
+        radius: 6.5,
+        fillColor: "#3c88e6",
+        color: "#000",
+        weight: 0.5,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+
+    const hospital_layer = L.geoJSON(hospital_data, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, hospitalLayerOptions)
+                .bindPopup("<b>" + feature['properties']['Name'] + "</b><p>" + feature['properties']['Street'] +
+                    "<br/>" + feature['properties']['City'] + ", " + feature['properties']['Prov'] + ", " +
+                    feature['properties']['Postal']);
+        }
+    });
+
+    // Toggle for hospitals layer
+    L.control.layers(null, { "Hospitals": hospital_layer }).addTo(map);
 
     // Add search bar for polygons
     const searchControl = new L.Control.Search({
