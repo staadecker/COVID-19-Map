@@ -1,4 +1,5 @@
-const ESRI_URL = 'https://opendata.arcgis.com/datasets/e5403793c5654affac0942432783365a_0.geojson';
+const ESRI_CONF_URL = 'https://opendata.arcgis.com/datasets/e5403793c5654affac0942432783365a_0.geojson';
+const ESRI_HOSP_URL = 'https://opendata.arcgis.com/datasets/1973e081296445f4b85bab94f99d2390_0.geojson';
 
 function getGSBucketReference(bucket) {
     try {
@@ -36,7 +37,8 @@ async function obtainAndDisplayMaps() {
     const bucket_reference = getGSBucketReference(bucket);
     form_data_obj = jsonRequest(await getGSDownloadURL(bucket_reference, 'form_data.json'));
     // Query confirmed case data from ESRI
-    confirmed_data = jsonRequest(ESRI_URL);
+    confirmed_data = jsonRequest(ESRI_CONF_URL);
+    hospital_data = jsonRequest(ESRI_HOSP_URL);
 
     displayMaps();
     tabs.pot_vul.switch_to_tab(map);
