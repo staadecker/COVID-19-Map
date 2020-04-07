@@ -18,7 +18,8 @@ const MIN_CIRCLE_RADIUS = 6;
 
 // Create map
 const MAP_BASE_LAYER = new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy;' +
+        '<a href="https://carto.com/attributions">CARTO</a> | Confirmed case data from <a href="https://resources-covid19canada.hub.arcgis.com">ESRI</a>',
     subdomains: 'abcd',
     minZoom: 4
 });
@@ -222,7 +223,7 @@ function displayMaps() {
 
     // Add hospital layer
     var hospitalLayerOptions = {
-        radius: 6.5,
+        radius: 5,
         fillColor: "#3c88e6",
         color: "#000",
         weight: 0.5,
