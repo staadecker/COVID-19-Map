@@ -37,6 +37,13 @@ map.on("popupopen", function (event) {
 
 function create_legend(colorThresholds, colourScheme, percent = true, not_enough_data = true) {
     let legend_content = "";
+
+    if (percent) {
+        legend_content += text['percent_legend_title'];
+    } else {
+        legend_content += text['conf_legend_title'];
+    }
+
     if (not_enough_data)
         legend_content += '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
 
