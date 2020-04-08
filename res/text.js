@@ -58,9 +58,7 @@ const text_fr = {
     "pot_vul_popup": "<h3>FSA</h3><p>Nous avons reçu XXX rapports de individus vulnérables qui sont également des cas potentiels.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "pot_vul_popup_1": "<h3>FSA</h3><p>Nous avons reçu 1 rapport d'une personne vulnérable qui est également un cas potentiel.</p><p>Nous avons reçus YYY rapports en tout.</p>",
     "not_enough_data_legend": "Pas assez de données",
-    "potential_legend_title": "<h4>% de réponses qui sont des cas potentiels</h4>",
-    "vulnerable_legend_title": "<h4>% de réponses vulnérables</h4>",
-    "vulnerable_potential_legend_title": "<h4>% de réponses qui sont des cas potentiels ou vulnérables</h4>",
+    "percent_legend_title": "<h3>% de réponses</h3>",
     "conf_legend_title": "<h3>Nombre de cas</h3>"
 };
 
@@ -126,8 +124,6 @@ const text_en = {
     "pot_vul_popup_1": "<h3>FSA</h3><p>We received 1 report from a vulnerable individual who is also a potential case." +
         "</p><p>We received YYY reports in total.</p>",
     "not_enough_data_legend": "Not Enough Data",
-    "potential_legend_title": "<h4>% of Responses that are Potential Cases</h4>",
-    "vulnerable_legend_title": "<h4>% of Responses that are Vulnerable</h4>",
-    "vulnerable_potential_legend_title": "<h4>% of Responses that are Potential Cases or Vulnerable</h4>",
+    "percent_legend_title": "<h3>% of Responses</h3>",
     "conf_legend_title": "<h3>Number of Cases</h3>"
 };

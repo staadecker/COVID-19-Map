@@ -37,9 +37,9 @@ function create_legend(colourScheme, data_tag, percent = true, not_enough_data =
     let legend_content = "";
 
     switch (data_tag) {
-        case POT_KEY: legend_content += text['potential_legend_title']; break;
-        case VULN_KEY: legend_content += text['vulnerable_legend_title']; break;
-        case BOTH_KEY: legend_content += text['vulnerable_potential_legend_title']; break;
+        case POT_KEY: legend_content += text['percent_legend_title']; break;
+        case VULN_KEY: legend_content += text['percent_legend_title']; break;
+        case BOTH_KEY: legend_content += text['percent_legend_title']; break;
         default: legend_content += text['conf_legend_title'];
     }
 

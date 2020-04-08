@@ -28,7 +28,6 @@ class Tab {
 
         if (this.map_layer) {
             this.map_layer.addTo(map);
-            if (current_location) current_location.bringToFront();
 
             if (this.layer_style) this.map_layer.setStyle(this.layer_style);
 
