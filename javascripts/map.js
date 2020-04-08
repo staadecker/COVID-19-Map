@@ -33,11 +33,15 @@ map.on("popupopen", function (event) {
     if (event.popup.coord) event.popup.setLatLng(event.popup.coord);
 });
 
-function create_legend(colourScheme, percent = true, not_enough_data = true) {
+function create_legend(colourScheme, data_tag, percent = true, not_enough_data = true) {
     let legend_content = "";
 
-    if (percent) legend_content += text['percent_legend_title'];
-    else legend_content += text['conf_legend_title'];
+    switch (data_tag) {
+        case POT_KEY: legend_content += text['potential_legend_title']; break;
+        case VULN_KEY: legend_content += text['vulnerable_legend_title']; break;
+        case BOTH_KEY: legend_content += text['vulnerable_potential_legend_title']; break;
+        default: legend_content += text['conf_legend_title'];
+    }
 
     if (not_enough_data)
         legend_content += '<i style="background:' + NOT_ENOUGH_GRAY + '"></i> ' + text.not_enough_data_legend + '<br>';
@@ -45,12 +49,9 @@ function create_legend(colourScheme, percent = true, not_enough_data = true) {
     // Loop through our density intervals and generate a label with a coloured square for each interval.
     for (let i = 0; i < colourScheme.colours.length; i++) {
         // Place square
-        legend_content += '<i style="background:' + colourScheme.colours[i] + '"></i>';
-
         const threshold = i === 0 ? 0 : colourScheme.thresholds[i - 1];
-
-        if (percent) legend_content += '> ' + threshold * 100 + '%<br>';
-        else legend_content += '> ' + threshold + '<br>';
+        legend_content += '<i style="background:' + colourScheme.colours[i] + '"></i>' + '> ' + 
+            (threshold * (data_tag? 100:1)) + (data_tag? '%':'') + '<br>';
     }
 
     const legend = L.control({position: 'bottomright'});
@@ -67,22 +68,22 @@ function create_legend(colourScheme, percent = true, not_enough_data = true) {
 
 const tabs = {
     "confirmed": new Tab({
-        legend: create_legend(CONFIRMED_COLOUR_SCHEME, percent = false, not_enough_data = false)
+        legend: create_legend(CONFIRMED_COLOUR_SCHEME, null, not_enough_data = false)
     }),
     "vulnerable": new Tab({
-        legend: create_legend(VULN_COLOUR_SCHEME),
-        layer_style: create_style_function(VULN_COLOUR_SCHEME, 'risk'),
-        popup_type: "risk"
+        legend: create_legend(VULN_COLOUR_SCHEME, VULN_KEY),
+        layer_style: create_style_function(VULN_COLOUR_SCHEME, VULN_KEY),
+        popup_type: VULN_KEY
     }),
     "potential": new Tab({
-        legend: create_legend(POT_COLOUR_SCHEME),
-        layer_style: create_style_function(POT_COLOUR_SCHEME, 'pot'),
-        popup_type: "pot"
+        legend: create_legend(POT_COLOUR_SCHEME, POT_KEY),
+        layer_style: create_style_function(POT_COLOUR_SCHEME, POT_KEY),
+        popup_type: POT_KEY
     }),
     "pot_vul": new Tab({
-        legend: create_legend(BOTH_COLOUR_SCHEME),
-        layer_style: create_style_function(BOTH_COLOUR_SCHEME, 'both'),
-        popup_type: "both"
+        legend: create_legend(BOTH_COLOUR_SCHEME, BOTH_KEY),
+        layer_style: create_style_function(BOTH_COLOUR_SCHEME, BOTH_KEY),
+        popup_type: BOTH_KEY
     })
 };
 
@@ -137,13 +138,13 @@ function adjustPopups(tab) {
             const num_cases = post_code_data && post_code_data[tab.data_tag] ? post_code_data[tab.data_tag] : 0;
 
             switch (tab.data_tag) {
-                case "pot":
+                case POT_KEY:
                     message = (num_cases === 1 ? text.pot_case_popup_1 : text.pot_case_popup);
                     break;
-                case "risk":
+                case VULN_KEY:
                     message = (num_cases === 1 ? text.vul_case_popup_1 : text.vul_case_popup);
                     break;
-                case "both":
+                case BOTH_KEY:
                     message = (num_cases === 1 ? text.pot_vul_popup_1 : text.pot_vul_popup);
                     break;
             }
