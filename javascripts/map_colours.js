@@ -24,3 +24,7 @@ const POT_COLOUR_SCHEME = new ColourScheme(COLOURS, [0.02, 0.05, 0.1, 0.25]);
 const VULN_COLOUR_SCHEME = new ColourScheme(COLOURS, [0.15, 0.25, 0.35, 0.50]);
 const BOTH_COLOUR_SCHEME = new ColourScheme(COLOURS, [0.01, 0.02, 0.05, 0.1]);
 const CONFIRMED_COLOUR_SCHEME = new ColourScheme(COLOURS, [5, 25, 100, 250]);
+
+const POT_KEY = "pot";
+const VULN_KEY = "risk";
+const BOTH_KEY = "both";
